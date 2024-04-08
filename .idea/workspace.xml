@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eb4f1cdf-5061-4641-bdb6-b388d0206de4" name="Changes" comment="+ UserDTO&#10;+ UserMapper">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/darfik/skycast/daos/DAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/darfik/skycast/daos/UserDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/darfik/skycast/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/darfik/skycast/models/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/darfik/skycast/utils/HibernateUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/darfik/skycast/utils/HibernateUtil.java" afterDir="false" />
+    <list default="true" id="eb4f1cdf-5061-4641-bdb6-b388d0206de4" name="Changes" comment="+ DAO&#10;+ UserDAO">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -260,7 +257,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1712574576277</updated>
-      <workItem from="1712574577329" duration="21860000" />
+      <workItem from="1712574577329" duration="22508000" />
     </task>
     <task id="LOCAL-00001" summary="gradle config">
       <option name="closed" value="true" />
@@ -366,7 +363,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712607232339</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="+ DAO&#10;+ UserDAO">
+      <option name="closed" value="true" />
+      <created>1712610725954</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1712610725954</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -392,7 +397,8 @@
     <MESSAGE value="+ Session model" />
     <MESSAGE value="cfg changes" />
     <MESSAGE value="+ UserDTO&#10;+ UserMapper" />
-    <option name="LAST_COMMIT_MESSAGE" value="+ UserDTO&#10;+ UserMapper" />
+    <MESSAGE value="+ DAO&#10;+ UserDAO" />
+    <option name="LAST_COMMIT_MESSAGE" value="+ DAO&#10;+ UserDAO" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
