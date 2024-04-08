@@ -2,7 +2,7 @@ package com.darfik.skycast.models;
 
 
 import jakarta.persistence.*;
-import org.checkerframework.checker.units.qual.C;
+
 
 @Entity
 @Table(name = "users")
