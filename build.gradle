@@ -28,7 +28,7 @@ dependencies {
     implementation 'org.hibernate.orm:hibernate-core:6.4.4.Final'
     implementation 'org.mariadb.jdbc:mariadb-java-client:3.3.3'
     implementation('org.glassfish.jaxb:jaxb-runtime:3.0.2')
-
+    implementation 'org.mindrot:jbcrypt:0.4'
 
 
 
