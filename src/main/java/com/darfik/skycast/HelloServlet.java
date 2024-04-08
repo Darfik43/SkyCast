@@ -1,12 +1,16 @@
-package com.darfik.skycsat;
+package com.darfik.skycast;
 
 import java.io.*;
 
+import com.darfik.skycast.utils.HibernateUtil;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.hibernate.Session;
 
 @WebServlet(name = "helloServlet", value = "/hello-servlet")
 public class HelloServlet extends HttpServlet {
+
+
     private String message;
 
     public void init() {
@@ -15,8 +19,8 @@ public class HelloServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
+        Session session = HibernateUtil.getSession();
 
-        // Hello
         PrintWriter out = response.getWriter();
         out.println("<html><body>");
         out.println("<h1>" + message + "</h1>");
