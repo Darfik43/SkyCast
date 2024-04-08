@@ -1,4 +1,4 @@
-package com.darfik.skycast;
+package com.darfik.skycast.controllers;
 
 import java.io.*;
 

@@ -2,6 +2,7 @@ package com.darfik.skycast.models;
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 
 @Entity
@@ -13,6 +14,7 @@ public class User {
     @Column(name = "id")
     private int id;
 
+    @Getter
     @Column(name = "login")
     private String login;
 
