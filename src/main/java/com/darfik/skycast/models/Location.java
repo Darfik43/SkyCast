@@ -1,6 +1,8 @@
 package com.darfik.skycast.models;
 
 import jakarta.persistence.*;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 
 @Entity
@@ -12,6 +14,7 @@ public class Location {
     @Column(name = "id")
     private int id;
 
+    @Setter
     @Column(name = "name")
     private String name;
 
