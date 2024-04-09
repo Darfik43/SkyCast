@@ -25,8 +25,6 @@ public class HelloServlet extends HttpServlet {
         User newUser = new User();
         newUser.setLogin("Test");
         newUser.setPassword("Test");
-        UserDAO userDAO = UserDAO.getInstance();
-        userDAO.save(newUser);
 
 
         PrintWriter out = response.getWriter();
