@@ -12,6 +12,16 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class LocationDAO implements DAO<Location>{
+
+    private static LocationDAO locationDAO;
+    private LocationDAO() {}
+
+    public static synchronized LocationDAO getInstance() {
+        if (locationDAO == null) {
+            locationDAO = new LocationDAO();
+        }
+        return locationDAO;
+    }
     @Override
     public void save(Location location) {
         try (Session session = HibernateUtil.getSession()) {

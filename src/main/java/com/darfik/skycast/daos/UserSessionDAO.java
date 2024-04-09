@@ -11,6 +11,16 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class UserSessionDAO implements DAO<UserSession> {
+
+    private static UserSessionDAO userSessionDAO;
+    private UserSessionDAO() {}
+
+    public static synchronized UserSessionDAO getInstance() {
+        if (userSessionDAO == null) {
+            userSessionDAO = new UserSessionDAO();
+        }
+        return userSessionDAO;
+    }
     @Override
     public void save(UserSession userSession) {
         try (Session session = HibernateUtil.getSession()) {
