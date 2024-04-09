@@ -11,7 +11,7 @@ public class UserSession {
 
     @Id
     @Setter
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private String id;
 
     @OneToOne

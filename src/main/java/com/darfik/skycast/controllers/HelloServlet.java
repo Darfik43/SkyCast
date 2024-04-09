@@ -2,6 +2,8 @@ package com.darfik.skycast.controllers;
 
 import java.io.*;
 
+import com.darfik.skycast.daos.UserDAO;
+import com.darfik.skycast.models.User;
 import com.darfik.skycast.utils.HibernateUtil;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -19,7 +21,13 @@ public class HelloServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
-        Session session = HibernateUtil.getSession();
+
+        User newUser = new User();
+        newUser.setLogin("Test");
+        newUser.setPassword("Test");
+        UserDAO userDAO = UserDAO.getInstance();
+        userDAO.save(newUser);
+
 
         PrintWriter out = response.getWriter();
         out.println("<html><body>");
