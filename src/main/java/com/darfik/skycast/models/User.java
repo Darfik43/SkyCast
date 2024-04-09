@@ -2,6 +2,7 @@ package com.darfik.skycast.models;
 
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,11 +16,13 @@ public class User {
     @Column(name = "id")
     private int id;
 
+
+    @Column(name = "login")
     @Getter
     @Setter
-    @Column(name = "login")
     private String login;
 
     @Column(name = "password")
     private String password;
+
 }

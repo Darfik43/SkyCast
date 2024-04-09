@@ -1,14 +1,16 @@
 package com.darfik.skycast.models;
 
 import jakarta.persistence.*;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "sessions")
-public class Session {
+public class UserSession {
 
     @Id
+    @Setter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
