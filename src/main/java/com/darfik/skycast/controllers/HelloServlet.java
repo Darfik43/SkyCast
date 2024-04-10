@@ -20,7 +20,7 @@ public class HelloServlet extends HttpServlet {
 
     public void init() {
         message = "Hello World!";
-        weatherProcessingService = new WeatherProcessingService(new WeatherJsonParserFactory());
+        weatherProcessingService = new WeatherProcessingService();
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {

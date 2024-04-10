@@ -1,43 +1,38 @@
 package com.darfik.skycast.services;
 
 import com.darfik.skycast.models.WeatherResponse;
-import com.darfik.skycast.services.parsers.JsonParserFactory;
+import com.darfik.skycast.services.parsers.AbstractJsonParserFactory;
 import com.darfik.skycast.services.parsers.WeatherJsonParser;
+import com.darfik.skycast.services.parsers.WeatherJsonParserFactory;
 
 import java.util.Optional;
 
 public class WeatherProcessingService {
-    private final JsonParserFactory<WeatherJsonParser> parserFactory;
+    private AbstractJsonParserFactory builder = new WeatherJsonParserFactory();
+    private WeatherJsonParser parser;
 
-    public WeatherProcessingService(JsonParserFactory<WeatherJsonParser> parserFactory) {
-        this.parserFactory = parserFactory;
+    public WeatherProcessingService() {
+        parser = builder.buildWeatherJsonParser();
     }
 
     public String processJson(String json) {
-        WeatherJsonParser parser = parserFactory.build();
+        Optional<WeatherResponse> weatherResponseOptional = parser.parse(json);
 
-        Optional<WeatherResponse> weatherResponseOptional = parser.parse(json, WeatherResponse.class);
-        if (weatherResponseOptional.isPresent()) {
-            WeatherResponse weatherResponse = weatherResponseOptional.get();
-            return formatToWeatherOutput(weatherResponse);
-        } else {
-            return "There's nothing to parse";
-        }
+        return weatherResponseOptional.map(this::formatToWeatherOutput)
+                .orElse("There's nothing to parse");
     }
 
     private String formatToWeatherOutput(WeatherResponse weatherResponse) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Current weather in ")
-                .append(weatherResponse.getLocationName())
-                .append("<br>");
-        stringBuilder.append("Temperature: ")
-                .append(weatherResponse.getMainWeatherData().getTemp())
-                .append(" Celsius<br>");
-        stringBuilder.append("Feels like: ")
-                .append(weatherResponse.getMainWeatherData().getFeelsLike())
-                .append(" Celsius<br>");
-
-        return stringBuilder.toString();
+        //TODO
+        return "Current weather in " +
+                weatherResponse.getLocationName() +
+                "<br>" +
+                "Temperature: " +
+                weatherResponse.getMainWeatherData().getTemp() +
+                " Celsius<br>" +
+                "Feels like: " +
+                weatherResponse.getMainWeatherData().getFeelsLike() +
+                " Celsius<br>";
     }
 
 }
