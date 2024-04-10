@@ -1,5 +1,5 @@
 package com.darfik.skycast.services.parsers;
 
-public interface JsonParserFactory {
-    AbstractJsonParser build();
+public interface JsonParserFactory<T extends AbstractJsonParser> {
+    T build();
 }

@@ -1,8 +1,8 @@
 package com.darfik.skycast.services.parsers;
 
-public class WeatherJsonParserFactory implements JsonParserFactory {
+public class WeatherJsonParserFactory implements JsonParserFactory<WeatherJsonParser> {
     @Override
-    public AbstractJsonParser build() {
+    public WeatherJsonParser build() {
         return new WeatherJsonParser();
     }
 }
