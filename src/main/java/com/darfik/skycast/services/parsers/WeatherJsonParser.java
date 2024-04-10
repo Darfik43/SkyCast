@@ -1,17 +1,20 @@
 package com.darfik.skycast.services.parsers;
+import com.darfik.skycast.models.WeatherResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+
 import java.util.Optional;
 
-public class WeatherJsonParser extends AbstractJsonParser {
+public class WeatherJsonParser implements JsonParser<WeatherResponse> {
+    private final JsonMapper jsonMapper = JsonMapper.builder().build();
 
     @Override
-    public <T> Optional<T> parse(String json, Class<T> clazz) {
+    public Optional<WeatherResponse> parse(String json) {
         try {
-            T result = jsonMapper.readValue(json, clazz);
+            WeatherResponse result = jsonMapper.readValue(json, WeatherResponse.class);
             return Optional.ofNullable(result);
         } catch (JsonProcessingException e) {
-            System.err.println("JSON parsing error: " + e.getMessage());
-            return Optional.empty();
+            throw new RuntimeException("Error parsing weather JSON", e);
         }
     }
 }
