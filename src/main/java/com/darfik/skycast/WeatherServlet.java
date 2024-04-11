@@ -3,22 +3,19 @@ package com.darfik.skycast;
 import java.io.*;
 import java.net.URISyntaxException;
 
-import com.darfik.skycast.user.UserDAO;
-import com.darfik.skycast.user.User;
 import com.darfik.skycast.utils.OpenWeatherAPIService;
-import com.darfik.skycast.weather.WeatherProcessingService;
+import com.darfik.skycast.weather.WeatherJsonProcessor;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
-@WebServlet(name = "helloServlet", value = "/hello-servlet")
-public class HelloServlet extends HttpServlet {
+@WebServlet(value = "/weather-servlet")
+public class WeatherServlet extends HttpServlet {
 
-    private WeatherProcessingService weatherProcessingService;
-    private String message;
+    private ResponseProcessingService responseProcessingService;
+    private final String jsonType = "weather";
 
     public void init() {
-        message = "Hello World!";
-        weatherProcessingService = new WeatherProcessingService();
+        responseProcessingService = new ResponseProcessingService();
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -26,14 +23,11 @@ public class HelloServlet extends HttpServlet {
         String json = null;
         try {
             json = OpenWeatherAPIService.getTemperatureByName("London");
-            response.getWriter().print(weatherProcessingService.processJson(json));
+            response.getWriter().print(responseProcessingService.processJson(json, jsonType));
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void destroy() {
     }
 }
