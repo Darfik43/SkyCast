@@ -1,11 +1,11 @@
 package com.darfik.skycast.user;
 
 public class UserMapper {
-    public UserDTO toDto(User user) {
+    public static UserDTO toDto(User user) {
         return new UserDTO(user.getUsername());
     }
 
-    public User toModel(UserRegistrationDTO userDTO) {
+    public static User toModel(UserRegistrationDTO userDTO) {
         return new User(userDTO.username(), userDTO.password());
     }
 }
