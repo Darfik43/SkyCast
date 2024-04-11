@@ -1,7 +1,8 @@
 package com.darfik.skycast.commons.services;
 
-import java.util.Optional;
 
-public interface JsonParser<T> {
-    Optional<T> parse(String json);
+import com.darfik.skycast.commons.models.Response;
+
+public interface JsonParser {
+    Response parse(String json);
 }

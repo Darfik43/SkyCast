@@ -1,13 +1,11 @@
 package com.darfik.skycast.weather;
 
-import com.darfik.skycast.commons.factories.AbstractJsonParserFactory;
-import com.darfik.skycast.weather.WeatherJsonParser;
+import com.darfik.skycast.commons.factories.JsonParserFactory;
+import com.darfik.skycast.commons.services.JsonParser;
 
-class WeatherJsonParserFactory extends AbstractJsonParserFactory {
-
-
+class WeatherJsonParserFactory extends JsonParserFactory {
     @Override
-    public WeatherJsonParser buildWeatherJsonParser() {
+    protected JsonParser buildJsonParser() {
         return new WeatherJsonParser();
     }
 }
