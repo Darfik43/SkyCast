@@ -3,7 +3,6 @@ package com.darfik.skycast.location;
 import com.darfik.skycast.commons.factories.JsonParserFactory;
 import com.darfik.skycast.commons.services.JsonParser;
 import com.darfik.skycast.commons.services.JsonProcessor;
-import com.darfik.skycast.weather.WeatherJson;
 
 public class LocationJsonProcessor implements JsonProcessor {
     private final JsonParser<LocationJson> parser = JsonParserFactory.build("location");
