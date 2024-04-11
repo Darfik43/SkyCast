@@ -23,8 +23,10 @@ public class Location {
     @JoinColumn(name = "userId")
     private User user;
 
+
     @Column(name = "latitude")
     private BigDecimal latitude;
+
 
     @Column(name = "longitude")
     private BigDecimal longitude;

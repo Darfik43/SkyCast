@@ -32,6 +32,7 @@ public class User {
     @Setter
     private String username;
 
+
     @Getter
     @Setter
     @Column(name = "password")

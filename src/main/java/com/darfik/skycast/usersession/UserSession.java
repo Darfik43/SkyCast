@@ -18,9 +18,11 @@ public class UserSession {
     @Column(name = "id")
     private String id;
 
+
     @OneToOne
     @JoinColumn(name = "userId")
     private User user;
+
 
     @Column(name = "expiresAt")
     private LocalDateTime expiresAt;

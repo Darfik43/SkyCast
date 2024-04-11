@@ -21,7 +21,7 @@ public class UserService {
         userSessionService.createAndSaveUserSession(newUser);
     }
 
-    public UserService getInstance() {
+    public static UserService getInstance() {
         if (userService == null) {
             userService = new UserService();
         }
