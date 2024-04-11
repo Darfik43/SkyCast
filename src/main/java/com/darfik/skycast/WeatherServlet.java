@@ -4,7 +4,6 @@ import java.io.*;
 import java.net.URISyntaxException;
 
 import com.darfik.skycast.utils.OpenWeatherAPIService;
-import com.darfik.skycast.weather.WeatherJsonProcessor;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
