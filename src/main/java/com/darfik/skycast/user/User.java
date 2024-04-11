@@ -1,4 +1,4 @@
-package com.darfik.skycast.models;
+package com.darfik.skycast.user;
 
 
 import jakarta.persistence.*;

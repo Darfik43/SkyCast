@@ -1,4 +1,4 @@
-package com.darfik.skycast.daos;
+package com.darfik.skycast.commons.daos;
 
 import java.util.List;
 import java.util.Optional;

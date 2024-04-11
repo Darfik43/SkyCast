@@ -1,5 +1,5 @@
-package com.darfik.skycast.services.parsers;
-import com.darfik.skycast.models.WeatherResponse;
+package com.darfik.skycast.weather;
+import com.darfik.skycast.commons.services.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 

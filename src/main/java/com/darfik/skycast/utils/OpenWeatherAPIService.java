@@ -1,4 +1,4 @@
-package com.darfik.skycast.services;
+package com.darfik.skycast.utils;
 
 import java.io.IOException;
 import java.net.URI;

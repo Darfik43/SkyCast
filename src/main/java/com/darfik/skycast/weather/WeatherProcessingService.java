@@ -1,9 +1,9 @@
-package com.darfik.skycast.services;
+package com.darfik.skycast.weather;
 
-import com.darfik.skycast.models.WeatherResponse;
-import com.darfik.skycast.services.parsers.AbstractJsonParserFactory;
-import com.darfik.skycast.services.parsers.WeatherJsonParser;
-import com.darfik.skycast.services.parsers.WeatherJsonParserFactory;
+import com.darfik.skycast.weather.WeatherResponse;
+import com.darfik.skycast.commons.factories.AbstractJsonParserFactory;
+import com.darfik.skycast.weather.WeatherJsonParser;
+import com.darfik.skycast.weather.WeatherJsonParserFactory;
 
 import java.util.Optional;
 

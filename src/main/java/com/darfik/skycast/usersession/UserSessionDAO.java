@@ -1,6 +1,6 @@
-package com.darfik.skycast.daos;
+package com.darfik.skycast.usersession;
 
-import com.darfik.skycast.models.UserSession;
+import com.darfik.skycast.commons.daos.DAO;
 import com.darfik.skycast.utils.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;

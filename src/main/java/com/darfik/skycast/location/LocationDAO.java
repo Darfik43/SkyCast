@@ -1,7 +1,6 @@
-package com.darfik.skycast.daos;
+package com.darfik.skycast.location;
 
-import com.darfik.skycast.models.Location;
-import com.darfik.skycast.models.User;
+import com.darfik.skycast.commons.daos.DAO;
 import com.darfik.skycast.utils.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -11,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class LocationDAO implements DAO<Location>{
+public class LocationDAO implements DAO<Location> {
 
     private static LocationDAO locationDAO;
     private LocationDAO() {}

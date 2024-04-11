@@ -1,4 +1,4 @@
-package com.darfik.skycast.services;
+package com.darfik.skycast.utils;
 
 import org.mindrot.jbcrypt.BCrypt;
 

@@ -1,4 +1,4 @@
-package com.darfik.skycast.dtos;
+package com.darfik.skycast.user;
 
 
 public record UserDTO(

@@ -1,5 +1,6 @@
-package com.darfik.skycast.models;
+package com.darfik.skycast.location;
 
+import com.darfik.skycast.user.User;
 import jakarta.persistence.*;
 import lombok.Setter;
 

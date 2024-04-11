@@ -1,7 +1,7 @@
 package com.darfik.skycast;
 
-import com.darfik.skycast.daos.UserDAO;
-import com.darfik.skycast.models.User;
+import com.darfik.skycast.user.UserDAO;
+import com.darfik.skycast.user.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

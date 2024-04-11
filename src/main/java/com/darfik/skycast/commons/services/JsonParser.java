@@ -1,4 +1,4 @@
-package com.darfik.skycast.services.parsers;
+package com.darfik.skycast.commons.services;
 
 import java.util.Optional;
 

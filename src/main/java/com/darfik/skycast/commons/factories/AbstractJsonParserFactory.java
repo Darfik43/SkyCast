@@ -1,6 +1,6 @@
-package com.darfik.skycast.services.parsers;
+package com.darfik.skycast.commons.factories;
 
-import java.util.Optional;
+import com.darfik.skycast.weather.WeatherJsonParser;
 
 public abstract class AbstractJsonParserFactory {
 

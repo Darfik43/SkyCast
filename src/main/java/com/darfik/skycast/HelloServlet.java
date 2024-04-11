@@ -1,14 +1,12 @@
-package com.darfik.skycast.controllers;
+package com.darfik.skycast;
 
 import java.io.*;
 import java.net.URISyntaxException;
 
-import com.darfik.skycast.models.WeatherResponse;
-import com.darfik.skycast.services.OpenWeatherAPIService;
-import com.darfik.skycast.services.WeatherOutputService;
-import com.darfik.skycast.services.WeatherProcessingService;
-import com.darfik.skycast.services.parsers.WeatherJsonParser;
-import com.darfik.skycast.services.parsers.WeatherJsonParserFactory;
+import com.darfik.skycast.user.UserDAO;
+import com.darfik.skycast.user.User;
+import com.darfik.skycast.utils.OpenWeatherAPIService;
+import com.darfik.skycast.weather.WeatherProcessingService;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
@@ -34,8 +32,6 @@ public class HelloServlet extends HttpServlet {
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
     public void destroy() {
