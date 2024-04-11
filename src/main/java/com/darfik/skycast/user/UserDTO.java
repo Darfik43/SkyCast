@@ -1,7 +1,9 @@
 package com.darfik.skycast.user;
 
-
-public record UserDTO(
-        String login
+import lombok.Getter;
+import lombok.Setter;
+public record UserDTO (
+        String username
 ){
+
 }

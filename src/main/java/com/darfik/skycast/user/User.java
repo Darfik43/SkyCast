@@ -3,12 +3,23 @@ package com.darfik.skycast.user;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
 @Entity
+@NoArgsConstructor
 @Table(name = "users")
 public class User {
+
+    public User(String username) {
+        this.username = username;
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,11 +27,12 @@ public class User {
     private int id;
 
 
-    @Column(name = "login")
+    @Column(name = "username")
     @Getter
     @Setter
-    private String login;
+    private String username;
 
+    @Getter
     @Setter
     @Column(name = "password")
     private String password;

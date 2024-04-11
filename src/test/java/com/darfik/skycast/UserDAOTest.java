@@ -21,7 +21,7 @@ public class UserDAOTest {
     @Test
     void save() {
         User newUser = new User();
-        newUser.setLogin("Test");
+        newUser.setUsername("Test");
         newUser.setPassword("Test");
         userDAO.save(newUser);
 
