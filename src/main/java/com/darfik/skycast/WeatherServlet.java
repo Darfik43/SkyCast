@@ -17,12 +17,12 @@ public class WeatherServlet extends HttpServlet {
         responseProcessingService = new ResponseProcessingService();
     }
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        resp.setContentType("text/html");
         String json = null;
         try {
             json = OpenWeatherAPIService.getTemperatureByName("London");
-            response.getWriter().print(responseProcessingService.processJson(json, jsonType));
+            resp.getWriter().print(responseProcessingService.processJson(json, jsonType));
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } catch (URISyntaxException e) {
