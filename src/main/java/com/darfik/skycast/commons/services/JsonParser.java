@@ -1,8 +1,8 @@
 package com.darfik.skycast.commons.services;
 
 
-import com.darfik.skycast.commons.models.Response;
+import com.darfik.skycast.commons.models.ResponseJson;
 
-public interface JsonParser {
-    Response parse(String json);
+public interface JsonParser<T extends ResponseJson> {
+    T parse(String json);
 }
