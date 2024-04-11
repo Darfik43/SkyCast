@@ -1,5 +1,6 @@
-package com.darfik.skycast;
+package com.darfik.skycast.location;
 
+import com.darfik.skycast.ResponseProcessingService;
 import com.darfik.skycast.utils.OpenWeatherAPIService;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
