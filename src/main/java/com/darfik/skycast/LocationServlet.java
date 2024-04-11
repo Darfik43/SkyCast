@@ -1,0 +1,33 @@
+package com.darfik.skycast;
+
+import com.darfik.skycast.utils.OpenWeatherAPIService;
+import com.darfik.skycast.weather.WeatherJsonProcessor;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+
+@WebServlet(value = "/location-servlet")
+public class LocationServlet extends HttpServlet {
+    private ResponseProcessingService responseProcessingService;
+    private final String jsonType = "location";
+
+    public void init() {
+        responseProcessingService = new ResponseProcessingService();
+    }
+
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String json = null;
+        try {
+            json = OpenWeatherAPIService.getLocationByName("London");
+            response.getWriter().print(responseProcessingService.processJson(json, jsonType));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
