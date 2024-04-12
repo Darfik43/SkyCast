@@ -6,6 +6,8 @@ import com.darfik.skycast.usersession.UserSessionServiceFactory;
 import com.darfik.skycast.usersession.UserSessionServiceFactoryImp;
 import com.darfik.skycast.utils.PasswordEncryptor;
 
+import java.util.Optional;
+
 public class UserService {
     private static UserService userService;
     private final UserDAO userDAO = UserDAO.getInstance();
@@ -13,7 +15,7 @@ public class UserService {
     private final PasswordEncryptor passwordEncryptor = new PasswordEncryptor();
 
 
-    public void registerUser(UserRegistrationDTO userDTO, UserSessionDTO userSessionDTO) {
+    public void registerUser(UserWithPasswordDTO userDTO, UserSessionDTO userSessionDTO) {
         String hashedPassword = passwordEncryptor.encryptPassword(userDTO.password());
         UserSessionService userSessionService = userSessionServiceFactory.build();
 
@@ -23,6 +25,12 @@ public class UserService {
         userDAO.save(newUser);
 
         userSessionService.createAndSaveUserSession(newUser, userSessionDTO);
+    }
+
+    public boolean authenticateUser(UserWithPasswordDTO userWithPasswordDTO, UserSessionDTO userSessionDTO) {
+        return userDAO.getByName(userWithPasswordDTO.username())
+                .map(user -> passwordEncryptor.verifyPassword(userWithPasswordDTO.password(), user.getPassword()))
+                .orElse(false);
     }
 
     public static UserService getInstance() {
