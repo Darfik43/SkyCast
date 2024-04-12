@@ -1,8 +1,6 @@
 package com.darfik.skycast.user;
 
-import com.darfik.skycast.usersession.UserSessionService;
-import com.darfik.skycast.usersession.UserSessionServiceFactory;
-import com.darfik.skycast.usersession.UserSessionServiceFactoryImp;
+import com.darfik.skycast.usersession.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -23,13 +21,13 @@ public class UserRegistrationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserService userService = UserService.getInstance();
-        HttpSession session = req.getSession(true);
+        UserSessionDTO userSessionDTO = new UserSessionDTO(req.getSession().getId());
 
         String password = req.getParameter("password");
         String username = req.getParameter("username");
 
         UserRegistrationDTO userRegistrationDTO = new UserRegistrationDTO(username, password);
-        userService.registerUser(userRegistrationDTO, session);
+        userService.registerUser(userRegistrationDTO, userSessionDTO);
 
 
         resp.getWriter().print("You've created your account");

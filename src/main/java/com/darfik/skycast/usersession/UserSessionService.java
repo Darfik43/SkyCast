@@ -1,25 +1,19 @@
 package com.darfik.skycast.usersession;
 
 import com.darfik.skycast.user.User;
-import com.darfik.skycast.user.UserRegistrationDTO;
-import jakarta.servlet.http.HttpSession;
-
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 public class UserSessionService {
-    private static UserSessionService userSessionService;
     private final UserSessionDAO userSessionDAO = UserSessionDAO.getInstance();
 
-    public void createAndSaveUserSession(User user, HttpSession session) {
-        UserSession userSession = new UserSession();
+    public void createAndSaveUserSession(User user, UserSessionDTO userSessionDTO) {
+        UserSession userSession = UserSessionMapper.toModel(userSessionDTO);
 
-        userSession.setId(session.getId());
+        userSession.setId(userSession.getId());
         userSession.setUser(user);
         userSession.setExpiresAt(LocalDateTime.now().plusHours(1));
 
         userSessionDAO.save(userSession);
-
     }
 
     public void deleteExpiredSessions() {
