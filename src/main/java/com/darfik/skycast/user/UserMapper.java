@@ -5,7 +5,7 @@ public class UserMapper {
         return new UserDTO(user.getUsername());
     }
 
-    public static User toModel(UserRegistrationDTO userDTO) {
+    public static User toModel(UserWithPasswordDTO userDTO) {
         return new User(userDTO.username(), userDTO.password());
     }
 }

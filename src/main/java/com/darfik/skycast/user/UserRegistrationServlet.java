@@ -24,13 +24,8 @@ public class UserRegistrationServlet extends HttpServlet {
         String password = req.getParameter("password");
         String username = req.getParameter("username");
 
-        UserRegistrationDTO userRegistrationDTO = new UserRegistrationDTO(username, password);
-        userService.registerUser(userRegistrationDTO, userSessionDTO);
-
-        Cookie sessionCookie = new Cookie("sessionId", sessionId);
-        sessionCookie.setMaxAge(-1);
-        sessionCookie.setPath("/");
-        resp.addCookie(sessionCookie);
+        UserWithPasswordDTO userWithPasswordDTO = new UserWithPasswordDTO(username, password);
+        userService.registerUser(userWithPasswordDTO, userSessionDTO);
 
         resp.getWriter().print("You've created your account");
     }
