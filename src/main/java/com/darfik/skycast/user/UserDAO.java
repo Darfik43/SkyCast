@@ -47,14 +47,17 @@ public class UserDAO implements DAO<User> {
     public Optional<User> getByName(String username) {
         User user = null;
         try (Session session = HibernateUtil.getSession()) {
-            user = session.get(User.class, username);
+            String hql = "FROM User WHERE username = :username";
+            user = session.createQuery(hql, User.class)
+                    .setParameter("username", username)
+                    .uniqueResult();
         } catch (HibernateException e) {
             //TODO
         }
         return Optional.ofNullable(user);
     }
 
-    @Override
+        @Override
     public List<User> getAll() {
         List<User> users = null;
         try (Session session = HibernateUtil.getSession()) {
