@@ -9,6 +9,8 @@ import lombok.Setter;
 
 @Entity
 @NoArgsConstructor
+@Getter
+@Setter
 @Table(name = "users")
 public class User {
 
@@ -28,13 +30,9 @@ public class User {
 
 
     @Column(name = "username")
-    @Getter
-    @Setter
     private String username;
 
 
-    @Getter
-    @Setter
     @Column(name = "password")
     private String password;
 
