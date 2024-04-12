@@ -7,14 +7,14 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 @WebListener
-public class TaskScheduleListener implements ServletContextListener {
+public class SessionExpirationListener implements ServletContextListener {
+    private final UserSessionServiceFactory userSessionServiceFactory = new UserSessionServiceFactoryImp();
+    private final UserSessionService userSessionService = userSessionServiceFactory.build();
     private ScheduledExecutorService scheduler;
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         scheduler = Executors.newSingleThreadScheduledExecutor();
-
-        UserSessionService userSessionService = UserSessionService.getInstance();
 
         scheduler.scheduleAtFixedRate(
                 userSessionService::deleteExpiredSessions, 0, 1, TimeUnit.MINUTES

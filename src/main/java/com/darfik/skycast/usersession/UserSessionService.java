@@ -25,11 +25,4 @@ public class UserSessionService {
     public void deleteExpiredSessions() {
         userSessionDAO.deleteExpiredSessions();
     }
-
-    public static UserSessionService getInstance() {
-        if (userSessionService == null) {
-            userSessionService = new UserSessionService();
-        }
-        return userSessionService;
-    }
 }
