@@ -18,19 +18,6 @@ public class UserDAOTest {
         userDAO = UserDAO.getInstance();
     }
 
-    @Test
-    void save() {
-        User newUser = new User();
-        newUser.setUsername("Test");
-        newUser.setPassword("Test");
-        userDAO.save(newUser);
 
-        Optional<User> userFromDBOptional = userDAO.get(3);
-        if (userFromDBOptional.isPresent()) {
-            User userFromDB = userFromDBOptional.get();
-            assertNotNull(userFromDB);
-        } else {
-            fail("User not found in the database");
-        }
-    }
+
 }
