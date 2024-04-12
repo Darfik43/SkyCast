@@ -22,8 +22,8 @@ public class UserSessionService {
 
     }
 
-    private String generateGUID() {
-        return UUID.randomUUID().toString();
+    public void deleteExpiredSessions() {
+        userSessionDAO.deleteExpiredSessions();
     }
 
     public static UserSessionService getInstance() {

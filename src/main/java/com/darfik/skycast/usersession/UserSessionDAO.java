@@ -6,6 +6,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -64,6 +65,17 @@ public class UserSessionDAO implements DAO<UserSession> {
         } catch (HibernateException e) {
             //TODO
         }
+    }
 
+    public void deleteExpiredSessions() {
+        try (Session session = HibernateUtil.getSession()) {
+            Transaction tx = session.beginTransaction();
+            session.createQuery("DELETE FROM UserSession WHERE expiresAt < :currentTime")
+                    .setParameter("currentTime", LocalDateTime.now())
+                    .executeUpdate();
+            tx.commit();
+        } catch (HibernateException e) {
+            //TODO
+        }
     }
 }
