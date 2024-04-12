@@ -21,12 +21,14 @@ public class UserRegistrationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserService userService = UserService.getInstance();
+        HttpSession session = req.getSession(true);
 
         String password = req.getParameter("password");
         String username = req.getParameter("username");
 
         UserRegistrationDTO userRegistrationDTO = new UserRegistrationDTO(username, password);
-        userService.registerUser(userRegistrationDTO);
+        userService.registerUser(userRegistrationDTO, session);
+
 
         resp.getWriter().print("You've created your account");
     }

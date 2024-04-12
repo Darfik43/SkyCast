@@ -2,6 +2,7 @@ package com.darfik.skycast.user;
 
 import com.darfik.skycast.usersession.UserSessionService;
 import com.darfik.skycast.utils.PasswordEncryptor;
+import jakarta.servlet.http.HttpSession;
 
 public class UserService {
     private static UserService userService;
@@ -10,7 +11,7 @@ public class UserService {
     private final PasswordEncryptor passwordEncryptor = new PasswordEncryptor();
 
 
-    public void registerUser(UserRegistrationDTO userDTO) {
+    public void registerUser(UserRegistrationDTO userDTO, HttpSession session) {
         String hashedPassword = passwordEncryptor.encryptPassword(userDTO.password());
 
         User newUser = UserMapper.toModel(userDTO);
@@ -18,7 +19,7 @@ public class UserService {
 
         userDAO.save(newUser);
 
-        userSessionService.createAndSaveUserSession(newUser);
+        userSessionService.createAndSaveUserSession(newUser, session);
     }
 
     public static UserService getInstance() {
