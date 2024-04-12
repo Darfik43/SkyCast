@@ -44,6 +44,16 @@ public class UserDAO implements DAO<User> {
         return Optional.ofNullable(user);
     }
 
+    public Optional<User> getByName(String username) {
+        User user = null;
+        try (Session session = HibernateUtil.getSession()) {
+            user = session.get(User.class, username);
+        } catch (HibernateException e) {
+            //TODO
+        }
+        return Optional.ofNullable(user);
+    }
+
     @Override
     public List<User> getAll() {
         List<User> users = null;
