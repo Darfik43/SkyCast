@@ -9,7 +9,7 @@ public class UserSessionService {
     public void createAndSaveUserSession(User user, UserSessionDTO userSessionDTO) {
         UserSession userSession = UserSessionMapper.toModel(userSessionDTO);
 
-        userSession.setId(userSession.getId());
+        userSession.setId(userSessionDTO.id());
         userSession.setUser(user);
         userSession.setExpiresAt(LocalDateTime.now().plusHours(1));
 
