@@ -9,7 +9,6 @@ import com.darfik.skycast.utils.PasswordEncryptor;
 import java.util.Optional;
 
 public class UserService {
-    private static UserService userService;
     private final UserDAO userDAO = UserDAO.getInstance();
     private final UserSessionServiceFactory userSessionServiceFactory = new UserSessionServiceFactoryImp();
     private final PasswordEncryptor passwordEncryptor = new PasswordEncryptor();
@@ -31,12 +30,5 @@ public class UserService {
         return userDAO.getByName(userWithPasswordDTO.username())
                 .map(user -> passwordEncryptor.verifyPassword(userWithPasswordDTO.password(), user.getPassword()))
                 .orElse(false);
-    }
-
-    public static UserService getInstance() {
-        if (userService == null) {
-            userService = new UserService();
-        }
-        return userService;
     }
 }
