@@ -5,7 +5,7 @@ import com.darfik.skycast.commons.services.JsonParser;
 import com.darfik.skycast.commons.services.JsonProcessor;
 
 public class LocationJsonProcessor implements JsonProcessor {
-    private final JsonParser<LocationJson> parser = JsonParserFactory.build("location");
+    private final JsonParser<?> parser = JsonParserFactory.build("location");
 
     private String formatToOutput(LocationJson locationJson) {
         return "You are currently in "
@@ -17,7 +17,7 @@ public class LocationJsonProcessor implements JsonProcessor {
 
     @Override
     public String processJson(String json) {
-        LocationJson responseJson = parser.parse(json);
+        LocationJson responseJson = (LocationJson) parser.parse(json);
 
         return formatToOutput(responseJson);
     }

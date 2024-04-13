@@ -6,7 +6,7 @@ import com.darfik.skycast.commons.services.JsonProcessor;
 
 public class WeatherJsonProcessor implements JsonProcessor {
 
-    private final JsonParser<WeatherJson> parser = JsonParserFactory.build("weather");
+    private final JsonParser<?> parser = JsonParserFactory.build("weather");
 
 
     private String formatToOutput(WeatherJson weatherJson) {
@@ -23,7 +23,7 @@ public class WeatherJsonProcessor implements JsonProcessor {
 
 
     public String processJson(String json) {
-        WeatherJson responseJson = parser.parse(json);
+        WeatherJson responseJson = (WeatherJson) parser.parse(json);
 
         return formatToOutput(responseJson);
     }
