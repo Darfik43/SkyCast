@@ -34,10 +34,9 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            String userId = userService.authorizeUser(
+            userService.authorizeUser(
                     new UserDTO(req.getParameter("username"), req.getParameter("password")),
                     new UserSessionDTO(req.getSession().getId()));
-            resp.addCookie(new Cookie("userId", userId));
             resp.getWriter().print("You've logged in");
         } catch (NoSuchObjectException e) {
             resp.getWriter().print("Incorrect username or password");

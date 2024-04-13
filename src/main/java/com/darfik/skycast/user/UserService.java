@@ -24,11 +24,10 @@ public class UserService {
         userDAO.save(user);
     }
 
-    public String authorizeUser(UserDTO userDTO, UserSessionDTO userSessionDTO) {
+    public void authorizeUser(UserDTO userDTO, UserSessionDTO userSessionDTO) {
         if (userExistsAndPasswordCorrect(userDTO)) {
             User user = userDAO.getByName(userDTO.getUsername()).get();
             userSessionService.createAndSaveUserSession(user, userSessionDTO);
-            return user.getId().toString();
         } else {
             throw new NoSuchElementException();
         }
