@@ -1,6 +1,25 @@
 package com.darfik.skycast.user;
-public record UserDTO (
-        String username
-){
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class UserDTO {
+    private Long id;
+    private String username;
+    private String password;
+
+    public UserDTO(String username) {
+        this.username = username;
+    }
+
+    public UserDTO(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public UserDTO(Long id) {
+        this.id = id;
+    }
 }
