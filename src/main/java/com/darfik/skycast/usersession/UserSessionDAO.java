@@ -78,4 +78,16 @@ public class UserSessionDAO implements DAO<UserSession> {
             //TODO
         }
     }
+
+    public void delete(String id) {
+        try (Session session = HibernateUtil.getSession()) {
+            Transaction tx = session.beginTransaction();
+            session.createQuery("DELETE FROM UserSession WHERE id = :id")
+                    .setParameter("id", id)
+                    .executeUpdate();
+            tx.commit();
+        } catch (HibernateException e) {
+            //TODO
+        }
+    }
 }
