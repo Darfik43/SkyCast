@@ -6,6 +6,7 @@ import com.darfik.skycast.utils.PasswordEncryptor;
 import java.util.NoSuchElementException;
 
 public class UserService {
+    private User user;
     private final UserDAO userDAO;
     private final UserSessionService userSessionService;
     private final PasswordEncryptor passwordEncryptor;
@@ -19,13 +20,15 @@ public class UserService {
 
 
     public void registerUser(UserDTO userDTO) {
-        User user = UserMapper.toModel(userDTO);
-        user.setPassword(passwordEncryptor.encryptPassword(userDTO.getPassword()));
-        userDAO.save(user);
+        if (!userExists(userDTO.getUsername())) {
+            User user = UserMapper.toModel(userDTO);
+            user.setPassword(passwordEncryptor.encryptPassword(userDTO.getPassword()));
+            userDAO.save(user);
+        }
     }
 
     public void authorizeUser(UserDTO userDTO, UserSessionDTO userSessionDTO) {
-        if (userExistsAndPasswordCorrect(userDTO)) {
+        if (userExists(userDTO.getUsername()) && isPasswordCorrect(userDTO)) {
             User user = userDAO.getByName(userDTO.getUsername()).get();
             userSessionService.createAndSaveUserSession(user, userSessionDTO);
         } else {
@@ -33,10 +36,13 @@ public class UserService {
         }
     }
 
-    private boolean userExistsAndPasswordCorrect(UserDTO userDTO) {
+    private boolean isPasswordCorrect(UserDTO userDTO) {
         return userDAO.getByName(userDTO.getUsername())
-                .filter(user -> passwordEncryptor.verifyPassword(userDTO.getPassword(), user.getPassword()))
-                .isPresent();
+                .map(user -> passwordEncryptor.verifyPassword(userDTO.getPassword(), user.getPassword())).orElse(false);
+    }
+
+    private boolean userExists(String username) {
+        return userDAO.getByName(username).isPresent();
     }
 
     public void logout(UserSessionDTO userSessionDTO) {
