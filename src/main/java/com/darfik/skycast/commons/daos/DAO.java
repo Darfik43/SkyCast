@@ -6,7 +6,7 @@ import java.util.Optional;
 public interface DAO<T> {
 
     void save(T t);
-    Optional<T> get(int id);
+    Optional<T> find(String usernameOrId);
 
     List<T> getAll();
 

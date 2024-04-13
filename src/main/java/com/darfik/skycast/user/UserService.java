@@ -29,7 +29,7 @@ public class UserService {
 
     public void authorizeUser(UserDTO userDTO, UserSessionDTO userSessionDTO) {
         if (userExists(userDTO.getUsername()) && isPasswordCorrect(userDTO)) {
-            User user = userDAO.getByName(userDTO.getUsername()).get();
+            User user = userDAO.find(userDTO.getUsername()).get();
             userSessionService.createAndSaveUserSession(user, userSessionDTO);
         } else {
             throw new NoSuchElementException();
@@ -37,12 +37,12 @@ public class UserService {
     }
 
     private boolean isPasswordCorrect(UserDTO userDTO) {
-        return userDAO.getByName(userDTO.getUsername())
+        return userDAO.find(userDTO.getUsername())
                 .map(user -> passwordEncryptor.verifyPassword(userDTO.getPassword(), user.getPassword())).orElse(false);
     }
 
     private boolean userExists(String username) {
-        return userDAO.getByName(username).isPresent();
+        return userDAO.find(username).isPresent();
     }
 
     public void logout(UserSessionDTO userSessionDTO) {

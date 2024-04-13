@@ -2,6 +2,7 @@ package com.darfik.skycast.user;
 
 import com.darfik.skycast.commons.daos.DAO;
 import com.darfik.skycast.utils.HibernateUtil;
+import lombok.extern.log4j.Log4j2;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -9,7 +10,7 @@ import org.hibernate.Transaction;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-
+@Log4j2
 public class UserDAO implements DAO<User> {
 
     private static UserDAO userDAO;
@@ -29,22 +30,11 @@ public class UserDAO implements DAO<User> {
             session.persist(user);
             tx.commit();
         } catch (HibernateException e) {
-            //TODO
+            log.error("Couldn't save user, try again");
         }
     }
 
-    @Override
-    public Optional<User> get(int id) {
-        User user = null;
-        try (Session session = HibernateUtil.getSession()) {
-            user = session.get(User.class, id);
-        } catch (HibernateException e) {
-            //TODO
-        }
-        return Optional.ofNullable(user);
-    }
-
-    public Optional<User> getByName(String username) {
+    public Optional<User> find(String username) {
         User user = null;
         try (Session session = HibernateUtil.getSession()) {
             String hql = "FROM User WHERE username = :username";
@@ -52,7 +42,7 @@ public class UserDAO implements DAO<User> {
                     .setParameter("username", username)
                     .uniqueResult();
         } catch (HibernateException e) {
-            //TODO
+            log.error("Couldn't find user");
         }
         return Optional.ofNullable(user);
     }
@@ -63,7 +53,7 @@ public class UserDAO implements DAO<User> {
         try (Session session = HibernateUtil.getSession()) {
             users = session.createQuery("FROM User", User.class).getResultList();
         } catch (HibernateException e) {
-            //TODO
+            log.error("Couldn't get the a list of location");
         }
         return users;
     }
@@ -76,7 +66,7 @@ public class UserDAO implements DAO<User> {
             session.merge(user);
             tx.commit();
         } catch (HibernateException e) {
-            //TODO
+            log.error("Couldn't update the location");
         }
 
     }

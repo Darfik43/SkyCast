@@ -2,6 +2,7 @@ package com.darfik.skycast.usersession;
 
 import com.darfik.skycast.commons.daos.DAO;
 import com.darfik.skycast.utils.HibernateUtil;
+import lombok.extern.log4j.Log4j2;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+@Log4j2
 public class UserSessionDAO implements DAO<UserSession> {
 
     private static UserSessionDAO userSessionDAO;
@@ -29,17 +31,17 @@ public class UserSessionDAO implements DAO<UserSession> {
             session.persist(userSession);
             tx.commit();
         } catch (HibernateException e) {
-            //TODO
+            log.error("Couldn't save session, try again");
         }
     }
 
     @Override
-    public Optional<UserSession> get(int id) {
+    public Optional<UserSession> find(String id) {
         UserSession userSession = null;
         try (Session session = HibernateUtil.getSession()) {
             userSession = session.get(UserSession.class, id);
         } catch (HibernateException e) {
-            //TODO
+            log.error("Couldn't find the session");
         }
         return Optional.ofNullable(userSession);
     }
@@ -50,7 +52,7 @@ public class UserSessionDAO implements DAO<UserSession> {
         try (Session session = HibernateUtil.getSession()) {
             userSessions = session.createQuery("FROM UserSession ", UserSession.class).getResultList();
         } catch (HibernateException e) {
-            //TODO
+            log.error("Couldn't get a list of sessions");
         }
         return userSessions;
     }
@@ -63,7 +65,7 @@ public class UserSessionDAO implements DAO<UserSession> {
             session.merge(userSession);
             tx.commit();
         } catch (HibernateException e) {
-            //TODO
+            log.error("Couldn't update the location");
         }
     }
 
@@ -75,7 +77,7 @@ public class UserSessionDAO implements DAO<UserSession> {
                     .executeUpdate();
             tx.commit();
         } catch (HibernateException e) {
-            //TODO
+            log.error("Couldn't delete expired sessions");
         }
     }
 
@@ -87,7 +89,7 @@ public class UserSessionDAO implements DAO<UserSession> {
                     .executeUpdate();
             tx.commit();
         } catch (HibernateException e) {
-            //TODO
+            log.error("Couldn't delete the session");
         }
     }
 }
