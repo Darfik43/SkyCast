@@ -12,13 +12,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.rmi.NoSuchObjectException;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
     private final UserServiceFactory userServiceFactory = new UserServiceFactoryImp();
     private final UserService userService = userServiceFactory.build();
-    private final UserSessionServiceFactory userSessionServiceFactory = new UserSessionServiceFactoryImp();
-    private final UserSessionService userSessionService = userSessionServiceFactory.build();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -34,18 +33,14 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
-        UserWithPasswordDTO userWithPasswordDTO = new UserWithPasswordDTO(username, password);
-        UserSessionDTO userSessionDTO = new UserSessionDTO(req.getSession().getId());
-
-        userService.authenticateUser(userWithPasswordDTO, userSessionDTO);
-
-        String newUserId = String.valueOf(userService.getNewUserId());
-        Cookie userIdCookie = new Cookie("userId", newUserId);
-        resp.addCookie(userIdCookie);
-
-        resp.getWriter().print("You've logged in");
-
+        try {
+            String userId = userService.authorizeUser(
+                    new UserDTO(req.getParameter("username"), req.getParameter("password")),
+                    new UserSessionDTO(req.getSession().getId()));
+            resp.addCookie(new Cookie("userId", userId));
+            resp.getWriter().print("You've logged in");
+        } catch (NoSuchObjectException e) {
+            resp.getWriter().print("Incorrect username or password");
+        }
     }
 }
