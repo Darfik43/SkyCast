@@ -70,7 +70,7 @@ public class UserSessionDAO implements DAO<UserSession> {
     public void deleteExpiredSessions() {
         try (Session session = HibernateUtil.getSession()) {
             Transaction tx = session.beginTransaction();
-            session.createQuery("DELETE FROM UserSession WHERE expiresAt < :currentTime")
+            session.createMutationQuery("DELETE FROM UserSession WHERE expiresAt < :currentTime")
                     .setParameter("currentTime", LocalDateTime.now())
                     .executeUpdate();
             tx.commit();
@@ -82,7 +82,7 @@ public class UserSessionDAO implements DAO<UserSession> {
     public void delete(String id) {
         try (Session session = HibernateUtil.getSession()) {
             Transaction tx = session.beginTransaction();
-            session.createQuery("DELETE FROM UserSession WHERE id = :id")
+            session.createMutationQuery("DELETE FROM UserSession WHERE id = :id")
                     .setParameter("id", id)
                     .executeUpdate();
             tx.commit();

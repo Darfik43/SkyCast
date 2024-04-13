@@ -13,16 +13,16 @@ import java.net.URISyntaxException;
 @WebServlet(value = "/location-servlet")
 public class LocationServlet extends HttpServlet {
     private ResponseProcessingService responseProcessingService;
-    private final String jsonType = "location";
 
     public void init() {
         responseProcessingService = new ResponseProcessingService();
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String json = null;
+        String json;
         try {
             json = OpenWeatherAPIService.getLocationByName("London");
+            String jsonType = "location";
             response.getWriter().print(responseProcessingService.processJson(json, jsonType));
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

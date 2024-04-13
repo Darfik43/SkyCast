@@ -5,8 +5,7 @@ import org.mindrot.jbcrypt.BCrypt;
 public class PasswordEncryptor {
 
     public String encryptPassword(String password) {
-        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-        return hashedPassword;
+        return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
     public boolean verifyPassword(String password, String hashedPassword) {

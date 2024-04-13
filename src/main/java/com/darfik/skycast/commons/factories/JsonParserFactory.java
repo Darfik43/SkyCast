@@ -4,7 +4,7 @@ import com.darfik.skycast.location.LocationJsonParser;
 import com.darfik.skycast.weather.WeatherJsonParser;
 
 public class JsonParserFactory {
-    public static JsonParser build(String type) {
+    public static JsonParser<?> build(String type) {
         return switch (type) {
             case "weather" -> new WeatherJsonParser();
             case "location" -> new LocationJsonParser();

@@ -10,8 +10,7 @@ public class LocationJsonParser implements JsonParser<LocationJson> {
     @Override
     public LocationJson parse(String json) {
         try {
-            LocationJson result = jsonMapper.readValue(json, LocationJson[].class)[0];
-            return result;
+            return jsonMapper.readValue(json, LocationJson[].class)[0];
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Error parsing location JSON", e);
         }

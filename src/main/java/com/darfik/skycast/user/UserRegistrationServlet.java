@@ -9,7 +9,7 @@ import java.io.IOException;
 
 @WebServlet("/register")
 public class UserRegistrationServlet extends HttpServlet {
-    UserServiceFactory userServiceFactory = new UserServiceFactoryImp();
+    private final UserServiceFactory userServiceFactory = new UserServiceFactoryImp();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -11,7 +11,6 @@ import jakarta.servlet.annotation.*;
 public class WeatherServlet extends HttpServlet {
 
     private ResponseProcessingService responseProcessingService;
-    private final String jsonType = "weather";
 
     public void init() {
         responseProcessingService = new ResponseProcessingService();
@@ -19,9 +18,10 @@ public class WeatherServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("text/html");
-        String json = null;
+        String json;
         try {
             json = OpenWeatherAPIService.getTemperatureByName("London");
+            String jsonType = "weather";
             resp.getWriter().print(responseProcessingService.processJson(json, jsonType));
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

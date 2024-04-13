@@ -15,10 +15,10 @@ import java.io.IOException;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
-    UserServiceFactory userServiceFactory = new UserServiceFactoryImp();
-    UserService userService = userServiceFactory.build();
-    UserSessionServiceFactory userSessionServiceFactory = new UserSessionServiceFactoryImp();
-    UserSessionService userSessionService = userSessionServiceFactory.build();
+    private final UserServiceFactory userServiceFactory = new UserServiceFactoryImp();
+    private final UserService userService = userServiceFactory.build();
+    private final UserSessionServiceFactory userSessionServiceFactory = new UserSessionServiceFactoryImp();
+    private final UserSessionService userSessionService = userSessionServiceFactory.build();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

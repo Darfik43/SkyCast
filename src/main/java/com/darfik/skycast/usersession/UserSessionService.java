@@ -16,6 +16,10 @@ public class UserSessionService {
         userSessionDAO.save(userSession);
     }
 
+    public void logout(UserSessionDTO userSessionDTO) {
+        userSessionDAO.delete(userSessionDTO.id());
+    }
+
     public void deleteExpiredSessions() {
         userSessionDAO.deleteExpiredSessions();
     }

@@ -9,8 +9,7 @@ public class WeatherJsonParser implements JsonParser<WeatherJson> {
     @Override
     public WeatherJson parse(String json) {
         try {
-            WeatherJson result = jsonMapper.readValue(json, WeatherJson.class);
-            return result;
+            return jsonMapper.readValue(json, WeatherJson.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Error parsing weather JSON", e);
         }
