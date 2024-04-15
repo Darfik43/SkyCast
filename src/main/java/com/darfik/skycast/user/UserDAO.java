@@ -34,6 +34,19 @@ public class UserDAO implements DAO<User> {
         }
     }
 
+    public Optional<User> findById(Long id) {
+        User user = null;
+        try (Session session = HibernateUtil.getSession()) {
+            String hql = "FROM User WHERE username = :username";
+            user = session.createQuery(hql, User.class)
+                    .setParameter("id", id)
+                    .uniqueResult();
+        } catch (HibernateException e) {
+            log.error("Couldn't find user");
+        }
+        return Optional.ofNullable(user);
+    }
+
     public Optional<User> find(String username) {
         User user = null;
         try (Session session = HibernateUtil.getSession()) {
