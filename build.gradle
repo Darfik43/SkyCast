@@ -26,6 +26,9 @@ dependencies {
     compileOnly('jakarta.servlet:jakarta.servlet-api:5.0.0')
     compileOnly 'org.projectlombok:lombok:1.18.30'
 
+    implementation 'org.thymeleaf:thymeleaf:3.1.2.RELEASE'
+    implementation 'org.webjars:bootstrap:5.3.3'
+
     implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.3'
     implementation 'com.mysql:mysql-connector-j:8.3.0'
 
