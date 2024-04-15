@@ -21,14 +21,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Cookie[] cookies = req.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("userId")) {
-
-                }
-            }
-        }
+        req.getRequestDispatcher("login.jsp").forward(req, resp);
     }
 
     @Override
