@@ -2,12 +2,17 @@ package com.darfik.skycast.location;
 
 import com.darfik.skycast.user.User;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "locations")
+@NoArgsConstructor
 public class Location {
 
     @Id
@@ -16,11 +21,14 @@ public class Location {
     private Long id;
 
     @Setter
+    @Getter
     @Column(name = "name")
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "userid")
+    @Getter
+    @Setter
     private User user;
 
 
@@ -30,4 +38,10 @@ public class Location {
 
     @Column(name = "longitude")
     private BigDecimal longitude;
+
+    public Location(String name, BigDecimal latitude, BigDecimal longitude) {
+        this.name = name;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
 }
