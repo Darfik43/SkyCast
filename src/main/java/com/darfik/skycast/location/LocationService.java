@@ -2,7 +2,7 @@ package com.darfik.skycast.location;
 
 import com.darfik.skycast.commons.services.JsonParser;
 import com.darfik.skycast.user.UserDAO;
-import com.darfik.skycast.user.UserDTO;
+import com.darfik.skycast.usersession.UserSessionDTO;
 import com.darfik.skycast.utils.OpenWeatherAPIService;
 import com.darfik.skycast.weather.WeatherJson;
 import com.darfik.skycast.weather.WeatherJsonParser;
@@ -27,19 +27,26 @@ public class LocationService {
         userDAO = UserDAO.getInstance();
     }
 
-    public LocationDTO addLocationForUser(LocationDTO locationDTO, UserDTO userDTO) {
-        Location location;
-        locationDTO = getLocationByName(locationDTO);
-        location = LocationMapper.toModel(locationDTO);
-        location.setUser(userDAO.find(userDTO.getUsername()).get());
-        locationDAO.save(location);
-        return locationDTO;
+    public void addLocationForUser(LocationDTO locationDTO, UserSessionDTO userSessionDTO) {
+        if (!locationExistsForUser(locationDTO, userSessionDTO)) {
+            Location location = LocationMapper.toModel(getLocationByName(locationDTO));
+            location.setUser(userDAO.findById(Long.valueOf(userSessionDTO.id())).get());
+            locationDAO.save(location);
+        } else {
+            throw new IllegalArgumentException("This location is already added");
+        }
+
     }
 
-    public List<LocationDTO> getUserLocations(UserDTO userDTO) {
-        return locationDAO.findLocationsByUser(userDAO.find(userDTO.getUsername()).get())
+    public List<LocationDTO> getUserLocations(UserSessionDTO userSessionDTO) {
+        return locationDAO.findLocationsByUser(userDAO.findById(Long.valueOf(userSessionDTO.id())).get())
                 .stream().map(LocationMapper::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    private boolean locationExistsForUser(LocationDTO locationDTO, UserSessionDTO userSessionDTO) {
+        List<LocationDTO> userLocations = getUserLocations(userSessionDTO);
+        return userLocations.contains(locationDTO);
     }
 
     public LocationDTO getLocationByName(LocationDTO locationDTO) {
