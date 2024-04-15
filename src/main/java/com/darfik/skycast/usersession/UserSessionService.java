@@ -1,7 +1,5 @@
 package com.darfik.skycast.usersession;
 import com.darfik.skycast.user.User;
-import com.darfik.skycast.user.UserDAO;
-import com.darfik.skycast.user.UserDTO;
 
 import java.time.LocalDateTime;
 

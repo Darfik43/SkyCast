@@ -54,11 +54,7 @@ public class LocationService {
             LocationJson parsedJson = locationParser.parse(openWeatherAPIService.getLocationByName(locationDTO.getName()));
             locationDTO.setLatitude(parsedJson.getLatitude());
             locationDTO.setLongitude(parsedJson.getLongitude());
-        } catch (IOException e) {
-            log.error("//TODO");
-        } catch (InterruptedException e) {
-            log.error("//TODO");
-        } catch (URISyntaxException e) {
+        } catch (IOException | URISyntaxException | InterruptedException e) {
             log.error("//TODO");
         }
         return locationDTO;
@@ -69,11 +65,7 @@ public class LocationService {
             WeatherJson parsedWeatherJson = weatherParser.parse(openWeatherAPIService.getWeatherByCoordinates(locationDTO));
             locationDTO.setTemperature(parsedWeatherJson.getMainWeatherData().getTemp());
             return locationDTO;
-        } catch (IOException e) {
-            log.error("//TODO");
-        } catch (InterruptedException e) {
-            log.error("//TODO");
-        } catch (URISyntaxException e) {
+        } catch (IOException | InterruptedException | URISyntaxException e) {
             log.error("//TODO");
         }
         return null;

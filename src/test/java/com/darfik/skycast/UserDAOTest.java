@@ -5,13 +5,4 @@ import org.junit.jupiter.api.BeforeEach;
 
 public class UserDAOTest {
 
-    //TODO
-    private UserDAO userDAO;
-
-    @BeforeEach
-    void setUp() {
-        userDAO = UserDAO.getInstance();
-    }
-
-
 }

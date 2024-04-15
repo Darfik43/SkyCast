@@ -8,7 +8,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 @Log4j2
 public class UserDAO implements DAO<User> {

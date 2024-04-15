@@ -1,12 +1,8 @@
 package com.darfik.skycast.user;
 
 import com.darfik.skycast.usersession.UserSessionDTO;
-import com.darfik.skycast.usersession.UserSessionService;
-import com.darfik.skycast.usersession.UserSessionServiceFactory;
-import com.darfik.skycast.usersession.UserSessionServiceFactoryImp;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,7 +17,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("login.jsp").forward(req, resp);
+        req.getRequestDispatcher("login.html").forward(req, resp);
     }
 
     @Override
