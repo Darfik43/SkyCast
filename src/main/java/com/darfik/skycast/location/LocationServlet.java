@@ -1,33 +1,35 @@
 package com.darfik.skycast.location;
 
 import com.darfik.skycast.ResponseProcessingService;
-import com.darfik.skycast.utils.OpenWeatherAPIService;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 
 @WebServlet(value = "/location-servlet")
 public class LocationServlet extends HttpServlet {
     private ResponseProcessingService responseProcessingService;
+    private final LocationService locationService;
 
-    public void init() {
-        responseProcessingService = new ResponseProcessingService();
+    public LocationServlet() {
+        locationService = LocationServiceFactory.build();
     }
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String json;
-        try {
-            json = OpenWeatherAPIService.getLocationByName("London");
-            String jsonType = "location";
-            response.getWriter().print(responseProcessingService.processJson(json, jsonType));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        LocationDTO locationDTO = new LocationDTO();
+        locationDTO.setName(req.getParameter("locationName"));
+        locationDTO = locationService.getLocationByName(locationDTO);
+        resp.getWriter().print(locationDTO.getName() + " " + locationDTO.getLatitude() + " " +
+                locationDTO.getLongitude() + " " + locationDTO.getTemperature());
     }
+
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    }
+
+
 }
