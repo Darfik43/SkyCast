@@ -59,8 +59,7 @@ public class UserDAO implements DAO<User> {
     }
 
     @Override
-    public void update(User user, String[] params) {
-        user.setUsername(Objects.requireNonNull(params[0], "Name cannot be null"));
+    public void update(User user) {
         try (Session session = HibernateUtil.getSession()) {
             Transaction tx = session.beginTransaction();
             session.merge(user);

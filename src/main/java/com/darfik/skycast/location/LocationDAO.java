@@ -1,6 +1,7 @@
 package com.darfik.skycast.location;
 
 import com.darfik.skycast.commons.daos.DAO;
+import com.darfik.skycast.user.User;
 import com.darfik.skycast.utils.HibernateUtil;
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.HibernateException;
@@ -8,13 +9,15 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
+
 @Log4j2
 public class LocationDAO implements DAO<Location> {
 
     private static LocationDAO locationDAO;
-    private LocationDAO() {}
+
+    private LocationDAO() {
+    }
 
     public static synchronized LocationDAO getInstance() {
         if (locationDAO == null) {
@@ -22,6 +25,7 @@ public class LocationDAO implements DAO<Location> {
         }
         return locationDAO;
     }
+
     @Override
     public void save(Location location) {
         try (Session session = HibernateUtil.getSession()) {
@@ -37,11 +41,27 @@ public class LocationDAO implements DAO<Location> {
     public Optional<Location> find(String name) {
         Location location = null;
         try (Session session = HibernateUtil.getSession()) {
-            location = session.get(Location.class, name);
+            String hql = "FROM Location WHERE name = :name";
+            location = session.createQuery(hql, Location.class)
+                    .setParameter("name", name)
+                    .uniqueResult();
         } catch (HibernateException e) {
-            log.error("Couldn't find the location");
+            log.error("Couldn't find the location by name");
         }
         return Optional.ofNullable(location);
+    }
+
+    public List<Location> findLocationsByUser(User user) {
+        List<Location> locations = null;
+        try (Session session = HibernateUtil.getSession()) {
+            String hql = "FROM Location WHERE user = :user";
+            locations = session.createQuery(hql, Location.class)
+                    .setParameter("user", user)
+                    .getResultList();
+        } catch (HibernateException e) {
+            log.error("Couldn't find the location by name");
+        }
+        return locations;
     }
 
     @Override
@@ -56,8 +76,7 @@ public class LocationDAO implements DAO<Location> {
     }
 
     @Override
-    public void update(Location location, String[] params) {
-        location.setName(Objects.requireNonNull(params[0], "Name cannot be null"));
+    public void update(Location location) {
         try (Session session = HibernateUtil.getSession()) {
             Transaction tx = session.beginTransaction();
             session.merge(location);
