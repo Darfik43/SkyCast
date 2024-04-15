@@ -11,6 +11,7 @@ import lombok.extern.log4j.Log4j2;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Log4j2
 public class LocationService {
@@ -35,8 +36,10 @@ public class LocationService {
         return locationDTO;
     }
 
-    public List<Location> getUserLocations(UserDTO userDTO) {
-        return locationDAO.findLocationsByUser(userDAO.find(userDTO.getUsername()).get());
+    public List<LocationDTO> getUserLocations(UserDTO userDTO) {
+        return locationDAO.findLocationsByUser(userDAO.find(userDTO.getUsername()).get())
+                .stream().map(LocationMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     public LocationDTO getLocationByName(LocationDTO locationDTO) {
