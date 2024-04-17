@@ -18,10 +18,10 @@ public class LogoutServlet extends HttpServlet {
             UserSessionDTO userSessionDTO = new UserSessionDTO(req.getSession().getId());
             userService.logout(userSessionDTO);
             session.invalidate();
-            Cookie cookie = new Cookie("userId", "");
+            Cookie cookie = new Cookie("sessionID", "");
             cookie.setMaxAge(0);
+            cookie.setPath("/");
             resp.addCookie(cookie);
-
             resp.getWriter().print("You've logged out");
         }
 

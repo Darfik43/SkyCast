@@ -3,6 +3,7 @@ package com.darfik.skycast.user;
 import com.darfik.skycast.usersession.UserSessionDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,6 +28,10 @@ public class LoginServlet extends HttpServlet {
                     new UserDTO(req.getParameter("username"), req.getParameter("password")),
                     new UserSessionDTO(req.getSession().getId()));
             req.getSession().setAttribute("username", req.getParameter("username"));
+            Cookie cookie = new Cookie("sessionID", req.getSession().getId());
+            cookie.setPath("/");
+            cookie.setMaxAge(3600);
+            resp.addCookie(cookie);
             resp.getWriter().print("You've logged in");
         } catch (NoSuchObjectException e) {
             resp.getWriter().print("Incorrect username or password");

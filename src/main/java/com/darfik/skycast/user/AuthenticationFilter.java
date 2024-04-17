@@ -5,9 +5,10 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Objects;
 
 @WebFilter("/*")
 public class AuthenticationFilter implements Filter {
@@ -20,26 +21,21 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
         String requestURI = request.getRequestURI().substring(request.getContextPath().length());
-
-        HttpSession session = request.getSession();
         Cookie[] cookies = request.getCookies();
 
-        if (session == null && cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("JSESSIONID")) {
-                    session = request.getSession();
-                    break;
-                }
-            }
-        }
-        if (("/".equals(requestURI) || "/login".equals(requestURI)) || "/register".equals(requestURI)) {
+        if (("/".equals(requestURI) || "/login".equals(requestURI)) || "/register".equals(requestURI) || "/logout".equals(requestURI)) {
             chain.doFilter(request, response);
+        }
+
+        Cookie sessionCookie = Arrays.stream(cookies)
+                .filter((cookie) -> Objects.equals(cookie.getName(), "sessionID"))
+                .findFirst().orElse(null);
+        if (sessionCookie != null && sessionCookie.getName().equals("sessionID")) {
+            chain.doFilter(req, resp);
         } else {
-            if (session != null && session.getAttribute("username") != null) {
-                chain.doFilter(req, resp);
-            } else {
-                response.sendRedirect(request.getContextPath() + "/login");
-            }
+            response.sendRedirect(request.getContextPath() + "/login");
         }
     }
+
 }
+
