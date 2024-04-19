@@ -27,7 +27,7 @@ public class LocationService {
         userDAO = UserDAO.getInstance();
     }
 
-    public void addLocationForUser(LocationDTO locationDTO, UserSessionDTO userSessionDTO) {
+    public void addLocationForUser(LocationDTO locationDTO, UserSessionDTO userSessionDTO) throws IOException, URISyntaxException, InterruptedException {
         if (!locationExistsForUser(locationDTO, userSessionDTO)) {
             Location location = LocationMapper.toModel(getLocationByName(locationDTO));
             location.setUser(userDAO.findById(Long.valueOf(userSessionDTO.id())).get());
@@ -49,14 +49,14 @@ public class LocationService {
         return userLocations.contains(locationDTO);
     }
 
-    public LocationDTO getLocationByName(LocationDTO locationDTO) {
-        try {
+    public LocationDTO getLocationByName(LocationDTO locationDTO) throws IOException, URISyntaxException, InterruptedException {
+//        try {
             LocationJson parsedJson = locationParser.parse(openWeatherAPIService.getLocationByName(locationDTO.getName()));
             locationDTO.setLatitude(parsedJson.getLatitude());
             locationDTO.setLongitude(parsedJson.getLongitude());
-        } catch (IOException | URISyntaxException | InterruptedException e) {
-            log.error("//TODO");
-        }
+//        } catch (IOException | URISyntaxException | InterruptedException e) {
+//            throw new InterruptedException("Can't connect to OpenWeatherAPI");
+//        }
         return locationDTO;
     }
 
