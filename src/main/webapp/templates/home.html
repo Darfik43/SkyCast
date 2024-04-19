@@ -16,14 +16,14 @@
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
-                <!-- Проверяем наличие и значение sessionID -->
-                <li class="nav-item" th:if="${sessionID != null}">
+
+                <li class="nav-item" th:if="${isLoggedIn == true}">
                     <a class="nav-link" href="#">Logout</a>
                 </li>
-                <li class="nav-item" th:unless="${sessionID != null}">
+                <li class="nav-item" th:unless="${isLoggedIn == true}">
                     <a class="nav-link" href="login.html">Login</a>
                 </li>
-                <li class="nav-item" th:unless="${sessionID != null}">
+                <li class="nav-item" th:unless="${isLoggedIn == true}">
                     <a class="nav-link" href="register.html">Register</a>
                 </li>
             </ul>
