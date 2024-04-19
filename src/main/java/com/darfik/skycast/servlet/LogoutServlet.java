@@ -26,8 +26,7 @@ public class LogoutServlet extends BaseServlet {
             cookie.setPath("/");
             resp.addCookie(cookie);
             resp.getWriter().print("You've logged out");
+            resp.sendRedirect(req.getContextPath() + "/home");
         }
-
-
     }
 }
