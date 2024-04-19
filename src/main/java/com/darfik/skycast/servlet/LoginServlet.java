@@ -22,7 +22,7 @@ public class LoginServlet extends BaseServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/templates/login.html").forward(req, resp);
+        req.getRequestDispatcher("/templates/login.html").forward(req, resp);
     }
 
     @Override
@@ -37,6 +37,7 @@ public class LoginServlet extends BaseServlet {
             cookie.setMaxAge(3600);
             resp.addCookie(cookie);
             resp.getWriter().print("You've logged in");
+            resp.sendRedirect(req.getContextPath() + "/home");
         } catch (NoSuchObjectException e) {
             resp.getWriter().print("Incorrect username or password");
         }
