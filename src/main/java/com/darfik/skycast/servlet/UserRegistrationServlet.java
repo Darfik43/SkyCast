@@ -1,5 +1,9 @@
-package com.darfik.skycast.user;
+package com.darfik.skycast.servlet;
 
+import com.darfik.skycast.user.UserDTO;
+import com.darfik.skycast.user.UserService;
+import com.darfik.skycast.user.UserServiceFactory;
+import com.darfik.skycast.user.UserServiceFactoryImp;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -7,7 +11,7 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 
 @WebServlet("/register")
-public class UserRegistrationServlet extends HttpServlet {
+public class UserRegistrationServlet extends BaseServlet {
     private final UserService userService;
 
     public UserRegistrationServlet() {

@@ -1,17 +1,17 @@
-package com.darfik.skycast.location;
+package com.darfik.skycast.servlet;
 
-import com.darfik.skycast.ResponseProcessingService;
+import com.darfik.skycast.location.LocationDTO;
+import com.darfik.skycast.location.LocationService;
+import com.darfik.skycast.location.LocationServiceFactory;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
 @WebServlet(value = "/location-servlet")
-public class LocationServlet extends HttpServlet {
-    private ResponseProcessingService responseProcessingService;
+public class LocationServlet extends BaseServlet {
     private final LocationService locationService;
 
     public LocationServlet() {
