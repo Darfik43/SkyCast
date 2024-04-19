@@ -3,9 +3,6 @@ package com.darfik.skycast.servlet;
 import com.darfik.skycast.user.UserDTO;
 import com.darfik.skycast.user.UserService;
 import com.darfik.skycast.user.UserServiceFactory;
-import com.darfik.skycast.user.UserServiceFactoryImp;
-import com.darfik.skycast.usersession.UserSessionDTO;
-import com.darfik.skycast.usersession.UserSessionMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -19,8 +16,7 @@ public class UserRegistrationServlet extends BaseServlet {
     private final UserService userService;
 
     public UserRegistrationServlet() {
-        UserServiceFactory userServiceFactory = new UserServiceFactoryImp();
-        userService = userServiceFactory.build();
+        userService = UserServiceFactory.build();
     }
 
     @Override

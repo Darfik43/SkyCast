@@ -3,7 +3,6 @@ package com.darfik.skycast.location;
 import com.darfik.skycast.commons.services.JsonParser;
 import com.darfik.skycast.user.UserDAO;
 import com.darfik.skycast.usersession.UserSessionDTO;
-import com.darfik.skycast.utils.OpenWeatherAPIService;
 import com.darfik.skycast.weather.WeatherJson;
 import com.darfik.skycast.weather.WeatherJsonParser;
 import lombok.extern.log4j.Log4j2;

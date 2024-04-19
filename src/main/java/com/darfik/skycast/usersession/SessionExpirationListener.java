@@ -1,4 +1,5 @@
 package com.darfik.skycast.usersession;
+import com.darfik.skycast.user.UserServiceFactory;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
@@ -8,8 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 @WebListener
 public class SessionExpirationListener implements ServletContextListener {
-    private final UserSessionServiceFactory userSessionServiceFactory = new UserSessionServiceFactoryImp();
-    private final UserSessionService userSessionService = userSessionServiceFactory.build();
+    private final UserSessionService userSessionService = UserSessionServiceFactory.build();
     private ScheduledExecutorService scheduler;
 
     @Override

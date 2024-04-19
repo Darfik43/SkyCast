@@ -1,7 +1,7 @@
 package com.darfik.skycast.usersession;
 
 import com.darfik.skycast.commons.daos.DAO;
-import com.darfik.skycast.utils.HibernateUtil;
+import com.darfik.skycast.util.HibernateUtil;
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;

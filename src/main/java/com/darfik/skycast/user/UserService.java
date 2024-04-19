@@ -1,8 +1,6 @@
 package com.darfik.skycast.user;
 
 import com.darfik.skycast.usersession.*;
-import com.darfik.skycast.utils.PasswordEncryptor;
-import org.hibernate.HibernateException;
 
 import java.util.NoSuchElementException;
 
@@ -14,8 +12,8 @@ public class UserService {
 
     UserService() {
         userDAO = UserDAO.getInstance();
-        UserSessionServiceFactory userSessionServiceFactory = new UserSessionServiceFactoryImp();
-        userSessionService = userSessionServiceFactory.build();
+        UserSessionServiceFactory userSessionServiceFactory = new UserSessionServiceFactory();
+        userSessionService = UserSessionServiceFactory.build();
         passwordEncryptor = new PasswordEncryptor();
     }
 

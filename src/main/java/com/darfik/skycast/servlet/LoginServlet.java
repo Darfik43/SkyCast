@@ -3,12 +3,10 @@ package com.darfik.skycast.servlet;
 import com.darfik.skycast.user.UserDTO;
 import com.darfik.skycast.user.UserService;
 import com.darfik.skycast.user.UserServiceFactory;
-import com.darfik.skycast.user.UserServiceFactoryImp;
 import com.darfik.skycast.usersession.UserSessionDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -17,8 +15,7 @@ import java.rmi.NoSuchObjectException;
 
 @WebServlet("/login")
 public class LoginServlet extends BaseServlet {
-    private final UserServiceFactory userServiceFactory = new UserServiceFactoryImp();
-    private final UserService userService = userServiceFactory.build();
+    private final UserService userService = UserServiceFactory.build();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

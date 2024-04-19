@@ -1,6 +1,4 @@
-package com.darfik.skycast.utils;
-
-import com.darfik.skycast.location.LocationDTO;
+package com.darfik.skycast.location;
 
 import java.io.IOException;
 import java.io.InputStream;

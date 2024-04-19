@@ -1,5 +1,9 @@
 package com.darfik.skycast.user;
 
-public interface UserServiceFactory {
-    UserService build();
+public class UserServiceFactory {
+
+
+    public static UserService build() {
+        return new UserService();
+    }
 }

@@ -1,6 +1,6 @@
 package com.darfik.skycast.servlet;
 
-import com.darfik.skycast.config.ThymeleafUtil;
+import com.darfik.skycast.util.ThymeleafUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;

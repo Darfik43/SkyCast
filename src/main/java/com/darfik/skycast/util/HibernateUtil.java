@@ -1,4 +1,4 @@
-package com.darfik.skycast.utils;
+package com.darfik.skycast.util;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

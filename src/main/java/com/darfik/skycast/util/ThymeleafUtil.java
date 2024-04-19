@@ -1,4 +1,4 @@
-package com.darfik.skycast.config;
+package com.darfik.skycast.util;
 
 
 import jakarta.servlet.ServletContext;
