@@ -29,7 +29,7 @@ public class UserDAO implements DAO<User> {
             session.persist(user);
             tx.commit();
         } catch (HibernateException e) {
-            log.error("Couldn't save user, try again");
+            throw new HibernateException("User already exists");
         }
     }
 
