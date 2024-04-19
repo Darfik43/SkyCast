@@ -1,4 +1,4 @@
-package com.darfik.skycast.user;
+package com.darfik.skycast.servlet;
 
 import com.darfik.skycast.servlet.BaseServlet;
 import jakarta.servlet.*;
@@ -19,8 +19,9 @@ public class AuthenticationFilter extends BaseServlet implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
         String requestURI = request.getRequestURI().substring(request.getContextPath().length());
-        if (("/".equals(requestURI) || "/login".equals(requestURI)) || "/register".equals(requestURI) || "/logout".equals(requestURI)) {
+        if (("/home".equals(requestURI) || "/login".equals(requestURI)) || "/register".equals(requestURI) || "/logout".equals(requestURI)) {
             chain.doFilter(request, response);
+            return;
         }
 
         boolean isLoggedIn = false;
@@ -31,9 +32,6 @@ public class AuthenticationFilter extends BaseServlet implements Filter {
 
         request.setAttribute("isLoggedIn", isLoggedIn);
         chain.doFilter(request, response);
-
-
-
     }
 }
 
