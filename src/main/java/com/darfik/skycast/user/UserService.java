@@ -2,6 +2,7 @@ package com.darfik.skycast.user;
 
 import com.darfik.skycast.usersession.*;
 import com.darfik.skycast.utils.PasswordEncryptor;
+import org.hibernate.HibernateException;
 
 import java.util.NoSuchElementException;
 
@@ -20,11 +21,9 @@ public class UserService {
 
 
     public void registerUser(UserDTO userDTO) {
-        if (!userExists(userDTO.getUsername())) {
             User user = UserMapper.toModel(userDTO);
             user.setPassword(passwordEncryptor.encryptPassword(userDTO.getPassword()));
             userDAO.save(user);
-        }
     }
 
     public void authorizeUser(UserDTO userDTO, UserSessionDTO userSessionDTO) {
