@@ -19,7 +19,7 @@ public class AuthenticationFilter extends BaseServlet implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
         String requestURI = request.getRequestURI().substring(request.getContextPath().length());
-        if (("/home".equals(requestURI) || "/login".equals(requestURI)) || "/register".equals(requestURI) || "/logout".equals(requestURI)) {
+        if (("/login".equals(requestURI)) || "/register".equals(requestURI) || "/logout".equals(requestURI)) {
             chain.doFilter(request, response);
             return;
         }
