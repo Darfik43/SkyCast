@@ -1,6 +1,5 @@
 package com.darfik.skycast.servlet;
 
-import com.darfik.skycast.servlet.BaseServlet;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.Cookie;
