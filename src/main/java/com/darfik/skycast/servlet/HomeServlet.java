@@ -15,6 +15,4 @@ public class HomeServlet extends BaseServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.processTemplate("home", req, resp);
     }
-
-
 }
