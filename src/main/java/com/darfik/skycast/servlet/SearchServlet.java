@@ -16,11 +16,14 @@ public class SearchServlet extends BaseServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        //hard coded to test
+
         try {
             LocationService locationService = LocationServiceFactory.build();
             LocationDTO locationDTO = new LocationDTO();
             locationDTO.setName("London");
             locationDTO = locationService.getLocationByName(locationDTO);
+            locationDTO = locationService.getWeatherByCoordinates(locationDTO);
             resp.getWriter().print(locationDTO.getName() + " " + locationDTO.getLatitude() + " " +
                     locationDTO.getLongitude() + " " + locationDTO.getTemperature());
         } catch (InterruptedException e) {

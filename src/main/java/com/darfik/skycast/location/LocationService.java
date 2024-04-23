@@ -49,13 +49,9 @@ public class LocationService {
     }
 
     public LocationDTO getLocationByName(LocationDTO locationDTO) throws IOException, URISyntaxException, InterruptedException {
-//        try {
             LocationJson parsedJson = locationParser.parse(openWeatherAPIService.getLocationByName(locationDTO.getName()));
             locationDTO.setLatitude(parsedJson.getLatitude());
             locationDTO.setLongitude(parsedJson.getLongitude());
-//        } catch (IOException | URISyntaxException | InterruptedException e) {
-//            throw new InterruptedException("Can't connect to OpenWeatherAPI");
-//        }
         return locationDTO;
     }
 
