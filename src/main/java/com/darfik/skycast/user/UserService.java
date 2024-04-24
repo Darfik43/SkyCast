@@ -1,6 +1,7 @@
 package com.darfik.skycast.user;
 
 import com.darfik.skycast.usersession.*;
+import org.hibernate.HibernateException;
 
 import java.util.NoSuchElementException;
 
@@ -18,8 +19,11 @@ public class UserService {
     }
 
 
-    public void registerUser(UserDTO userDTO) {
+    public void registerUser(UserDTO userDTO) throws HibernateException {
             User user = UserMapper.toModel(userDTO);
+            if (userExists(user.getUsername())) {
+                throw new HibernateException("User already exists"); //TODO Replace to custom exception
+            }
             user.setPassword(passwordEncryptor.encryptPassword(userDTO.getPassword()));
             userDAO.save(user);
     }
