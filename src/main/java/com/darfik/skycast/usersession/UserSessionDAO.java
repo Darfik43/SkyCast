@@ -79,13 +79,40 @@ public class UserSessionDAO implements DAO<UserSession> {
         }
     }
 
+    public boolean isExpired(String id) {
+        boolean isExpired = false;
+        try (Session session = HibernateUtil.getSession()) {
+            UserSession userSession = session.get(UserSession.class, id);
+            isExpired = userSession.getExpiresAt().isAfter(LocalDateTime.now());
+            if (isExpired) {
+                deleteExpiredSession(id);
+            }
+        } catch (HibernateException e) {
+            log.error("Couldn't find the session");
+        }
+        return isExpired;
+    }
+
+    private void deleteExpiredSession(String id) {
+        try (Session session = HibernateUtil.getSession()) {
+            if (isExpired(id)) {
+                Transaction tx = session.beginTransaction();
+                session.createMutationQuery("DELETE FROM UserSession WHERE id = :id")
+                        .setParameter("id", id)
+                        .executeUpdate();
+                tx.commit();
+            }
+        } catch (HibernateException e) {
+            log.error("Couldn't delete the session");
+        }
+    }
     public void delete(String id) {
         try (Session session = HibernateUtil.getSession()) {
-            Transaction tx = session.beginTransaction();
-            session.createMutationQuery("DELETE FROM UserSession WHERE id = :id")
-                    .setParameter("id", id)
-                    .executeUpdate();
-            tx.commit();
+                Transaction tx = session.beginTransaction();
+                session.createMutationQuery("DELETE FROM UserSession WHERE id = :id")
+                        .setParameter("id", id)
+                        .executeUpdate();
+                tx.commit();
         } catch (HibernateException e) {
             log.error("Couldn't delete the session");
         }
