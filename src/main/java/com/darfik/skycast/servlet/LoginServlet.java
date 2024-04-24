@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.rmi.NoSuchObjectException;
+import java.util.NoSuchElementException;
 
 @WebServlet("/login")
 public class LoginServlet extends RenderServlet {
@@ -39,7 +39,7 @@ public class LoginServlet extends RenderServlet {
             resp.addCookie(cookie);
             resp.getWriter().print("You've logged in");
             resp.sendRedirect(req.getContextPath() + "/home");
-        } catch (NoSuchObjectException e) {
+        } catch (NoSuchElementException e) {
             resp.getWriter().print("Incorrect username or password");
         }
     }
