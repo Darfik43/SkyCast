@@ -19,7 +19,11 @@ public class LoginServlet extends RenderServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/templates/login.html").forward(req, resp);
+        if ((Boolean) req.getAttribute("isLoggedIn")) {
+            resp.sendRedirect(req.getContextPath() + "/home");
+        } else {
+            req.getRequestDispatcher("/templates/login.html").forward(req, resp);
+        }
     }
 
     @Override
