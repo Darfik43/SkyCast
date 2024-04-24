@@ -12,7 +12,7 @@ import java.io.IOException;
 
 
 @WebServlet("/register")
-public class UserRegistrationServlet extends BaseServlet {
+public class UserRegistrationServlet extends RenderServlet {
     private final UserService userService;
 
     public UserRegistrationServlet() {

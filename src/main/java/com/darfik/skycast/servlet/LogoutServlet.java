@@ -10,7 +10,7 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 
 @WebServlet("/logout")
-public class LogoutServlet extends BaseServlet {
+public class LogoutServlet extends RenderServlet {
     private final UserService userService = UserServiceFactory.build();
 
     @Override

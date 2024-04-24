@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 @WebServlet("/search")
-public class SearchServlet extends BaseServlet {
+public class SearchServlet extends RenderServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

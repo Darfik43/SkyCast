@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/home")
-public class HomeServlet extends BaseServlet {
+public class HomeServlet extends RenderServlet {
 
 
     @Override

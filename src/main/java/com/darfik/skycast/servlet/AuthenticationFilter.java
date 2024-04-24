@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 @WebFilter("/*")
-public class AuthenticationFilter extends BaseServlet implements Filter {
+public class AuthenticationFilter extends CookieServlet implements Filter {
 
 
     @Override

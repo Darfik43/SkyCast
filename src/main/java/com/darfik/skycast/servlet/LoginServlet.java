@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.rmi.NoSuchObjectException;
 
 @WebServlet("/login")
-public class LoginServlet extends BaseServlet {
+public class LoginServlet extends RenderServlet {
     private final UserService userService = UserServiceFactory.build();
 
     @Override

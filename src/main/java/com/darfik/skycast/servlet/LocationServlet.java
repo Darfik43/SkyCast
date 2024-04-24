@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 @WebServlet("/add")
-public class LocationServlet extends BaseServlet {
+public class LocationServlet extends RenderServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

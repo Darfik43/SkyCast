@@ -1,7 +1,6 @@
 package com.darfik.skycast.servlet;
 
 import com.darfik.skycast.util.ThymeleafUtil;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -9,10 +8,9 @@ import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.context.WebContext;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Optional;
 
-public abstract class BaseServlet extends HttpServlet {
+public class RenderServlet extends HttpServlet {
+
     ITemplateEngine engine;
 
     @Override
@@ -27,13 +25,4 @@ public abstract class BaseServlet extends HttpServlet {
 
         engine.process(templateName, webContext, resp.getWriter());
     }
-    protected Optional<Cookie> catchAuthCookie(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        if (cookies == null || cookies.length == 0) {
-            return Optional.empty();
-        }
-        return Arrays.stream(cookies)
-                .filter(item -> item.getName().equals("sessionID")).findFirst();
-    }
 }
-
