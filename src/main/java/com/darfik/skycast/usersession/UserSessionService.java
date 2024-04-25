@@ -19,8 +19,4 @@ public class UserSessionService {
     public void logout(UserSessionDTO userSessionDTO) {
         userSessionDAO.delete(userSessionDTO.id());
     }
-
-    public void deleteExpiredSessions() {
-        userSessionDAO.deleteExpiredSessions();
-    }
 }
