@@ -67,23 +67,13 @@ public class UserSessionDAO implements DAO<UserSession> {
         }
     }
 
-    public void deleteExpiredSessions() {
-        try (Session session = HibernateUtil.getSession()) {
-            Transaction tx = session.beginTransaction();
-            session.createMutationQuery("DELETE FROM UserSession WHERE expiresAt < :currentTime")
-                    .setParameter("currentTime", LocalDateTime.now())
-                    .executeUpdate();
-            tx.commit();
-        } catch (HibernateException e) {
-            log.error("Couldn't delete expired sessions");
-        }
-    }
-
     public boolean isExpired(String id) {
         boolean isExpired = false;
         try (Session session = HibernateUtil.getSession()) {
-            UserSession userSession = session.get(UserSession.class, id);
-            isExpired = userSession.getExpiresAt().isAfter(LocalDateTime.now());
+            isExpired = find(id)
+                    .map((userSession1) -> userSession1.getExpiresAt()
+                            .isAfter(LocalDateTime.now()))
+                    .orElse(false);
             if (isExpired) {
                 deleteExpiredSession(id);
             }
