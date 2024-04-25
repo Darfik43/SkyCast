@@ -23,9 +23,10 @@ public class UserService {
             User user = UserMapper.toModel(userDTO);
             if (userExists(user.getUsername())) {
                 throw new HibernateException("User already exists"); //TODO Replace to custom exception
+            } else {
+                user.setPassword(passwordEncryptor.encryptPassword(userDTO.getPassword()));
+                userDAO.save(user);
             }
-            user.setPassword(passwordEncryptor.encryptPassword(userDTO.getPassword()));
-            userDAO.save(user);
     }
 
     public void authorizeUser(UserDTO userDTO, UserSessionDTO userSessionDTO) {
