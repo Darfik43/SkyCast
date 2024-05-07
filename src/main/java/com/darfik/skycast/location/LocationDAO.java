@@ -75,6 +75,17 @@ public class LocationDAO implements DAO<Location> {
         return locations;
     }
 
+    public void delete(Location location, User user) {
+        try (Session session = HibernateUtil.getSession()) {
+            Transaction tx = session.beginTransaction();
+            session.createMutationQuery("DELETE FROM Location WHERE name = :name AND user.id = :userID")
+                    .setParameter("name", location.getName())
+                    .setParameter("userID", user.getId())
+                    .executeUpdate();
+            tx.commit();
+        }
+    }
+
     @Override
     public void update(Location location) {
         try (Session session = HibernateUtil.getSession()) {

@@ -18,6 +18,22 @@ import java.net.URISyntaxException;
 public class LocationServlet extends RenderServlet {
 
     @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            LocationService locationService = LocationServiceFactory.build();
+            LocationDTO locationDTO = new LocationDTO(req.getParameter("location"));
+            UserDTO userDTO = new UserDTO(req.getSession().getAttribute("username").toString());
+            locationService.deleteLocationForUser(locationDTO, userDTO);
+        } catch (InterruptedException e) {
+        resp.getWriter().print("Connection to the API was interrupted");
+    } catch (IOException e) {
+        resp.getWriter().print("Can't connect to OpenWeatherAPI");
+    } catch (URISyntaxException e) {
+        resp.getWriter().print("URI is invalid");
+    }
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // To be tested
 

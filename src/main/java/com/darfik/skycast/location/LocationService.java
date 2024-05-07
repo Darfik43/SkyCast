@@ -1,6 +1,7 @@
 package com.darfik.skycast.location;
 
 import com.darfik.skycast.commons.services.JsonParser;
+import com.darfik.skycast.user.User;
 import com.darfik.skycast.user.UserDAO;
 import com.darfik.skycast.user.UserDTO;
 import com.darfik.skycast.usersession.UserSessionDTO;
@@ -47,7 +48,9 @@ public class LocationService {
 
     private boolean locationExistsForUser(LocationDTO locationDTO, UserDTO userDTO) {
         List<LocationDTO> userLocations = getUserLocations(userDTO);
-        return userLocations.contains(locationDTO);
+        return userLocations.stream()
+                .map(LocationDTO::getName)
+                .anyMatch(locationName -> locationName.equals(locationDTO.getName()));
     }
 
     public LocationDTO getLocationByName(LocationDTO locationDTO) throws IOException, URISyntaxException, InterruptedException {
@@ -66,5 +69,16 @@ public class LocationService {
             log.error("//TODO");
         }
         return null;
+    }
+
+    public void deleteLocationForUser(LocationDTO locationDTO, UserDTO userDTO) throws IOException, URISyntaxException, InterruptedException {
+        if (locationExistsForUser(locationDTO, userDTO)) {
+            Location location = LocationMapper.toModel(getLocationByName(locationDTO));
+            location.setUser(userDAO.find(userDTO.getUsername()).get());
+            User user = userDAO.find(userDTO.getUsername()).get();
+            locationDAO.delete(location, user);
+        } else {
+            throw new IllegalArgumentException("This location isn't added for you");
+        }
     }
 }
