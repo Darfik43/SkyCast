@@ -13,7 +13,7 @@ public class UserSessionService {
         userSession.setUser(user);
         userSession.setExpiresAt(LocalDateTime.now().plusHours(1));
 
-        userSessionDAO.save(userSession);
+        userSessionDAO.update(userSession);
     }
 
     public void logout(UserSessionDTO userSessionDTO) {

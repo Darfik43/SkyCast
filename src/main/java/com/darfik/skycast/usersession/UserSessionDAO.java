@@ -56,10 +56,13 @@ public class UserSessionDAO implements DAO<UserSession> {
         return userSessions;
     }
 
+
+    //TODO Doesn't update existing session because it has a brand new id
     @Override
     public void update(UserSession userSession) {
         try (Session session = HibernateUtil.getSession()) {
             Transaction tx = session.beginTransaction();
+            //TODO UserSession userSession1 = session.createQuery("FROM UserSession ", UserSession.class).getSingleResultOrNull();
             session.merge(userSession);
             tx.commit();
         } catch (HibernateException e) {

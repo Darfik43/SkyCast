@@ -26,6 +26,8 @@ public class LocationService {
         userDAO = UserDAO.getInstance();
     }
 
+
+    //TODO Usersession?
     public void addLocationForUser(LocationDTO locationDTO, UserSessionDTO userSessionDTO) throws IOException, URISyntaxException, InterruptedException {
         if (!locationExistsForUser(locationDTO, userSessionDTO)) {
             Location location = LocationMapper.toModel(getLocationByName(locationDTO));
