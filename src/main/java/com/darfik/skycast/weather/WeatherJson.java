@@ -9,7 +9,7 @@ import lombok.Getter;
 @Getter
 public class WeatherJson extends ResponseJson {
     @JsonProperty("name")
-    private String locationName;
+    private String location;
 
     @JsonProperty("main")
     private MainWeatherData mainWeatherData;

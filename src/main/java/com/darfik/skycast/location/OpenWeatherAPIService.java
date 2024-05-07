@@ -13,8 +13,8 @@ public class OpenWeatherAPIService {
 
     private static final String API_KEY = getApiKey();
 
-    public String getLocationByName(String locationName) throws IOException, InterruptedException, URISyntaxException {
-        String url = "https://api.openweathermap.org/geo/1.0/direct?q=" + locationName
+    public String getLocationByName(String location) throws IOException, InterruptedException, URISyntaxException {
+        String url = "https://api.openweathermap.org/geo/1.0/direct?q=" + location
                 + "&appid=" + API_KEY;
 
         HttpClient client = HttpClient.newHttpClient();

@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Getter
 public class LocationJson extends ResponseJson {
     @JsonProperty("name")
-    private String locationName;
+    private String location;
 
     @JsonProperty("lat")
     private BigDecimal latitude;

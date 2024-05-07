@@ -59,7 +59,7 @@ public class UserDAO implements DAO<User> {
         return Optional.ofNullable(user);
     }
 
-        @Override
+    @Override
     public List<User> getAll() {
         List<User> users = null;
         try (Session session = HibernateUtil.getSession()) {
