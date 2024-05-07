@@ -16,16 +16,16 @@ public class SearchServlet extends RenderServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        //hard coded to test
+
 
         try {
             LocationService locationService = LocationServiceFactory.build();
             LocationDTO locationDTO = new LocationDTO();
-            locationDTO.setName("London");
+            locationDTO.setName(req.getParameter("location"));
             locationDTO = locationService.getLocationByName(locationDTO);
             locationDTO = locationService.getWeatherByCoordinates(locationDTO);
             resp.getWriter().print(locationDTO.getName() + " " + locationDTO.getLatitude() + " " +
-                    locationDTO.getLongitude() + " " + locationDTO.getTemperature());
+                    locationDTO.getLongitude() + " " + locationDTO.getTemperature() + "°");
         } catch (InterruptedException e) {
             resp.getWriter().print("Connection to the API was interrupted");
         } catch (IOException e) {

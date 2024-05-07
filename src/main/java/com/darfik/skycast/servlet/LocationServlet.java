@@ -4,6 +4,7 @@ package com.darfik.skycast.servlet;
 import com.darfik.skycast.location.LocationDTO;
 import com.darfik.skycast.location.LocationService;
 import com.darfik.skycast.location.LocationServiceFactory;
+import com.darfik.skycast.user.UserDTO;
 import com.darfik.skycast.usersession.UserSessionDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -22,9 +23,9 @@ public class LocationServlet extends RenderServlet {
 
         try {
             LocationService locationService = LocationServiceFactory.build();
-            LocationDTO locationDTO = new LocationDTO(req.getParameter("locationName"));
-            UserSessionDTO userSessionDTO = new UserSessionDTO(req.getSession().getId());
-            locationService.addLocationForUser(locationDTO, userSessionDTO);
+            LocationDTO locationDTO = new LocationDTO(req.getParameter("location"));
+            UserDTO userDTO = new UserDTO(req.getSession().getAttribute("username").toString());
+            locationService.addLocationForUser(locationDTO, userDTO);
         } catch (InterruptedException e) {
             resp.getWriter().print("Connection to the API was interrupted");
         } catch (IOException e) {

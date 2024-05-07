@@ -2,6 +2,7 @@ package com.darfik.skycast.location;
 
 import com.darfik.skycast.commons.services.JsonParser;
 import com.darfik.skycast.user.UserDAO;
+import com.darfik.skycast.user.UserDTO;
 import com.darfik.skycast.usersession.UserSessionDTO;
 import com.darfik.skycast.weather.WeatherJson;
 import com.darfik.skycast.weather.WeatherJsonParser;
@@ -28,25 +29,24 @@ public class LocationService {
 
 
     //TODO Usersession?
-    public void addLocationForUser(LocationDTO locationDTO, UserSessionDTO userSessionDTO) throws IOException, URISyntaxException, InterruptedException {
-        if (!locationExistsForUser(locationDTO, userSessionDTO)) {
+    public void addLocationForUser(LocationDTO locationDTO, UserDTO userDTO) throws IOException, URISyntaxException, InterruptedException {
+        if (!locationExistsForUser(locationDTO, userDTO)) {
             Location location = LocationMapper.toModel(getLocationByName(locationDTO));
-            location.setUser(userDAO.findById(Long.valueOf(userSessionDTO.id())).get());
+            location.setUser(userDAO.find(userDTO.getUsername()).get());
             locationDAO.save(location);
         } else {
             throw new IllegalArgumentException("This location is already added");
         }
-
     }
 
-    public List<LocationDTO> getUserLocations(UserSessionDTO userSessionDTO) {
-        return locationDAO.findLocationsByUser(userDAO.findById(Long.valueOf(userSessionDTO.id())).get())
+    public List<LocationDTO> getUserLocations(UserDTO userDTO) {
+        return locationDAO.findLocationsByUser(userDAO.find(userDTO.getUsername()).get())
                 .stream().map(LocationMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
-    private boolean locationExistsForUser(LocationDTO locationDTO, UserSessionDTO userSessionDTO) {
-        List<LocationDTO> userLocations = getUserLocations(userSessionDTO);
+    private boolean locationExistsForUser(LocationDTO locationDTO, UserDTO userDTO) {
+        List<LocationDTO> userLocations = getUserLocations(userDTO);
         return userLocations.contains(locationDTO);
     }
 
