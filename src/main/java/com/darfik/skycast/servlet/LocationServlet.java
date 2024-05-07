@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
 
 @WebServlet("/add")
 public class LocationServlet extends RenderServlet {
@@ -31,6 +32,25 @@ public class LocationServlet extends RenderServlet {
     } catch (URISyntaxException e) {
         resp.getWriter().print("URI is invalid");
     }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            LocationService locationService = LocationServiceFactory.build();
+            UserDTO userDTO = new UserDTO(req.getSession().getAttribute("username").toString());
+            List<LocationDTO> userLocations = locationService.getUserLocations(userDTO);
+            for (LocationDTO location : userLocations) {
+                location = locationService.getLocationByName(location);
+                resp.getWriter().print(location.getName() + " " + locationService.getWeatherByCoordinates(location).getTemperature());
+            }
+        } catch (IOException e) {
+            resp.getWriter().print("No locations");
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
