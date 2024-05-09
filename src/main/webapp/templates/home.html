@@ -34,14 +34,23 @@
 </header>
 
 <main class="container mt-4">
-    <form action="#" th:action="@{/search}" method="post">
-        <button type="submit" class="btn btn-primary">Search</button>
+    <form action="#" th:action="@{/search}" method="post" class="form-inline">
+        <div class="input-group">
+            <label>
+                <input type="text" class="form-control" placeholder="Введите место для поиска" name="searchQuery">
+            </label>
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Поиск</button>
+            </div>
+        </div>
     </form>
-    <section id="userLocations">
+    <section id="userLocations" th:if="${isLoggedIn}">
         <h2>Ваши локации</h2>
         <ul class="list-group">
-            <!-- Здесь будут отображаться локации -->
-            <!-- Пример: <li class="list-group-item">Локация 1</li> -->
+            <li class="list-group-item" th:each="location : ${session.userLocations}">
+                <span th:text="${location.getName()}"></span>
+                <span th:text="${location.getTemperature()}"></span>
+            </li>
         </ul>
     </section>
 </main>

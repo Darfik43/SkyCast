@@ -1,5 +1,8 @@
 package com.darfik.skycast.servlet;
 
+import com.darfik.skycast.location.LocationDTO;
+import com.darfik.skycast.location.LocationService;
+import com.darfik.skycast.location.LocationServiceFactory;
 import com.darfik.skycast.user.UserDTO;
 import com.darfik.skycast.user.UserService;
 import com.darfik.skycast.user.UserServiceFactory;
@@ -11,6 +14,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @WebServlet("/login")
@@ -33,6 +38,16 @@ public class LoginServlet extends RenderServlet {
                     new UserDTO(req.getParameter("username"), req.getParameter("password")),
                     new UserSessionDTO(req.getSession().getId()));
             req.getSession().setAttribute("username", req.getParameter("username"));
+
+            LocationService locationService = LocationServiceFactory.build();
+            List<LocationDTO> userLocations = locationService.getUserLocations(new UserDTO(req.getParameter("username")));
+            for (LocationDTO location : userLocations) {
+                locationService.getLocationByName(location);
+                locationService.getWeatherByCoordinates(location);
+            }
+            req.getSession().setAttribute("userLocations", userLocations);
+
+
             Cookie cookie = new Cookie("sessionID", req.getSession().getId());
             cookie.setPath("/");
             cookie.setMaxAge(3600);
@@ -41,6 +56,10 @@ public class LoginServlet extends RenderServlet {
             resp.sendRedirect(req.getContextPath() + "/home");
         } catch (NoSuchElementException e) {
             resp.getWriter().print("Incorrect username or password");
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 }

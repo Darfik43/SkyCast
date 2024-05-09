@@ -40,16 +40,11 @@ public class LocationServlet extends RenderServlet {
             LocationService locationService = LocationServiceFactory.build();
             UserDTO userDTO = new UserDTO(req.getSession().getAttribute("username").toString());
             List<LocationDTO> userLocations = locationService.getUserLocations(userDTO);
-            for (LocationDTO location : userLocations) {
-                location = locationService.getLocationByName(location);
-                resp.getWriter().print(location.getName() + " " + locationService.getWeatherByCoordinates(location).getTemperature());
-            }
-        } catch (IOException e) {
+            req.getSession().setAttribute("userLocations", userLocations);
+
+            //TODO
+        } catch (Exception e) {
             resp.getWriter().print("No locations");
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
         }
     }
 
