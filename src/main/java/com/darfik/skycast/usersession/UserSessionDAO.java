@@ -6,6 +6,7 @@ import lombok.extern.log4j.Log4j2;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -45,6 +46,18 @@ public class UserSessionDAO implements DAO<UserSession> {
         return Optional.ofNullable(userSession);
     }
 
+    public Optional<UserSession> findByUserId(Long userId) {
+        UserSession userSession = null;
+        try (Session session = HibernateUtil.getSession()) {
+            Query<UserSession> query = session.createQuery("FROM UserSession WHERE user.id = :userId", UserSession.class);
+            query.setParameter("userId", userId);
+            userSession = query.uniqueResult();
+        } catch (HibernateException e) {
+            log.error("Couldn't find the session by user id");
+        }
+        return Optional.ofNullable(userSession);
+    }
+
     @Override
     public List<UserSession> getAll() {
         List<UserSession> userSessions = null;
@@ -70,15 +83,15 @@ public class UserSessionDAO implements DAO<UserSession> {
         }
     }
 
-    public boolean isExpired(String id) {
+    public boolean isExpired(Long userId) {
         boolean isExpired = false;
         try (Session session = HibernateUtil.getSession()) {
-            isExpired = find(id)
-                    .map((userSession1) -> userSession1.getExpiresAt()
-                            .isAfter(LocalDateTime.now()))
+            isExpired = findByUserId(userId)
+                    .map(userSession -> userSession.getExpiresAt()
+                            .isBefore(LocalDateTime.now()))
                     .orElse(false);
             if (isExpired) {
-                deleteExpiredSession(id);
+                deleteExpiredSession(userId);
             }
         } catch (HibernateException e) {
             log.error("Couldn't find the session");
@@ -86,19 +99,18 @@ public class UserSessionDAO implements DAO<UserSession> {
         return isExpired;
     }
 
-    private void deleteExpiredSession(String id) {
+    private void deleteExpiredSession(Long userId) {
         try (Session session = HibernateUtil.getSession()) {
-            if (isExpired(id)) {
-                Transaction tx = session.beginTransaction();
-                session.createMutationQuery("DELETE FROM UserSession WHERE id = :id")
-                        .setParameter("id", id)
-                        .executeUpdate();
-                tx.commit();
-            }
+            Transaction tx = session.beginTransaction();
+            session.createQuery("DELETE FROM UserSession WHERE user.id = :userId")
+                    .setParameter("userId", userId)
+                    .executeUpdate();
+            tx.commit();
         } catch (HibernateException e) {
             log.error("Couldn't delete the session");
         }
     }
+
     public void delete(String id) {
         try (Session session = HibernateUtil.getSession()) {
                 Transaction tx = session.beginTransaction();

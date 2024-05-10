@@ -28,7 +28,7 @@ public class AuthenticationFilter extends CookieServlet implements Filter {
         boolean isLoggedIn = false;
         Optional<Cookie> authCookie = catchAuthCookie(request);
 
-        if (authCookie.isPresent() && !userSessionDAO.isExpired(authCookie.toString())) {
+        if (authCookie.isPresent()) { // && !userSessionDAO.isExpired(authCookie.toString())) {
             isLoggedIn = true;
         }
         request.setAttribute("isLoggedIn", isLoggedIn);
