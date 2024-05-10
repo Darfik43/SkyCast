@@ -23,7 +23,7 @@ public class UserSession {
     private String id;
 
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
 
