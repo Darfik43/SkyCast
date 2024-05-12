@@ -40,13 +40,18 @@ public class LocationService {
         }
     }
 
-    public List<LocationDTO> getUserLocations(UserDTO userDTO) {
-        return locationDAO.findLocationsByUser(userDAO.find(userDTO.getUsername()).get())
+    public List<LocationDTO> getUserLocations(UserDTO userDTO) throws IOException, URISyntaxException, InterruptedException {
+        List<LocationDTO> userLocations = locationDAO.findLocationsByUser(userDAO.find(userDTO.getUsername()).get())
                 .stream().map(LocationMapper::toDTO)
-                .collect(Collectors.toList());
+                .toList();
+        for (LocationDTO location : userLocations) {
+            getLocationByName(location);
+            getWeatherByCoordinates(location);
+        }
+        return userLocations;
     }
 
-    private boolean locationExistsForUser(LocationDTO locationDTO, UserDTO userDTO) {
+    private boolean locationExistsForUser(LocationDTO locationDTO, UserDTO userDTO) throws IOException, URISyntaxException, InterruptedException {
         List<LocationDTO> userLocations = getUserLocations(userDTO);
         return userLocations.stream()
                 .map(LocationDTO::getName)
