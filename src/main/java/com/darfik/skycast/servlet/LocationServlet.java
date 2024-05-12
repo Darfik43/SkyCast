@@ -41,8 +41,6 @@ public class LocationServlet extends RenderServlet {
             UserDTO userDTO = new UserDTO(req.getSession().getAttribute("username").toString());
             List<LocationDTO> userLocations = locationService.getUserLocations(userDTO);
             req.getSession().setAttribute("userLocations", userLocations);
-
-            //TODO
         } catch (Exception e) {
             resp.getWriter().print("No locations");
         }
