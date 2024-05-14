@@ -51,6 +51,8 @@ public class LocationServlet extends RenderServlet {
             LocationDTO locationDTO = new LocationDTO(req.getParameter("location"));
             UserDTO userDTO = new UserDTO(req.getSession().getAttribute("username").toString());
             locationService.addLocationForUser(locationDTO, userDTO);
+
+            resp.sendRedirect(req.getContextPath() + "/home");
         } catch (InterruptedException e) {
             resp.getWriter().print("Connection to the API was interrupted");
         } catch (IOException e) {
