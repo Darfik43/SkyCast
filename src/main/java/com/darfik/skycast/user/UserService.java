@@ -32,7 +32,7 @@ public class UserService {
     public void authorizeUser(UserDTO userDTO, UserSessionDTO userSessionDTO) {
         if (userExists(userDTO.getUsername()) && isPasswordCorrect(userDTO)) {
             User user = userDAO.find(userDTO.getUsername()).get();
-            userSessionService.createAndSaveUserSession(user, userSessionDTO);
+            userSessionService.updateUserSessions(user, userSessionDTO);
         } else {
             throw new NoSuchElementException();
         }

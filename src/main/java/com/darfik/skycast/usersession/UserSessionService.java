@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 public class UserSessionService {
     private final UserSessionDAO userSessionDAO = UserSessionDAO.getInstance();
 
-    public void createAndSaveUserSession(User user, UserSessionDTO userSessionDTO) {
+    public void updateUserSessions(User user, UserSessionDTO userSessionDTO) {
         userSessionDAO.deleteExpiredSessions(user);
 
         UserSession userSession = UserSessionMapper.toModel(userSessionDTO);
