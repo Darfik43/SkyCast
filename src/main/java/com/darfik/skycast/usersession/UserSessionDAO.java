@@ -1,6 +1,7 @@
 package com.darfik.skycast.usersession;
 
 import com.darfik.skycast.commons.daos.DAO;
+import com.darfik.skycast.user.User;
 import com.darfik.skycast.util.HibernateUtil;
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.HibernateException;
@@ -16,7 +17,9 @@ import java.util.Optional;
 public class UserSessionDAO implements DAO<UserSession> {
 
     private static UserSessionDAO userSessionDAO;
-    private UserSessionDAO() {}
+
+    private UserSessionDAO() {
+    }
 
     public static synchronized UserSessionDAO getInstance() {
         if (userSessionDAO == null) {
@@ -24,6 +27,7 @@ public class UserSessionDAO implements DAO<UserSession> {
         }
         return userSessionDAO;
     }
+
     @Override
     public void save(UserSession userSession) {
         try (Session session = HibernateUtil.getSession()) {
@@ -46,16 +50,16 @@ public class UserSessionDAO implements DAO<UserSession> {
         return Optional.ofNullable(userSession);
     }
 
-    public Optional<UserSession> findByUserId(Long userId) {
-        UserSession userSession = null;
+    public List<UserSession> findByUserId(User user) {
+        List<UserSession> userSessions = null;
         try (Session session = HibernateUtil.getSession()) {
-            Query<UserSession> query = session.createQuery("FROM UserSession WHERE user.id = :userId", UserSession.class);
-            query.setParameter("userId", userId);
-            userSession = query.uniqueResult();
+            Query<UserSession> query = session.createQuery("FROM UserSession WHERE user = :user", UserSession.class);
+            query.setParameter("user", user);
+            userSessions = query.getResultList();
         } catch (HibernateException e) {
             log.error("Couldn't find the session by user id");
         }
-        return Optional.ofNullable(userSession);
+        return userSessions;
     }
 
     @Override
@@ -70,12 +74,10 @@ public class UserSessionDAO implements DAO<UserSession> {
     }
 
 
-    //TODO Doesn't update existing session because it has a brand new id
     @Override
     public void update(UserSession userSession) {
         try (Session session = HibernateUtil.getSession()) {
             Transaction tx = session.beginTransaction();
-            //TODO UserSession userSession1 = session.createQuery("FROM UserSession ", UserSession.class).getSingleResultOrNull();
             session.merge(userSession);
             tx.commit();
         } catch (HibernateException e) {
@@ -83,41 +85,26 @@ public class UserSessionDAO implements DAO<UserSession> {
         }
     }
 
-    public boolean isExpired(Long userId) {
-        boolean isExpired = false;
-        try (Session session = HibernateUtil.getSession()) {
-            isExpired = findByUserId(userId)
-                    .map(userSession -> userSession.getExpiresAt()
-                            .isBefore(LocalDateTime.now()))
-                    .orElse(false);
-            if (isExpired) {
-                deleteExpiredSession(userId);
-            }
-        } catch (HibernateException e) {
-            log.error("Couldn't find the session");
-        }
-        return isExpired;
+    private boolean isExpired(UserSession userSession) {
+        return userSession.getExpiresAt().isBefore(LocalDateTime.now());
     }
 
-    private void deleteExpiredSession(Long userId) {
-        try (Session session = HibernateUtil.getSession()) {
-            Transaction tx = session.beginTransaction();
-            session.createQuery("DELETE FROM UserSession WHERE user.id = :userId")
-                    .setParameter("userId", userId)
-                    .executeUpdate();
-            tx.commit();
-        } catch (HibernateException e) {
-            log.error("Couldn't delete the session");
-        }
+    public void deleteExpiredSessions(User user) {
+            List<UserSession> userSessions = findByUserId(user);
+            for (UserSession userSession : userSessions) {
+                if (isExpired(userSession)) {
+                    delete(userSession.getId());
+                }
+            }
     }
 
     public void delete(String id) {
         try (Session session = HibernateUtil.getSession()) {
-                Transaction tx = session.beginTransaction();
-                session.createMutationQuery("DELETE FROM UserSession WHERE id = :id")
-                        .setParameter("id", id)
-                        .executeUpdate();
-                tx.commit();
+            Transaction tx = session.beginTransaction();
+            session.createMutationQuery("DELETE FROM UserSession WHERE id = :id")
+                    .setParameter("id", id)
+                    .executeUpdate();
+            tx.commit();
         } catch (HibernateException e) {
             log.error("Couldn't delete the session");
         }
