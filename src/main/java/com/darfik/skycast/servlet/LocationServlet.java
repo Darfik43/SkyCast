@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
 
-@WebServlet("/add")
+@WebServlet("/location")
 public class LocationServlet extends RenderServlet {
 
     @Override
@@ -48,8 +48,6 @@ public class LocationServlet extends RenderServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // To be tested
-
         try {
             LocationService locationService = LocationServiceFactory.build();
             LocationDTO locationDTO = new LocationDTO(req.getParameter("location"));
