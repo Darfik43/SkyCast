@@ -3,7 +3,6 @@ package com.darfik.skycast.servlet;
 import com.darfik.skycast.location.LocationDTO;
 import com.darfik.skycast.location.LocationService;
 import com.darfik.skycast.location.LocationServiceFactory;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,10 +13,10 @@ import java.net.URISyntaxException;
 @WebServlet("/search")
 public class SearchServlet extends RenderServlet {
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             LocationService locationService = LocationServiceFactory.build();
-            LocationDTO locationDTO = new LocationDTO();
+            LocationDTO locationDTO = new LocationDTO(req.getParameter("location"));
             locationDTO.setName(req.getParameter("location"));
             locationDTO = locationService.getLocationByName(locationDTO);
             locationDTO = locationService.getWeatherByCoordinates(locationDTO);

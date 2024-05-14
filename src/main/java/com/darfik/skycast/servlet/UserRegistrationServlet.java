@@ -33,6 +33,7 @@ public class UserRegistrationServlet extends RenderServlet {
                     req.getParameter("password")
             );
             userService.registerUser(userDTO);
+
             req.getRequestDispatcher("/login").forward(req, resp);
         } catch (HibernateException e) {
             resp.getWriter().print(e.getMessage());

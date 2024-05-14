@@ -3,7 +3,6 @@ package com.darfik.skycast.servlet;
 import com.darfik.skycast.user.UserService;
 import com.darfik.skycast.user.UserServiceFactory;
 import com.darfik.skycast.usersession.UserSessionDTO;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,7 +16,7 @@ public class LogoutServlet extends RenderServlet {
     private final UserService userService = UserServiceFactory.build();
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession(false);
         if (session != null) {
             UserSessionDTO userSessionDTO = new UserSessionDTO(req.getSession().getId());

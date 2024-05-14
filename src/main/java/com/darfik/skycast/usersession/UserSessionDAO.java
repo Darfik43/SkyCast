@@ -63,18 +63,6 @@ public class UserSessionDAO implements DAO<UserSession> {
     }
 
     @Override
-    public List<UserSession> getAll() {
-        List<UserSession> userSessions = null;
-        try (Session session = HibernateUtil.getSession()) {
-            userSessions = session.createQuery("FROM UserSession ", UserSession.class).getResultList();
-        } catch (HibernateException e) {
-            log.error("Couldn't get a list of sessions");
-        }
-        return userSessions;
-    }
-
-
-    @Override
     public void update(UserSession userSession) {
         try (Session session = HibernateUtil.getSession()) {
             Transaction tx = session.beginTransaction();
@@ -85,10 +73,12 @@ public class UserSessionDAO implements DAO<UserSession> {
         }
     }
 
-    private boolean isExpired(UserSession userSession) {
+    public boolean isExpired(UserSession userSession) {
         return userSession.getExpiresAt().isBefore(LocalDateTime.now());
     }
 
+
+    // Could be one query to DB, have to think about it
     public void deleteExpiredSessions(User user) {
             List<UserSession> userSessions = findByUserId(user);
             for (UserSession userSession : userSessions) {

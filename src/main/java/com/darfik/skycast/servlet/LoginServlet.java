@@ -27,7 +27,7 @@ public class LoginServlet extends RenderServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             userService.authorizeUser(
                     new UserDTO(req.getParameter("username"), req.getParameter("password")),

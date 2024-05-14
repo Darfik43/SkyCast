@@ -63,18 +63,6 @@ public class LocationDAO implements DAO<Location> {
         }
         return locations;
     }
-
-    @Override
-    public List<Location> getAll() {
-        List<Location> locations = null;
-        try (Session session = HibernateUtil.getSession()) {
-            locations = session.createQuery("FROM Location", Location.class).getResultList();
-        } catch (HibernateException e) {
-            log.error("Couldn't get a list of location");
-        }
-        return locations;
-    }
-
     public void delete(Location location, User user) {
         try (Session session = HibernateUtil.getSession()) {
             Transaction tx = session.beginTransaction();

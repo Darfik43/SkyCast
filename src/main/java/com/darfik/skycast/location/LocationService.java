@@ -4,7 +4,6 @@ import com.darfik.skycast.commons.services.JsonParser;
 import com.darfik.skycast.user.User;
 import com.darfik.skycast.user.UserDAO;
 import com.darfik.skycast.user.UserDTO;
-import com.darfik.skycast.usersession.UserSessionDTO;
 import com.darfik.skycast.weather.WeatherJson;
 import com.darfik.skycast.weather.WeatherJsonParser;
 import lombok.extern.log4j.Log4j2;
@@ -12,7 +11,6 @@ import lombok.extern.log4j.Log4j2;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Log4j2
 public class LocationService {
@@ -69,7 +67,7 @@ public class LocationService {
             locationDTO.setTemperature(parsedWeatherJson.getMainWeatherData().getTemp());
             return locationDTO;
         } catch (IOException | InterruptedException | URISyntaxException e) {
-            log.error("//TODO");
+            log.error("Can't get Weather via OpenWeatherAPI");
         }
         return null;
     }

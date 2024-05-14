@@ -6,14 +6,12 @@ import org.hibernate.HibernateException;
 import java.util.NoSuchElementException;
 
 public class UserService {
-    private User user;
     private final UserDAO userDAO;
     private final UserSessionService userSessionService;
     private final PasswordEncryptor passwordEncryptor;
 
     UserService() {
         userDAO = UserDAO.getInstance();
-        UserSessionServiceFactory userSessionServiceFactory = new UserSessionServiceFactory();
         userSessionService = UserSessionServiceFactory.build();
         passwordEncryptor = new PasswordEncryptor();
     }

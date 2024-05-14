@@ -7,7 +7,6 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.util.List;
 import java.util.Optional;
 @Log4j2
 public class UserDAO implements DAO<User> {
@@ -46,6 +45,7 @@ public class UserDAO implements DAO<User> {
         return Optional.ofNullable(user);
     }
 
+    @Override
     public Optional<User> find(String username) {
         User user = null;
         try (Session session = HibernateUtil.getSession()) {
@@ -57,17 +57,6 @@ public class UserDAO implements DAO<User> {
             log.error("Couldn't find user");
         }
         return Optional.ofNullable(user);
-    }
-
-    @Override
-    public List<User> getAll() {
-        List<User> users = null;
-        try (Session session = HibernateUtil.getSession()) {
-            users = session.createQuery("FROM User", User.class).getResultList();
-        } catch (HibernateException e) {
-            log.error("Couldn't get the a list of location");
-        }
-        return users;
     }
 
     @Override
