@@ -1,6 +1,8 @@
 package com.darfik.skycast.servlet;
 
 import com.darfik.skycast.usersession.UserSessionDAO;
+import com.darfik.skycast.usersession.UserSessionDTO;
+import com.darfik.skycast.usersession.UserSessionMapper;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.Cookie;
@@ -28,7 +30,8 @@ public class AuthenticationFilter extends CookieServlet implements Filter {
         boolean isLoggedIn = false;
         Optional<Cookie> authCookie = catchAuthCookie(request);
 
-        if (authCookie.isPresent()) { // && !userSessionDAO.isExpired(authCookie.toString())) {
+        if (authCookie.isPresent()
+            && !userSessionDAO.isExpired(UserSessionMapper.toModel(new UserSessionDTO(authCookie.toString())))) {
             isLoggedIn = true;
         }
         request.setAttribute("isLoggedIn", isLoggedIn);
