@@ -5,7 +5,6 @@ import com.darfik.skycast.location.LocationDTO;
 import com.darfik.skycast.location.LocationService;
 import com.darfik.skycast.location.LocationServiceFactory;
 import com.darfik.skycast.user.UserDTO;
-import com.darfik.skycast.usersession.UserSessionDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;

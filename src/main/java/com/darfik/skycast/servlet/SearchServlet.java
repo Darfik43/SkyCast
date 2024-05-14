@@ -15,9 +15,6 @@ import java.net.URISyntaxException;
 public class SearchServlet extends RenderServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
-
         try {
             LocationService locationService = LocationServiceFactory.build();
             LocationDTO locationDTO = new LocationDTO();

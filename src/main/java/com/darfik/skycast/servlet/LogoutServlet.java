@@ -5,7 +5,10 @@ import com.darfik.skycast.user.UserServiceFactory;
 import com.darfik.skycast.usersession.UserSessionDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
@@ -19,6 +22,7 @@ public class LogoutServlet extends RenderServlet {
         if (session != null) {
             UserSessionDTO userSessionDTO = new UserSessionDTO(req.getSession().getId());
             userService.logout(userSessionDTO);
+
             session.invalidate();
             Cookie cookie = new Cookie("sessionID", "");
             cookie.setMaxAge(0);

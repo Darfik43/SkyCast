@@ -5,7 +5,8 @@ import com.darfik.skycast.user.UserService;
 import com.darfik.skycast.user.UserServiceFactory;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.hibernate.HibernateException;
 
 import java.io.IOException;
@@ -26,7 +27,6 @@ public class UserRegistrationServlet extends RenderServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         try {
             UserDTO userDTO = new UserDTO(
                     req.getParameter("username"),
@@ -34,7 +34,6 @@ public class UserRegistrationServlet extends RenderServlet {
             );
             userService.registerUser(userDTO);
             req.getRequestDispatcher("/login").forward(req, resp);
-            resp.getWriter().print("You've created your account");
         } catch (HibernateException e) {
             resp.getWriter().print(e.getMessage());
         }
