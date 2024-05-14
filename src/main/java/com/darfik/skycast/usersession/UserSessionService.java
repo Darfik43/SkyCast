@@ -7,7 +7,7 @@ public class UserSessionService {
     private final UserSessionDAO userSessionDAO = UserSessionDAO.getInstance();
 
     public void createAndSaveUserSession(User user, UserSessionDTO userSessionDTO) {
-        userSessionDAO.isExpired(user.getId());
+        userSessionDAO.deleteExpiredSessions(user);
 
         UserSession userSession = UserSessionMapper.toModel(userSessionDTO);
 
