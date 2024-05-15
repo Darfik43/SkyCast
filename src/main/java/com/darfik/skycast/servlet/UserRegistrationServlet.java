@@ -29,7 +29,7 @@ public class UserRegistrationServlet extends RenderServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             UserDTO userDTO = new UserDTO(
-                    req.getParameter("username"),
+                    req.getParameter("username").trim(),
                     req.getParameter("password")
             );
             userService.registerUser(userDTO);

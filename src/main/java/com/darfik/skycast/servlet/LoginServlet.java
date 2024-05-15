@@ -30,9 +30,9 @@ public class LoginServlet extends RenderServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             userService.authorizeUser(
-                    new UserDTO(req.getParameter("username"), req.getParameter("password")),
+                    new UserDTO(req.getParameter("username").trim(), req.getParameter("password")),
                     new UserSessionDTO(req.getSession().getId()));
-            req.getSession().setAttribute("username", req.getParameter("username"));
+            req.getSession().setAttribute("username", req.getParameter("username").trim());
             Cookie cookie = new Cookie("sessionID", req.getSession().getId());
             cookie.setPath("/");
             cookie.setMaxAge(3600);
