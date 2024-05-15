@@ -33,6 +33,18 @@
 </header>
 
 <main class="container mt-4">
+    <form action="#" th:action="@{/search}" method="post" class="form-inline">
+        <div class="input-group">
+            <input type="hidden" name="location" th:value="${searchQuery}">
+            <label>
+                <input type="text" class="form-control" placeholder="Введите место для поиска" name="searchQuery">
+            </label>
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Поиск</button>
+            </div>
+        </div>
+    </form>
+
     <h1>Search Results</h1>
     <p>Location: <span th:text="${location}"></span></p>
     <p>Latitude: <span th:text="${latitude}"></span></p>
