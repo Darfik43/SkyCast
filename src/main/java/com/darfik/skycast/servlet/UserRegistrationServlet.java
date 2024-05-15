@@ -1,5 +1,7 @@
 package com.darfik.skycast.servlet;
 
+import com.darfik.skycast.exception.DatabaseException;
+import com.darfik.skycast.exception.UserAlreadyExistsException;
 import com.darfik.skycast.user.UserDTO;
 import com.darfik.skycast.user.UserService;
 import com.darfik.skycast.user.UserServiceFactory;
@@ -33,11 +35,13 @@ public class UserRegistrationServlet extends RenderServlet {
                     req.getParameter("password")
             );
             userService.registerUser(userDTO);
-
             req.getRequestDispatcher("/login").forward(req, resp);
-        } catch (HibernateException e) {
-            resp.getWriter().print(e.getMessage());
+        } catch (UserAlreadyExistsException e) {
+            req.setAttribute("errorMessage", "User already exists");
+            super.processTemplate("error", req, resp);
+        } catch (DatabaseException e) {
+            req.setAttribute("errorMessage", "A database error occurred. Please try again later.");
+            super.processTemplate("error", req, resp);
         }
-
     }
 }

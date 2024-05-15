@@ -1,9 +1,12 @@
 package com.darfik.skycast.user;
 
-import com.darfik.skycast.usersession.*;
+import com.darfik.skycast.exception.DatabaseException;
+import com.darfik.skycast.exception.InvalidCredentialsException;
+import com.darfik.skycast.exception.UserAlreadyExistsException;
+import com.darfik.skycast.usersession.UserSessionDTO;
+import com.darfik.skycast.usersession.UserSessionService;
+import com.darfik.skycast.usersession.UserSessionServiceFactory;
 import org.hibernate.HibernateException;
-
-import java.util.NoSuchElementException;
 
 public class UserService {
     private final UserDAO userDAO;
@@ -17,22 +20,26 @@ public class UserService {
     }
 
 
-    public void registerUser(UserDTO userDTO) throws HibernateException {
+    public void registerUser(UserDTO userDTO) throws UserAlreadyExistsException, DatabaseException {
             User user = UserMapper.toModel(userDTO);
-            if (userExists(user.getUsername())) {
-                throw new HibernateException("User already exists"); //TODO Replace to custom exception
-            } else {
+        if (userExists(user.getUsername())) {
+            throw new UserAlreadyExistsException("User already exists");
+        } else {
+            try {
                 user.setPassword(passwordEncryptor.encryptPassword(userDTO.getPassword()));
                 userDAO.save(user);
+            } catch (HibernateException e) {
+                throw new DatabaseException("Error saving user", e);
             }
+        }
     }
 
-    public void authorizeUser(UserDTO userDTO, UserSessionDTO userSessionDTO) {
+    public void authorizeUser(UserDTO userDTO, UserSessionDTO userSessionDTO) throws InvalidCredentialsException {
         if (userExists(userDTO.getUsername()) && isPasswordCorrect(userDTO)) {
             User user = userDAO.find(userDTO.getUsername()).get();
             userSessionService.updateUserSessions(user, userSessionDTO);
         } else {
-            throw new NoSuchElementException();
+            throw new InvalidCredentialsException("Incorrect username or password");
         }
     }
 

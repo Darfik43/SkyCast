@@ -1,5 +1,6 @@
 package com.darfik.skycast.servlet;
 
+import com.darfik.skycast.exception.InvalidCredentialsException;
 import com.darfik.skycast.user.UserDTO;
 import com.darfik.skycast.user.UserService;
 import com.darfik.skycast.user.UserServiceFactory;
@@ -39,8 +40,9 @@ public class LoginServlet extends RenderServlet {
             resp.addCookie(cookie);
             resp.getWriter().print("You've logged in");
             resp.sendRedirect(req.getContextPath() + "/home");
-        } catch (NoSuchElementException e) {
-            resp.getWriter().print("Incorrect username or password");
+        }  catch (InvalidCredentialsException e) {
+            req.setAttribute("errorMessage", "Incorrect username or password");
+            super.processTemplate("error", req, resp);
         }
     }
 }
