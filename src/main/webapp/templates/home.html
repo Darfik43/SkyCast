@@ -53,6 +53,11 @@
             <li class="list-group-item" th:each="location : ${session.userLocations}">
                 <span th:text="${location.getName()}"></span>
                 <span th:text="${location.getTemperature()}"></span>
+                <form action="#" th:action="@{/location}" method="post">
+                    <input type="hidden" name="action" value="delete">
+                    <input type="hidden" name="location" th:value="${location.getName()}">
+                    <button type="submit" class="btn btn-danger">Удалить</button>
+                </form>
             </li>
         </ul>
     </section>

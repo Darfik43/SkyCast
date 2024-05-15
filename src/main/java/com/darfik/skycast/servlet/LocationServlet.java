@@ -17,22 +17,6 @@ import java.util.List;
 public class LocationServlet extends RenderServlet {
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        try {
-            LocationService locationService = LocationServiceFactory.build();
-            LocationDTO locationDTO = new LocationDTO(req.getParameter("location"));
-            UserDTO userDTO = new UserDTO(req.getSession().getAttribute("username").toString());
-            locationService.deleteLocationForUser(locationDTO, userDTO);
-        } catch (InterruptedException e) {
-            resp.getWriter().print("Connection to the API was interrupted");
-        } catch (IOException e) {
-            resp.getWriter().print("Can't connect to OpenWeatherAPI");
-        } catch (URISyntaxException e) {
-            resp.getWriter().print("URI is invalid");
-        }
-    }
-
-    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
         try {
             LocationService locationService = LocationServiceFactory.build();
@@ -46,11 +30,18 @@ public class LocationServlet extends RenderServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String action = req.getParameter("action");
+
         try {
             LocationService locationService = LocationServiceFactory.build();
             LocationDTO locationDTO = new LocationDTO(req.getParameter("location"));
             UserDTO userDTO = new UserDTO(req.getSession().getAttribute("username").toString());
-            locationService.addLocationForUser(locationDTO, userDTO);
+
+            if ("delete".equals(action)) {
+                locationService.deleteLocationForUser(locationDTO, userDTO);
+            } else if ("add".equals(action)) {
+                locationService.addLocationForUser(locationDTO, userDTO);
+            }
 
             resp.sendRedirect(req.getContextPath() + "/home");
         } catch (InterruptedException e) {

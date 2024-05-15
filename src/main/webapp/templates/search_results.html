@@ -53,6 +53,7 @@
 
     <form action="#" th:action="@{/location}" method="post">
         <input type="hidden" name="location" th:value="${location}">
+        <input type="hidden" name="action" value="add">
         <button type="submit" class="btn btn-primary">Add Location</button>
     </form>
 </main>
