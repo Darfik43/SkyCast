@@ -21,10 +21,18 @@ public class AuthenticationFilter extends CookieServlet implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
         String requestURI = request.getRequestURI().substring(request.getContextPath().length());
+
+        if ("/".equals(requestURI)) {
+            ((HttpServletResponse) resp).sendRedirect(((HttpServletRequest) req).getContextPath() + "/home");
+            return;
+        }
+
         if ("/register".equals(requestURI) || "/logout".equals(requestURI)) {
             chain.doFilter(request, response);
             return;
         }
+
+
 
         boolean isLoggedIn = false;
         Optional<Cookie> authCookie = catchAuthCookie(request);
