@@ -32,6 +32,12 @@ public class AuthenticationFilter extends CookieServlet implements Filter {
             && !userSessionDAO.isExpired(new UserSession(authCookie.toString()))) {
             isLoggedIn = true;
         }
+
+        if ("/search".equals(requestURI) && !isLoggedIn) {
+            req.getRequestDispatcher("/templates/login.html").forward(req, resp);
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        }
+
         request.setAttribute("isLoggedIn", isLoggedIn);
         chain.doFilter(request, response);
     }

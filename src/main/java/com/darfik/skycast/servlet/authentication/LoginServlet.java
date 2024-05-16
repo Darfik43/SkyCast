@@ -1,9 +1,10 @@
-package com.darfik.skycast.servlet;
+package com.darfik.skycast.servlet.authentication;
 
 import com.darfik.skycast.exception.InvalidCredentialsException;
 import com.darfik.skycast.model.dto.UserDTO;
 import com.darfik.skycast.service.UserService;
 import com.darfik.skycast.model.dto.UserSessionDTO;
+import com.darfik.skycast.servlet.RenderServlet;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
