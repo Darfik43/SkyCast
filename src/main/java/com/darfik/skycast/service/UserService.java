@@ -15,9 +15,9 @@ public class UserService {
     private final PasswordEncryptor passwordEncryptor;
 
     public UserService() {
-        userDAO = UserDAO.getInstance();
-        userSessionService = new UserSessionService();
-        passwordEncryptor = new PasswordEncryptor();
+        this.userDAO = UserDAO.getInstance();
+        this.userSessionService = new UserSessionService();
+        this.passwordEncryptor = new PasswordEncryptor();
     }
 
 

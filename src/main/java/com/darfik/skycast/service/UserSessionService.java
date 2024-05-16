@@ -7,7 +7,11 @@ import com.darfik.skycast.model.dto.UserSessionDTO;
 import java.time.LocalDateTime;
 
 public class UserSessionService {
-    private final UserSessionDAO userSessionDAO = UserSessionDAO.getInstance();
+    private final UserSessionDAO userSessionDAO;
+
+    public UserSessionService() {
+        this.userSessionDAO = UserSessionDAO.getInstance();
+    }
 
     public void updateUserSessions(User user, UserSessionDTO userSessionDTO) {
         userSessionDAO.deleteExpiredSessions(user);
