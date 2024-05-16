@@ -2,6 +2,7 @@ package com.darfik.skycast.service;
 
 import com.darfik.skycast.commons.service.JsonParser;
 import com.darfik.skycast.dao.LocationDAO;
+import com.darfik.skycast.exception.AlreadyAddedLocationException;
 import com.darfik.skycast.weatherapi.LocationJson;
 import com.darfik.skycast.util.json.LocationJsonParser;
 import com.darfik.skycast.model.Location;
@@ -34,13 +35,13 @@ public class LocationService {
         this.weatherParser = new WeatherJsonParser();
     }
 
-    public void addLocationForUser(LocationDTO locationDTO, UserDTO userDTO) throws IOException, URISyntaxException, InterruptedException {
+    public void addLocationForUser(LocationDTO locationDTO, UserDTO userDTO) throws IOException, URISyntaxException, InterruptedException, AlreadyAddedLocationException {
         if (!locationExistsForUser(locationDTO, userDTO)) {
             Location location = LocationMapper.toModel(getLocationByName(locationDTO));
             location.setUser(userDAO.find(userDTO.getUsername()).get());
             locationDAO.save(location);
         } else {
-            throw new IllegalArgumentException("This location is already added");
+            throw new AlreadyAddedLocationException("This location is already added");
         }
     }
 

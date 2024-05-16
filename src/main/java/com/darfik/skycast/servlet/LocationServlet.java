@@ -1,6 +1,7 @@
 package com.darfik.skycast.servlet;
 
 
+import com.darfik.skycast.exception.AlreadyAddedLocationException;
 import com.darfik.skycast.model.dto.LocationDTO;
 import com.darfik.skycast.service.LocationService;
 import com.darfik.skycast.model.dto.UserDTO;
@@ -49,6 +50,9 @@ public class LocationServlet extends RenderServlet {
             resp.getWriter().print("Can't connect to OpenWeatherAPI");
         } catch (URISyntaxException e) {
             resp.getWriter().print("URI is invalid");
+        } catch (AlreadyAddedLocationException e) {
+            req.setAttribute("errorMessage", e.getMessage());
+            super.processTemplate("error", req, resp);
         }
     }
 }
