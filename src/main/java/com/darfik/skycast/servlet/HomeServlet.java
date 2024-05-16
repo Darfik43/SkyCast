@@ -1,9 +1,8 @@
 package com.darfik.skycast.servlet;
 
-import com.darfik.skycast.location.LocationDTO;
-import com.darfik.skycast.location.LocationService;
-import com.darfik.skycast.location.LocationServiceFactory;
-import com.darfik.skycast.user.UserDTO;
+import com.darfik.skycast.model.dto.LocationDTO;
+import com.darfik.skycast.service.LocationService;
+import com.darfik.skycast.model.dto.UserDTO;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,7 +20,7 @@ public class HomeServlet extends RenderServlet {
 
         if ((Boolean) req.getAttribute("isLoggedIn")) {
             try {
-                LocationService locationService = LocationServiceFactory.build();
+                LocationService locationService = new LocationService();
                 List<LocationDTO> userLocations = locationService.getUserLocations(new UserDTO(req.getSession().getAttribute("username").toString()));
                 req.getSession().setAttribute("userLocations", userLocations);
             } catch (URISyntaxException | InterruptedException e) {

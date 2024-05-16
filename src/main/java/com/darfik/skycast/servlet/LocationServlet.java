@@ -1,10 +1,9 @@
 package com.darfik.skycast.servlet;
 
 
-import com.darfik.skycast.location.LocationDTO;
-import com.darfik.skycast.location.LocationService;
-import com.darfik.skycast.location.LocationServiceFactory;
-import com.darfik.skycast.user.UserDTO;
+import com.darfik.skycast.model.dto.LocationDTO;
+import com.darfik.skycast.service.LocationService;
+import com.darfik.skycast.model.dto.UserDTO;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,7 +18,7 @@ public class LocationServlet extends RenderServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
         try {
-            LocationService locationService = LocationServiceFactory.build();
+            LocationService locationService = new LocationService();
             UserDTO userDTO = new UserDTO(req.getSession().getAttribute("username").toString());
             List<LocationDTO> userLocations = locationService.getUserLocations(userDTO);
             req.getSession().setAttribute("userLocations", userLocations);
@@ -33,7 +32,7 @@ public class LocationServlet extends RenderServlet {
         String action = req.getParameter("action");
 
         try {
-            LocationService locationService = LocationServiceFactory.build();
+            LocationService locationService = new LocationService();
             LocationDTO locationDTO = new LocationDTO(req.getParameter("location"));
             UserDTO userDTO = new UserDTO(req.getSession().getAttribute("username").toString());
 

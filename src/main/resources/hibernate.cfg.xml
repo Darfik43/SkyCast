@@ -12,9 +12,9 @@
 
     <property name="show_sql">true</property>
     <property name="hbm2ddl.auto">update</property>
-    <mapping class="com.darfik.skycast.user.User"/>
-    <mapping class="com.darfik.skycast.location.Location"/>
-    <mapping class="com.darfik.skycast.usersession.UserSession"/>
+    <mapping class="com.darfik.skycast.model.User"/>
+    <mapping class="com.darfik.skycast.model.Location"/>
+    <mapping class="com.darfik.skycast.model.UserSession"/>
 
   </session-factory>
 </hibernate-configuration>

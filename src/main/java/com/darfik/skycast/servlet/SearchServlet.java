@@ -1,8 +1,7 @@
 package com.darfik.skycast.servlet;
 
-import com.darfik.skycast.location.LocationDTO;
-import com.darfik.skycast.location.LocationService;
-import com.darfik.skycast.location.LocationServiceFactory;
+import com.darfik.skycast.model.dto.LocationDTO;
+import com.darfik.skycast.service.LocationService;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,7 +14,7 @@ public class SearchServlet extends RenderServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
-            LocationService locationService = LocationServiceFactory.build();
+            LocationService locationService = new LocationService();
             LocationDTO locationDTO = new LocationDTO(req.getParameter("searchQuery"));
             locationDTO = locationService.getLocationByName(locationDTO);
             locationDTO = locationService.getWeatherByCoordinates(locationDTO);
