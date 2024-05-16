@@ -12,26 +12,27 @@
     <form action="#" th:action="@{/search}" method="post" class="form-inline">
         <div class="input-group">
             <input type="hidden" name="location" th:value="${searchQuery}">
-            <label>
-                <input type="text" class="form-control" placeholder="Введите место для поиска" name="searchQuery">
-            </label>
+            <input type="text" class="form-control" placeholder="Введите место для поиска" name="searchQuery">
             <div class="input-group-append">
                 <button type="submit" class="btn btn-primary">Поиск</button>
             </div>
         </div>
     </form>
 
-    <h1>Search Results</h1>
-    <p>Location: <span th:text="${location}"></span></p>
-    <p>Latitude: <span th:text="${latitude}"></span></p>
-    <p>Longitude: <span th:text="${longitude}"></span></p>
-    <p>Temperature: <span th:text="${temperature}"></span>°</p>
-
-    <form action="#" th:action="@{/location}" method="post">
-        <input type="hidden" name="location" th:value="${location}">
-        <input type="hidden" name="action" value="add">
-        <button type="submit" class="btn btn-primary">Add Location</button>
-    </form>
+    <h1 class="mb-4">Search Results</h1>
+    <div class="card mb-3">
+        <div class="card-body">
+            <p class="card-text">Location: <span th:text="${location}"></span></p>
+            <p class="card-text">Latitude: <span th:text="${latitude}"></span></p>
+            <p class="card-text">Longitude: <span th:text="${longitude}"></span></p>
+            <p class="card-text">Temperature: <span th:text="${temperature}"></span>°</p>
+            <form action="#" th:action="@{/location}" method="post">
+                <input type="hidden" name="location" th:value="${location}">
+                <input type="hidden" name="action" value="add">
+                <button type="submit" class="btn btn-primary">Add Location</button>
+            </form>
+        </div>
+    </div>
 </main>
 </body>
 </html>

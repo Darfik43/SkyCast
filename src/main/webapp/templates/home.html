@@ -8,35 +8,42 @@
 </head>
 <body>
 <header th:replace="header :: header"></header>
-
 <main class="container mt-4">
-    <form action="#" th:action="@{/search}" method="post" class="form-inline">
+    <form action="#" th:action="@{/search}" method="post" class="form-inline justify-content-center mb-4">
         <div class="input-group">
             <input type="hidden" name="location" th:value="${searchQuery}">
-            <label>
-                <input type="text" class="form-control" placeholder="Введите место для поиска" name="searchQuery">
-            </label>
+            <input type="text" class="form-control" placeholder="Введите место для поиска" name="searchQuery">
             <div class="input-group-append">
                 <button type="submit" class="btn btn-primary">Поиск</button>
             </div>
         </div>
     </form>
 
-
     <section id="userLocations" th:if="${isLoggedIn}">
-        <h2>Ваши локации</h2>
-        <ul class="list-group">
-            <li class="list-group-item" th:each="location : ${session.userLocations}">
-                <span th:text="${location.getName()}"></span>
-                <span th:text="${location.getTemperature()}"></span>
-                <form action="#" th:action="@{/location}" method="post">
-                    <input type="hidden" name="action" value="delete">
-                    <input type="hidden" name="location" th:value="${location.getName()}">
-                    <button type="submit" class="btn btn-danger">Удалить</button>
-                </form>
-            </li>
-        </ul>
+        <h2 class="text-center mb-4">Ваши локации</h2>
+        <div class="card-deck">
+            <div class="card" th:each="location : ${session.userLocations}">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <img th:src="@{/img/loc.svg}" alt="Location Icon" width="30" height="30" class="mr-2">
+                        <h5 class="card-title font-weight-bold text-primary" th:text="${location.getName()}"></h5>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <img th:src="@{/img/temp.png}" alt="Location Icon" width="30" height="30" class="mr-2">
+                        <p class="card-text text-success" th:text="${location.getTemperature()} + '°C'"></p>
+                    </div>
+                    <form action="#" th:action="@{/location}" method="post" class="mb-0">
+                        <input type="hidden" name="action" value="delete">
+                        <input type="hidden" name="location" th:value="${location.getName()}">
+                        <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </section>
 </main>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
