@@ -2,17 +2,17 @@ package com.darfik.skycast.service;
 
 import com.darfik.skycast.commons.service.JsonParser;
 import com.darfik.skycast.dao.LocationDAO;
+import com.darfik.skycast.dao.UserDAO;
 import com.darfik.skycast.exception.AlreadyAddedLocationException;
-import com.darfik.skycast.weatherapi.LocationJson;
-import com.darfik.skycast.util.json.LocationJsonParser;
 import com.darfik.skycast.model.Location;
 import com.darfik.skycast.model.User;
-import com.darfik.skycast.dao.UserDAO;
 import com.darfik.skycast.model.dto.LocationDTO;
 import com.darfik.skycast.model.dto.UserDTO;
+import com.darfik.skycast.util.json.LocationJsonParser;
+import com.darfik.skycast.util.json.WeatherJsonParser;
+import com.darfik.skycast.weatherapi.LocationJson;
 import com.darfik.skycast.weatherapi.OpenWeatherAPIService;
 import com.darfik.skycast.weatherapi.WeatherJson;
-import com.darfik.skycast.util.json.WeatherJsonParser;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.IOException;
@@ -56,7 +56,7 @@ public class LocationService {
         return userLocations;
     }
 
-    private boolean locationExistsForUser(LocationDTO locationDTO, UserDTO userDTO) throws IOException, URISyntaxException, InterruptedException {
+    public boolean locationExistsForUser(LocationDTO locationDTO, UserDTO userDTO) throws IOException, URISyntaxException, InterruptedException {
         List<LocationDTO> userLocations = getUserLocations(userDTO);
         return userLocations.stream()
                 .map(LocationDTO::getName)
