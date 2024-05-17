@@ -1,6 +1,5 @@
 package com.darfik.skycast.dao;
 
-import com.darfik.skycast.commons.dao.DAO;
 import com.darfik.skycast.model.Location;
 import com.darfik.skycast.model.User;
 import com.darfik.skycast.util.HibernateUtil;
@@ -13,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Log4j2
-public class LocationDAO implements DAO<Location> {
+public class LocationDAO {
 
     private static LocationDAO locationDAO;
 
@@ -27,7 +26,6 @@ public class LocationDAO implements DAO<Location> {
         return locationDAO;
     }
 
-    @Override
     public void save(Location location) {
         try (Session session = HibernateUtil.getSession()) {
             Transaction tx = session.beginTransaction();
@@ -38,7 +36,6 @@ public class LocationDAO implements DAO<Location> {
         }
     }
 
-    @Override
     public Optional<Location> find(String name) {
         Location location = null;
         try (Session session = HibernateUtil.getSession()) {
@@ -75,7 +72,6 @@ public class LocationDAO implements DAO<Location> {
         }
     }
 
-    @Override
     public void update(Location location) {
         try (Session session = HibernateUtil.getSession()) {
             Transaction tx = session.beginTransaction();

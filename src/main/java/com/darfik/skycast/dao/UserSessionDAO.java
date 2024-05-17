@@ -1,6 +1,5 @@
 package com.darfik.skycast.dao;
 
-import com.darfik.skycast.commons.dao.DAO;
 import com.darfik.skycast.model.User;
 import com.darfik.skycast.model.UserSession;
 import com.darfik.skycast.util.HibernateUtil;
@@ -15,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Log4j2
-public class UserSessionDAO implements DAO<UserSession> {
+public class UserSessionDAO{
 
     private static UserSessionDAO userSessionDAO;
 
@@ -29,7 +28,6 @@ public class UserSessionDAO implements DAO<UserSession> {
         return userSessionDAO;
     }
 
-    @Override
     public void save(UserSession userSession) {
         try (Session session = HibernateUtil.getSession()) {
             Transaction tx = session.beginTransaction();
@@ -40,7 +38,6 @@ public class UserSessionDAO implements DAO<UserSession> {
         }
     }
 
-    @Override
     public Optional<UserSession> find(String id) {
         UserSession userSession = null;
         try (Session session = HibernateUtil.getSession()) {
@@ -63,7 +60,6 @@ public class UserSessionDAO implements DAO<UserSession> {
         return userSessions;
     }
 
-    @Override
     public void update(UserSession userSession) {
         try (Session session = HibernateUtil.getSession()) {
             Transaction tx = session.beginTransaction();
