@@ -28,16 +28,6 @@ public class UserSessionDAO{
         return userSessionDAO;
     }
 
-    public void save(UserSession userSession) {
-        try (Session session = HibernateUtil.getSession()) {
-            Transaction tx = session.beginTransaction();
-            session.persist(userSession);
-            tx.commit();
-        } catch (HibernateException e) {
-            log.error("Couldn't save session, try again");
-        }
-    }
-
     public Optional<UserSession> find(String id) {
         UserSession userSession = null;
         try (Session session = HibernateUtil.getSession()) {

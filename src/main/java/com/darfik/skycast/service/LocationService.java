@@ -5,7 +5,6 @@ import com.darfik.skycast.dao.LocationDAO;
 import com.darfik.skycast.dao.UserDAO;
 import com.darfik.skycast.exception.AlreadyAddedLocationException;
 import com.darfik.skycast.model.Location;
-import com.darfik.skycast.model.User;
 import com.darfik.skycast.model.dto.LocationDTO;
 import com.darfik.skycast.model.dto.UserDTO;
 import com.darfik.skycast.util.json.LocationJsonParser;
@@ -17,6 +16,7 @@ import lombok.extern.log4j.Log4j2;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Collections;
 import java.util.List;
 
 @Log4j2
@@ -38,7 +38,7 @@ public class LocationService {
     public void addLocationForUser(LocationDTO locationDTO, UserDTO userDTO) throws IOException, URISyntaxException, InterruptedException, AlreadyAddedLocationException {
         if (!locationExistsForUser(locationDTO, userDTO)) {
             Location location = LocationMapper.toModel(getLocationByName(locationDTO));
-            location.setUser(userDAO.find(userDTO.getUsername()).get());
+            userDAO.find(userDTO.getUsername()).ifPresent(location::setUser);
             locationDAO.save(location);
         } else {
             throw new AlreadyAddedLocationException("This location is already added");
@@ -46,9 +46,12 @@ public class LocationService {
     }
 
     public List<LocationDTO> getUserLocations(UserDTO userDTO) throws IOException, URISyntaxException, InterruptedException {
-        List<LocationDTO> userLocations = locationDAO.findLocationsByUser(userDAO.find(userDTO.getUsername()).get())
-                .stream().map(LocationMapper::toDTO)
-                .toList();
+        List<LocationDTO> userLocations = userDAO.find(userDTO.getUsername())
+                .map(user -> locationDAO.findLocationsByUser(user)
+                        .stream()
+                        .map(LocationMapper::toDTO)
+                        .toList())
+                .orElse(Collections.emptyList());
         for (LocationDTO location : userLocations) {
             getLocationByName(location);
             getWeatherByCoordinates(location);
@@ -84,9 +87,11 @@ public class LocationService {
     public void deleteLocationForUser(LocationDTO locationDTO, UserDTO userDTO) throws IOException, URISyntaxException, InterruptedException {
         if (locationExistsForUser(locationDTO, userDTO)) {
             Location location = LocationMapper.toModel(getLocationByName(locationDTO));
-            location.setUser(userDAO.find(userDTO.getUsername()).get());
-            User user = userDAO.find(userDTO.getUsername()).get();
-            locationDAO.delete(location, user);
+            userDAO.find(userDTO.getUsername())
+                    .ifPresent(user -> {
+                        location.setUser(user);
+                        locationDAO.delete(location, user);
+                    });
         } else {
             throw new IllegalArgumentException("This location isn't added for you");
         }

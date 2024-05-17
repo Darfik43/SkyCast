@@ -37,8 +37,8 @@ public class UserService {
 
     public void authorizeUser(UserDTO userDTO, UserSessionDTO userSessionDTO) throws InvalidCredentialsException {
         if (userExists(userDTO.getUsername()) && isPasswordCorrect(userDTO)) {
-            User user = userDAO.find(userDTO.getUsername()).get();
-            userSessionService.updateUserSessions(user, userSessionDTO);
+            userDAO.find(userDTO.getUsername())
+                    .ifPresent(user -> userSessionService.updateUserSessions(user, userSessionDTO));
         } else {
             throw new InvalidCredentialsException("Incorrect username or password");
         }

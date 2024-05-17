@@ -43,15 +43,4 @@ public class UserDAO{
         }
         return Optional.ofNullable(user);
     }
-
-    public void update(User user) {
-        try (Session session = HibernateUtil.getSession()) {
-            Transaction tx = session.beginTransaction();
-            session.merge(user);
-            tx.commit();
-        } catch (HibernateException e) {
-            log.error("Couldn't update the location");
-        }
-
-    }
 }

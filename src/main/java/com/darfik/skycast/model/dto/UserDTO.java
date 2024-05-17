@@ -18,8 +18,4 @@ public class UserDTO {
         this.username = username;
         this.password = password;
     }
-
-    public UserDTO(Long id) {
-        this.id = id;
-    }
 }

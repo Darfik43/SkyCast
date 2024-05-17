@@ -9,7 +9,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
-import java.util.Optional;
 
 @Log4j2
 public class LocationDAO {
@@ -36,19 +35,6 @@ public class LocationDAO {
         }
     }
 
-    public Optional<Location> find(String name) {
-        Location location = null;
-        try (Session session = HibernateUtil.getSession()) {
-            String hql = "FROM Location WHERE name = :name";
-            location = session.createQuery(hql, Location.class)
-                    .setParameter("name", name)
-                    .uniqueResult();
-        } catch (HibernateException e) {
-            log.error("Couldn't find the location by name");
-        }
-        return Optional.ofNullable(location);
-    }
-
     public List<Location> findLocationsByUser(User user) {
         List<Location> locations = null;
         try (Session session = HibernateUtil.getSession()) {
@@ -70,16 +56,5 @@ public class LocationDAO {
                     .executeUpdate();
             tx.commit();
         }
-    }
-
-    public void update(Location location) {
-        try (Session session = HibernateUtil.getSession()) {
-            Transaction tx = session.beginTransaction();
-            session.merge(location);
-            tx.commit();
-        } catch (HibernateException e) {
-            log.error("Couldn't update the location");
-        }
-
     }
 }
