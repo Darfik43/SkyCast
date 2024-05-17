@@ -1,8 +1,8 @@
 package com.darfik.skycast.servlet;
 
 import com.darfik.skycast.model.dto.LocationDTO;
-import com.darfik.skycast.service.LocationService;
 import com.darfik.skycast.model.dto.UserDTO;
+import com.darfik.skycast.service.LocationService;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,7 +17,6 @@ public class HomeServlet extends RenderServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-
         if ((Boolean) req.getAttribute("isLoggedIn")) {
             try {
                 LocationService locationService = new LocationService();
@@ -27,6 +26,7 @@ public class HomeServlet extends RenderServlet {
                 resp.getWriter().print("Can't get user locations");
             }
         }
+
         super.processTemplate("home", req, resp);
     }
 }
