@@ -12,7 +12,9 @@
     <form action="#" th:action="@{/search}" method="post" class="form-inline">
         <div class="input-group">
             <input type="hidden" name="location" th:value="${searchQuery}">
-            <input type="text" class="form-control" placeholder="Enter a location" name="searchQuery">
+            <label>
+                <input type="text" class="form-control" placeholder="Enter a location" name="searchQuery">
+            </label>
             <div class="input-group-append">
                 <button type="submit" class="btn btn-primary">Поиск</button>
             </div>
