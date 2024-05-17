@@ -75,10 +75,8 @@ public class UserSessionDAO implements DAO<UserSession> {
     }
 
     public boolean isExpired(UserSession userSession) {
-        if (userSession.getExpiresAt() == null) {
-            return true;
-        }
-        return userSession.getExpiresAt().isBefore(LocalDateTime.now());
+        return find(userSession.getId()).map(userSession1 ->
+                userSession1.getExpiresAt().isBefore(LocalDateTime.now())).orElse(false);
     }
 
 
