@@ -12,7 +12,7 @@
     <form action="#" th:action="@{/search}" method="post" class="form-inline">
         <div class="input-group">
             <input type="hidden" name="location" th:value="${searchQuery}">
-            <input type="text" class="form-control" placeholder="Введите место для поиска" name="searchQuery">
+            <input type="text" class="form-control" placeholder="Enter a location" name="searchQuery">
             <div class="input-group-append">
                 <button type="submit" class="btn btn-primary">Поиск</button>
             </div>
@@ -23,14 +23,18 @@
     <div class="card mb-3">
         <div class="card-body">
             <p class="card-text">Location: <span th:text="${location}"></span></p>
-            <p class="card-text">Latitude: <span th:text="${latitude}"></span></p>
-            <p class="card-text">Longitude: <span th:text="${longitude}"></span></p>
             <p class="card-text">Temperature: <span th:text="${temperature}"></span>°</p>
             <form action="#" th:action="@{/location}" method="post">
                 <input type="hidden" name="location" th:value="${location}">
                 <input type="hidden" name="action" value="add">
-                <button type="submit" class="btn btn-primary">Add Location</button>
+                <th:block th:if="${not locationAlreadyAdded}">
+                    <button type="submit" class="btn btn-primary">Add Location</button>
+                </th:block>
+                <th:block th:if="${locationAlreadyAdded}">
+                    <span class="text-success">Location already added</span>
+                </th:block>
             </form>
+
         </div>
     </div>
 </main>
