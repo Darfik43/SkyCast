@@ -14,6 +14,8 @@ public class LocationJsonParser implements JsonParser<LocationJson> {
             return jsonMapper.readValue(json, LocationJson[].class)[0];
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Error parsing location JSON", e);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new ArrayIndexOutOfBoundsException("No locations found");
         }
     }
 }
