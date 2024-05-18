@@ -22,7 +22,7 @@ public class LoginServlet extends RenderServlet {
         if ((Boolean) req.getAttribute("isLoggedIn")) {
             resp.sendRedirect(req.getContextPath() + "/home");
         } else {
-            req.getRequestDispatcher("/templates/login.html").forward(req, resp);
+            processTemplate("login", req, resp);
         }
     }
 
@@ -41,7 +41,7 @@ public class LoginServlet extends RenderServlet {
             resp.sendRedirect(req.getContextPath() + "/home");
         }  catch (InvalidCredentialsException e) {
             req.setAttribute("errorMessage", "Incorrect username or password");
-            super.processTemplate("error", req, resp);
+            super.processTemplate("login", req, resp);
         }
     }
 }
