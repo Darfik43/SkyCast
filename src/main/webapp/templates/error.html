@@ -5,36 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Error</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #f8f9fa;
-        }
-
-        .error-container {
-            width: 400px;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        .error-message {
-            color: red;
-            margin-bottom: 10px;
-        }
-    </style>
 </head>
-<body>
-
-<div class="error-container">
-    <h2 class="mb-4">Error</h2>
-    <div class="error-message" th:text="${errorMessage}">An error occurred</div>
-    <a href="/skycast/home" class="btn btn-primary">Back to Home</a>
+<body class="d-flex align-items-center justify-content-center" style="height: 100vh; background-color: #f8f9fa;">
+<div class="card w-400 p-4 shadow rounded" style="width: 400px;">
+    <div class="card-body">
+        <h2 class="card-title mb-4">Error</h2>
+        <div class="text-danger mb-3" th:text="${errorMessage}">An error occurred</div>
+        <button onclick="window.history.back()" class="btn btn-primary">Back</button>
+    </div>
 </div>
 </body>
 </html>
