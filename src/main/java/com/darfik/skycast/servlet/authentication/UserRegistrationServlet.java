@@ -23,7 +23,7 @@ public class UserRegistrationServlet extends RenderServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/templates/register.html").forward(req, resp);
+        processTemplate("register", req, resp);
     }
 
     @Override
