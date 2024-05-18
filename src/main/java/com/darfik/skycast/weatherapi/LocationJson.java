@@ -17,4 +17,7 @@ public class LocationJson {
 
     @JsonProperty("lon")
     private BigDecimal longitude;
+
+    @JsonProperty("country")
+    private String country;
 }
