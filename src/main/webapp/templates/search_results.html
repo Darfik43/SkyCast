@@ -10,17 +10,45 @@
             background-color: #ffffff;
         }
 
+        .weather-icon {
+            position: absolute;
+            top: 45px;
+            left: 10px;
+            width: 60px;
+            height: 60px;
+        }
+
+        .position-absolute {
+            position: absolute;
+        }
+
+        .top-right {
+            top: 0;
+            right: 0;
+        }
+
+        .bottom-left {
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
         .card {
             min-width: 18rem;
             max-width: 18rem;
             margin: 1rem;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background-color: #d7f5d7;
-            border: none;
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding-bottom: 3rem; /* Добавим отступ снизу */
         }
 
         .card-title, .card-text {
             text-align: center;
+            margin-left: 1rem;
         }
 
         .search-container {
@@ -52,22 +80,48 @@
         <span th:text="${errorMessage}"></span>
     </div>
 
-    <div th:if="${location != null and !location.isEmpty()}" class="row justify-content-center">
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <div class="card-body">
-                    <p class="card-text">Location: <span th:text="${location}"></span></p>
-                    <p class="card-text">Temperature: <span th:text="${temperature}"></span>°</p>
-                    <form action="#" th:action="@{/location}" method="post" class="text-center">
-                        <input type="hidden" name="location" th:value="${location}">
-                        <input type="hidden" name="action" value="add">
-                        <th:block th:if="${not locationAlreadyAdded}">
-                            <button type="submit" class="btn btn-primary">Add Location</button>
-                        </th:block>
+    <div th:if="${location != null}" class="row justify-content-center">
+        <div class="row justify-content-center">
+            <div class="col-md-4 mb-4 d-flex justify-content-center">
+                <div class="card position-relative">
+                    <div class="card-body">
+                        <div class="position-absolute top-right mt-1 mr-2">
+                            <th:block th:if="${not locationAlreadyAdded}">
+                                <form action="#" th:action="@{/location}" method="post" class="mb-0 text-center">
+                                    <input type="hidden" name="action" value="add">
+                                    <input type="hidden" name="location" th:value="${location.getName()}">
+                                    <button type="submit" class="btn btn-link p-0">
+                                        <img th:src="@{/img/plus.svg}" alt="Add Icon" width="20" height="20">
+                                    </button>
+                                </form>
+                            </th:block>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center">
+                            <h5 class="card-title font-weight-bold text-primary"
+                                th:text="${location.getName()} + ', ' + ${location.getCountry()}"></h5>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center">
+                            <p class="card-text" style="color: #333;"><strong>Temperature</strong> <span
+                                    th:text="${#numbers.formatDecimal(location.getTemperature(), 0, 0)} + '°C'"></span>
+                            </p>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center">
+                            <p class="card-text" style="color: #333;"><strong>Feels Like</strong> <span
+                                    th:text="${#numbers.formatDecimal(location.getFeelsLike(), 0, 0)} + '°C'"></span>
+                            </p>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center">
+                            <p class="card-text" style="color: #333;"><strong>Conditions</strong> <span
+                                    th:text="${(location.getWeather())}"></span></p>
+                        </div>
+                        <img th:src="@{'https://openweathermap.org/img/wn/' + ${location.getIcon()} + '.png'}"
+                             alt="Weather Icon" class="weather-icon">
+                    </div>
+                    <div class="position-absolute bottom-left">
                         <th:block th:if="${locationAlreadyAdded}">
                             <span class="text-success">Location already added</span>
                         </th:block>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -75,4 +129,3 @@
 </main>
 </body>
 </html>
-

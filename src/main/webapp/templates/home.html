@@ -9,21 +9,40 @@
         body {
             background-color: #ffffff;
         }
+
+        .weather-icon {
+            position: absolute;
+            top: 45px;
+            left: 10px;
+            width: 60px;
+            height: 60px;
+        }
+
+        .position-absolute {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
         .card {
             min-width: 18rem;
             max-width: 18rem;
             margin: 1rem;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             background-color: #ffffff;
             border-radius: 8px;
         }
+
         .card-title, .card-text {
             text-align: center;
+            margin-left: 1rem;
         }
+
         .search-container {
             margin-top: 2rem;
             margin-bottom: 2rem;
         }
+
         .input-group.custom-width {
             width: 80%;
         }
@@ -46,29 +65,43 @@
 
 <main class="container mt-4">
     <section id="userLocations" th:if="${isLoggedIn}">
-        <h2 class="text-center mb-4">Your locations</h2>
+        <h2 class="text-center mb-4">Your Locations</h2>
         <div class="row justify-content-center">
             <div class="col-md-4 mb-4" th:each="location : ${session.userLocations}">
-                <div class="card">
+                <div class="card position-relative">
                     <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-center">
-                            <img th:src="@{/img/loc.svg}" alt="Location Icon" width="30" height="30" class="mb-2">
-                            <h5 class="card-title font-weight-bold text-primary" th:text="${location.getName()}"></h5>
+                        <div class="position-absolute top-0 right-0 mt-1 mr-2">
+                            <form action="#" th:action="@{/location}" method="post" class="mb-0 text-center">
+                                <input type="hidden" name="action" value="delete">
+                                <input type="hidden" name="location" th:value="${location.getName()}">
+                                <button type="submit" class="btn btn-link p-0">
+                                    <img th:src="@{/img/trash.svg}" alt="Delete Icon" width="20" height="20">
+                                </button>
+                            </form>
                         </div>
                         <div class="d-flex align-items-center justify-content-center">
-                            <img th:src="@{/img/temp.png}" alt="Temperature Icon" width="30" height="30" class="mb-2">
-                            <p class="card-text text-success" th:text="${location.getTemperature()} + '°C'"></p>
+                            <h5 class="card-title font-weight-bold text-primary" th:text="${location.getName()} + ', ' + ${location.getCountry()}"></h5>
                         </div>
-                        <form action="#" th:action="@{/location}" method="post" class="mb-0 text-center">
-                            <input type="hidden" name="action" value="delete">
-                            <input type="hidden" name="location" th:value="${location.getName()}">
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
+                        <div class="d-flex align-items-center justify-content-center">
+                            <p class="card-text" style="color: #333;"><strong>Temperature</strong> <span
+                                    th:text="${#numbers.formatDecimal(location.getTemperature(), 0, 0)} + '°C'"></span></p>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center">
+                            <p class="card-text" style="color: #333;"><strong>Feels Like</strong> <span
+                                    th:text="${#numbers.formatDecimal(location.getFeelsLike(), 0, 0)} + '°C'"></span></p>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center">
+                            <p class="card-text" style="color: #333;"><strong>Conditions</strong> <span
+                                    th:text="${(location.getWeather())}"></span></p>
+                        </div>
+                        <img th:src="@{'https://openweathermap.org/img/wn/' + ${location.getIcon()} + '.png'}" alt="Weather Icon" class="weather-icon">
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+
 </main>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
