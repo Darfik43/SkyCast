@@ -29,7 +29,7 @@ public class SearchServlet extends RenderServlet {
             req.setAttribute("location", locationDTO.getName());
             req.setAttribute("temperature", locationDTO.getTemperature());
 
-            processTemplate("search_results.html", req, resp);
+            processTemplate("search_results", req, resp);
 
         } catch (InterruptedException e) {
             resp.getWriter().print("Connection to the API was interrupted");
@@ -39,7 +39,7 @@ public class SearchServlet extends RenderServlet {
             resp.getWriter().print("URI is invalid");
         } catch (ArrayIndexOutOfBoundsException e) {
             req.setAttribute("errorMessage", "No locations found");
-            super.processTemplate("error", req, resp);
+            processTemplate("search_results", req, resp);
         }
     }
 }

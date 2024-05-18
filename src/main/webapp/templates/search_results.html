@@ -9,21 +9,25 @@
         body {
             background-color: #ffffff;
         }
+
         .card {
             min-width: 18rem;
             max-width: 18rem;
             margin: 1rem;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             background-color: #d7f5d7;
             border: none;
         }
+
         .card-title, .card-text {
             text-align: center;
         }
+
         .search-container {
             margin-top: 2rem;
             margin-bottom: 2rem;
         }
+
         .input-group.custom-width {
             width: 80%;
         }
@@ -37,13 +41,18 @@
             <input type="hidden" name="location" th:value="${searchQuery}">
             <input type="text" class="form-control" placeholder="Enter a location" name="searchQuery">
             <div class="input-group-append">
-                <button type="submit" class="btn btn-primary">Поиск</button>
+                <button type="submit" class="btn btn-primary">Search</button>
             </div>
         </div>
     </form>
 
     <h1 class="mb-4 text-center">Search Results</h1>
-    <div class="row justify-content-center">
+
+    <div th:if="${errorMessage}" class="alert alert-danger text-center" role="alert">
+        <span th:text="${errorMessage}"></span>
+    </div>
+
+    <div th:if="${location != null and !location.isEmpty()}" class="row justify-content-center">
         <div class="col-md-4 mb-4">
             <div class="card">
                 <div class="card-body">
@@ -66,3 +75,4 @@
 </main>
 </body>
 </html>
+
