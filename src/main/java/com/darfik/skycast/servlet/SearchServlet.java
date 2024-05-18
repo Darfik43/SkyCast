@@ -26,8 +26,7 @@ public class SearchServlet extends RenderServlet {
 
             locationDTO = locationService.getLocationByName(locationDTO);
             locationDTO = locationService.getWeatherByCoordinates(locationDTO);
-            req.setAttribute("location", locationDTO.getName());
-            req.setAttribute("temperature", locationDTO.getTemperature());
+            req.setAttribute("location", locationDTO);
 
             processTemplate("search_results", req, resp);
 
