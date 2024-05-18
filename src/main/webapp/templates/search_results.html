@@ -5,38 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Results</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+        .card {
+            min-width: 18rem;
+            max-width: 18rem;
+            margin: 1rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background-color: #d7f5d7;
+            border: none;
+        }
+        .card-title, .card-text {
+            text-align: center;
+        }
+        .search-container {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        .input-group.custom-width {
+            width: 80%;
+        }
+    </style>
 </head>
 <body>
 <header th:replace="header :: header"></header>
 <main class="container mt-4">
-    <form action="#" th:action="@{/search}" method="post" class="form-inline">
-        <div class="input-group">
+    <form action="#" th:action="@{/search}" method="post" class="form-inline justify-content-center">
+        <div class="input-group custom-width">
             <input type="hidden" name="location" th:value="${searchQuery}">
-            <label>
-                <input type="text" class="form-control" placeholder="Enter a location" name="searchQuery">
-            </label>
+            <input type="text" class="form-control" placeholder="Enter a location" name="searchQuery">
             <div class="input-group-append">
                 <button type="submit" class="btn btn-primary">Поиск</button>
             </div>
         </div>
     </form>
 
-    <h1 class="mb-4">Search Results</h1>
-    <div class="card mb-3">
-        <div class="card-body">
-            <p class="card-text">Location: <span th:text="${location}"></span></p>
-            <p class="card-text">Temperature: <span th:text="${temperature}"></span>°</p>
-            <form action="#" th:action="@{/location}" method="post">
-                <input type="hidden" name="location" th:value="${location}">
-                <input type="hidden" name="action" value="add">
-                <th:block th:if="${not locationAlreadyAdded}">
-                    <button type="submit" class="btn btn-primary">Add Location</button>
-                </th:block>
-                <th:block th:if="${locationAlreadyAdded}">
-                    <span class="text-success">Location already added</span>
-                </th:block>
-            </form>
-
+    <h1 class="mb-4 text-center">Search Results</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <p class="card-text">Location: <span th:text="${location}"></span></p>
+                    <p class="card-text">Temperature: <span th:text="${temperature}"></span>°</p>
+                    <form action="#" th:action="@{/location}" method="post" class="text-center">
+                        <input type="hidden" name="location" th:value="${location}">
+                        <input type="hidden" name="action" value="add">
+                        <th:block th:if="${not locationAlreadyAdded}">
+                            <button type="submit" class="btn btn-primary">Add Location</button>
+                        </th:block>
+                        <th:block th:if="${locationAlreadyAdded}">
+                            <span class="text-success">Location already added</span>
+                        </th:block>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </main>
