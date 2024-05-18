@@ -4,17 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
-import java.util.List;
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Getter
-public class WeatherJson {
-    @JsonProperty("name")
-    private String location;
-
-    @JsonProperty("weather")
-    private List<WeatherData> weatherData;
-
+public class WeatherData {
     @JsonProperty("main")
-    private MainWeatherData mainWeatherData;
+    private String main;
+
+    @JsonProperty("icon")
+    private String icon;
 }
