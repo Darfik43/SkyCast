@@ -3,10 +3,18 @@ version: '3.8'
 services:
   mariadb:
     image: mariadb:latest
-    container_name: mariadb
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 12345678
       MYSQL_DATABASE: skycast
     ports:
       - "3306:3306"
+
+  tomcat:
+    build: .
+    restart: on-failure
+    depends_on:
+      - mariadb
+    ports:
+      - "8080:8080"
+    links:
+      - mariadb
