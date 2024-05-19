@@ -31,10 +31,12 @@ public class Location {
 
 
     @Column(name = "latitude")
+    @Getter
     private BigDecimal latitude;
 
 
     @Column(name = "longitude")
+    @Getter
     private BigDecimal longitude;
 
     public Location(String name, BigDecimal latitude, BigDecimal longitude) {
