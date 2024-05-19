@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URISyntaxException;
 import java.util.List;
 
@@ -34,7 +35,9 @@ public class LocationServlet extends RenderServlet {
 
         try {
             LocationService locationService = new LocationService();
-            LocationDTO locationDTO = new LocationDTO(req.getParameter("location"));
+            LocationDTO locationDTO = new LocationDTO(req.getParameter("location"),
+                    new BigDecimal(req.getParameter("latitude")),
+                    new BigDecimal(req.getParameter("longitude")));
             UserDTO userDTO = new UserDTO(req.getSession().getAttribute("username").toString());
 
             if ("delete".equals(action)) {
