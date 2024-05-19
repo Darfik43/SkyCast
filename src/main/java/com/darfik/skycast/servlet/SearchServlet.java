@@ -9,6 +9,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Arrays;
+import java.util.List;
 
 @WebServlet("/search")
 public class SearchServlet extends RenderServlet {
@@ -18,15 +20,16 @@ public class SearchServlet extends RenderServlet {
             LocationDTO locationDTO = new LocationDTO(req.getParameter("searchQuery"));
             LocationService locationService = new LocationService();
 
-            boolean locationAlreadyAdded = locationService.locationExistsForUser(
-                    locationDTO,
-                    new UserDTO(req.getSession().getAttribute("username").toString())
-            );
-            req.setAttribute("locationAlreadyAdded", locationAlreadyAdded);
+            LocationDTO[] locationDTOS = locationService.getLocationsByName(locationDTO);
+            for (int i = 0; i < locationDTOS.length; i++) {
+                locationDTOS[i] = locationService.getWeatherByCoordinates(locationDTOS[i]);
+                locationDTOS[i].setAlreadyAdded(locationService.locationExistsForUser(
+                        locationDTOS[i],
+                        new UserDTO(req.getSession().getAttribute("username").toString())
+                ));
+            }
 
-            locationDTO = locationService.getLocationByName(locationDTO);
-            locationDTO = locationService.getWeatherByCoordinates(locationDTO);
-            req.setAttribute("location", locationDTO);
+            req.setAttribute("foundLocations", locationDTOS);
 
             processTemplate("search_results", req, resp);
 
