@@ -74,6 +74,8 @@
                             <form action="#" th:action="@{/location}" method="post" class="mb-0 text-center">
                                 <input type="hidden" name="action" value="delete">
                                 <input type="hidden" name="location" th:value="${location.getName()}">
+                                <input type="hidden" name="longitude" th:value="${location.getLongitude()}">
+                                <input type="hidden" name="latitude" th:value="${location.getLatitude()}">
                                 <button type="submit" class="btn btn-link p-0">
                                     <img th:src="@{/img/trash.svg}" alt="Delete Icon" width="20" height="20">
                                 </button>
@@ -100,8 +102,6 @@
             </div>
         </div>
     </section>
-
-
 </main>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
