@@ -1,6 +1,5 @@
 package com.darfik.skycast.service;
 
-import com.darfik.skycast.commons.service.JsonParser;
 import com.darfik.skycast.dao.LocationDAO;
 import com.darfik.skycast.dao.UserDAO;
 import com.darfik.skycast.exception.AlreadyAddedLocationException;
@@ -18,14 +17,15 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @Log4j2
 public class LocationService {
     private final LocationDAO locationDAO;
     private final UserDAO userDAO;
     private final OpenWeatherAPIService openWeatherAPIService;
-    private final JsonParser<LocationJson> locationParser;
-    private final JsonParser<WeatherJson> weatherParser;
+    private final LocationJsonParser locationParser;
+    private final WeatherJsonParser weatherParser;
 
     public LocationService() {
         this.locationDAO = LocationDAO.getInstance();
@@ -37,7 +37,7 @@ public class LocationService {
 
     public void addLocationForUser(LocationDTO locationDTO, UserDTO userDTO) throws IOException, URISyntaxException, InterruptedException, AlreadyAddedLocationException {
         if (!locationExistsForUser(locationDTO, userDTO)) {
-            Location location = LocationMapper.toModel(getLocationByName(locationDTO));
+            Location location = LocationMapper.toModel(getLocationByCoords(locationDTO));
             userDAO.find(userDTO.getUsername()).ifPresent(location::setUser);
             locationDAO.save(location);
         } else {
@@ -53,7 +53,7 @@ public class LocationService {
                         .toList())
                 .orElse(Collections.emptyList());
         for (LocationDTO location : userLocations) {
-            getLocationByName(location);
+            getLocationByCoords(location);
             getWeatherByCoordinates(location);
         }
         return userLocations;
@@ -62,16 +62,32 @@ public class LocationService {
     public boolean locationExistsForUser(LocationDTO locationDTO, UserDTO userDTO) throws IOException, URISyntaxException, InterruptedException {
         List<LocationDTO> userLocations = getUserLocations(userDTO);
         return userLocations.stream()
-                .map(LocationDTO::getName)
-                .anyMatch(locationName -> locationName.equals(locationDTO.getName()));
+                .anyMatch(userLocation ->
+                        userLocation.getName().equals(locationDTO.getName()) &&
+                                Objects.equals(userLocation.getLatitude(), locationDTO.getLatitude()) &&
+                                Objects.equals(userLocation.getLongitude(), locationDTO.getLongitude())
+                );
     }
 
-    public LocationDTO getLocationByName(LocationDTO locationDTO) throws IOException, URISyntaxException, InterruptedException {
-            LocationJson parsedJson = locationParser.parse(openWeatherAPIService.getLocationByName(locationDTO.getName()));
+    public LocationDTO getLocationByCoords(LocationDTO locationDTO) throws IOException, URISyntaxException, InterruptedException {
+            LocationJson parsedJson = locationParser.parse(openWeatherAPIService.getLocationByCoords(locationDTO))[0];
             locationDTO.setLatitude(parsedJson.getLatitude());
             locationDTO.setLongitude(parsedJson.getLongitude());
             locationDTO.setCountry(parsedJson.getCountry());
         return locationDTO;
+    }
+
+    public LocationDTO[] getLocationsByName(LocationDTO locationDTO) throws IOException, URISyntaxException, InterruptedException {
+            LocationJson[] parsedJsons = locationParser.parse(openWeatherAPIService.getLocationsByName(locationDTO.getName()));
+            LocationDTO[] locationDTOS = new LocationDTO[parsedJsons.length];
+        for (int i = 0; i < locationDTOS.length; i++) {
+            locationDTOS[i] = new LocationDTO();
+            locationDTOS[i].setName(parsedJsons[i].getLocation());
+            locationDTOS[i].setLongitude(parsedJsons[i].getLongitude());
+            locationDTOS[i].setLatitude(parsedJsons[i].getLatitude());
+            locationDTOS[i].setCountry(parsedJsons[i].getCountry());
+        }
+        return locationDTOS;
     }
 
     public LocationDTO getWeatherByCoordinates(LocationDTO locationDTO) {
@@ -90,7 +106,7 @@ public class LocationService {
 
     public void deleteLocationForUser(LocationDTO locationDTO, UserDTO userDTO) throws IOException, URISyntaxException, InterruptedException {
         if (locationExistsForUser(locationDTO, userDTO)) {
-            Location location = LocationMapper.toModel(getLocationByName(locationDTO));
+            Location location = LocationMapper.toModel(getLocationByCoords(locationDTO));
             userDAO.find(userDTO.getUsername())
                     .ifPresent(user -> {
                         location.setUser(user);
