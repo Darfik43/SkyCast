@@ -3,6 +3,12 @@ plugins {
     id 'war'
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
 group 'com.darfik'
 version '1.0-SNAPSHOT'
 
