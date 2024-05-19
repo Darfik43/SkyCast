@@ -15,8 +15,9 @@ public class OpenWeatherAPIService {
 
     private static final String API_KEY = getApiKey();
 
-    public String getLocationByName(String location) throws IOException, InterruptedException, URISyntaxException {
+    public String getLocationsByName(String location) throws IOException, InterruptedException, URISyntaxException {
         String url = "https://api.openweathermap.org/geo/1.0/direct?q=" + location
+                + "&limit=5"
                 + "&appid=" + API_KEY;
 
         HttpClient client = HttpClient.newHttpClient();
@@ -29,6 +30,21 @@ public class OpenWeatherAPIService {
         return response.body();
     }
 
+    public String getLocationByCoords(LocationDTO locationDTO) throws URISyntaxException, IOException, InterruptedException {
+        String url = "https://api.openweathermap.org/geo/1.0/reverse?"
+                + "lat=" + locationDTO.getLatitude()
+                + "&lon=" + locationDTO.getLongitude()
+                + "&appid=" + API_KEY;
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(new URI(url))
+                .GET()
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        return response.body();
+    }
     public String getWeatherByCoordinates(LocationDTO locationDTO) throws IOException, InterruptedException, URISyntaxException {
         String url = "https://api.openweathermap.org/data/2.5/weather?lat=" + locationDTO.getLatitude()
                 + "&lon=" + locationDTO.getLongitude()
