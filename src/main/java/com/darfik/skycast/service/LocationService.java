@@ -70,6 +70,7 @@ public class LocationService {
             LocationJson parsedJson = locationParser.parse(openWeatherAPIService.getLocationByName(locationDTO.getName()));
             locationDTO.setLatitude(parsedJson.getLatitude());
             locationDTO.setLongitude(parsedJson.getLongitude());
+            locationDTO.setCountry(parsedJson.getCountry());
         return locationDTO;
     }
 
@@ -77,6 +78,9 @@ public class LocationService {
         try {
             WeatherJson parsedWeatherJson = weatherParser.parse(openWeatherAPIService.getWeatherByCoordinates(locationDTO));
             locationDTO.setTemperature(parsedWeatherJson.getMainWeatherData().getTemp());
+            locationDTO.setWeather(parsedWeatherJson.getWeatherData().getFirst().getMain());
+            locationDTO.setFeelsLike(parsedWeatherJson.getMainWeatherData().getFeelsLike());
+            locationDTO.setIcon(parsedWeatherJson.getWeatherData().getFirst().getIcon());
             return locationDTO;
         } catch (IOException | InterruptedException | URISyntaxException e) {
             log.error("Can't get Weather via OpenWeatherAPI");
