@@ -9,7 +9,6 @@
         body {
             background-color: #ffffff;
         }
-
         .weather-icon {
             position: absolute;
             top: 45px;
@@ -20,20 +19,8 @@
 
         .position-absolute {
             position: absolute;
-        }
-
-        .top-right {
             top: 0;
             right: 0;
-        }
-
-        .bottom-left {
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            justify-content: center;
-            width: 100%;
         }
 
         .card {
@@ -43,7 +30,6 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             background-color: #ffffff;
             border-radius: 8px;
-            padding-bottom: 3rem; /* Добавим отступ снизу */
         }
 
         .card-title, .card-text {
@@ -63,33 +49,40 @@
 </head>
 <body>
 <header th:replace="header :: header"></header>
-<main class="container mt-4">
+
+<div class="container search-container">
     <form action="#" th:action="@{/search}" method="post" class="form-inline justify-content-center">
         <div class="input-group custom-width">
             <input type="hidden" name="location" th:value="${searchQuery}">
-            <input type="text" class="form-control" placeholder="Enter a location" name="searchQuery">
+            <input type="text" class="form-control" placeholder="Find a location" name="searchQuery">
             <div class="input-group-append">
                 <button type="submit" class="btn btn-primary">Search</button>
             </div>
         </div>
     </form>
+</div>
 
-    <h1 class="mb-4 text-center">Search Results</h1>
-
+<main class="container mt-4">
     <div th:if="${errorMessage}" class="alert alert-danger text-center" role="alert">
         <span th:text="${errorMessage}"></span>
     </div>
-
-    <div th:if="${location != null}" class="row justify-content-center">
+    <section id="foundLocations" th:unless="${errorMessage}">
         <div class="row justify-content-center">
-            <div class="col-md-4 mb-4 d-flex justify-content-center">
+            <div class="row justify-content-center">
+                <div class="col-12 text-center mb-4">
+                    <h2>Search Results</h2>
+                </div>
+            <div class="col-md-4 mb-4" th:each="location : ${foundLocations}">
                 <div class="card position-relative">
                     <div class="card-body">
-                        <div class="position-absolute top-right mt-1 mr-2">
-                            <th:block th:if="${not locationAlreadyAdded}">
+                        <div class="position-absolute top-0 right-0 mt-1 mr-2">
+                            <th:block th:if="${not location.isAlreadyAdded()}"
+                                      class="position-absolute top-0 right-0 mt-1 mr-2">
                                 <form action="#" th:action="@{/location}" method="post" class="mb-0 text-center">
                                     <input type="hidden" name="action" value="add">
                                     <input type="hidden" name="location" th:value="${location.getName()}">
+                                    <input type="hidden" name="longitude" th:value="${location.getLongitude()}">
+                                    <input type="hidden" name="latitude" th:value="${location.getLatitude()}">
                                     <button type="submit" class="btn btn-link p-0">
                                         <img th:src="@{/img/plus.svg}" alt="Add Icon" width="20" height="20">
                                     </button>
@@ -117,15 +110,9 @@
                         <img th:src="@{'https://openweathermap.org/img/wn/' + ${location.getIcon()} + '.png'}"
                              alt="Weather Icon" class="weather-icon">
                     </div>
-                    <div class="position-absolute bottom-left">
-                        <th:block th:if="${locationAlreadyAdded}">
-                            <span class="text-success">Location already added</span>
-                        </th:block>
-                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+    </section>
 </main>
 </body>
 </html>
