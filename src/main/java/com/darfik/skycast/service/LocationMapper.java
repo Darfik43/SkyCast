@@ -10,6 +10,6 @@ public class LocationMapper {
     }
 
     public static LocationDTO toDTO(Location location) {
-        return new LocationDTO(location.getName());
+        return new LocationDTO(location.getName(), location.getLatitude(), location.getLongitude());
     }
 }

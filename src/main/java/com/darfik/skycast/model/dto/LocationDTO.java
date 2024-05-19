@@ -18,8 +18,15 @@ public class LocationDTO {
     private String country;
     private String weather;
     private String icon;
+    @Getter
+    private boolean alreadyAdded;
 
     public LocationDTO(String name) {
         this.name = name;
+    }
+    public LocationDTO(String name, BigDecimal latitude, BigDecimal longitude) {
+        this.name = name;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 }
