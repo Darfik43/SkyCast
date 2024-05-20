@@ -4,7 +4,7 @@
 
 ## English Version
 
-![Homepage](https://github.com/Darfik43/skycast/blob/master/img/homepage.jpg)
+![Homepage](img/homepage.jpg)
 
 ## Description
 
@@ -62,7 +62,7 @@ darfik43@gmail.com
 ## Русская версия
 # Skycast
 
-![Homepage](https://github.com/Darfik43/skycast/blob/master/img/homepage.jpg)
+![Homepage](img/homepage.jpg)
 
 ## Описание
 Skycast - это веб-приложение для проверки текущей погоды. Пользователь может зарегистрироваться и начать добавлять любые местоположения.
