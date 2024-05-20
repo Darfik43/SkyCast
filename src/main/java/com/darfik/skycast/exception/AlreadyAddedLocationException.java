@@ -1,8 +1,6 @@
 package com.darfik.skycast.exception;
 
-import jakarta.servlet.ServletException;
-
-public class AlreadyAddedLocationException extends ServletException {
+public class AlreadyAddedLocationException extends Exception {
     public AlreadyAddedLocationException(String message) {
         super(message);
     }

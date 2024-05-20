@@ -29,7 +29,7 @@ public class UserService {
                 user.setPassword(passwordEncryptor.encryptPassword(userDTO.getPassword()));
                 userDAO.save(user);
             } catch (HibernateException e) {
-                throw new DatabaseException("Error saving user", e);
+                throw new DatabaseException("Error saving user");
             }
         } else {
             throw new UserAlreadyExistsException("User already exists");

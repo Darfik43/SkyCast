@@ -18,13 +18,15 @@ public class OpenWeatherService {
 
     private String executeRequest(String url) {
         try {
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(new URI(url))
-                    .GET()
-                    .build();
+            HttpResponse<String> response;
+            try (HttpClient client = HttpClient.newHttpClient()) {
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(new URI(url))
+                        .GET()
+                        .build();
 
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            }
             return response.body();
         } catch (URISyntaxException | IOException | InterruptedException e) {
             log.debug("Error processing request to OpenWeatherAPI");

@@ -25,7 +25,6 @@ public class LogoutServlet extends BaseAuthenticationServlet {
             cookie.setMaxAge(0);
             cookie.setPath("/");
             resp.addCookie(cookie);
-            resp.getWriter().print("You've logged out");
             resp.sendRedirect(req.getContextPath() + SkycastURL.HOME_URL.getValue());
         }
     }

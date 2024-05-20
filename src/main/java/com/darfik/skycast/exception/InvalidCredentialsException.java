@@ -1,8 +1,6 @@
 package com.darfik.skycast.exception;
 
-import jakarta.servlet.ServletException;
-
-public class InvalidCredentialsException extends ServletException {
+public class InvalidCredentialsException extends Exception {
     public InvalidCredentialsException(String message) {
         super(message);
     }

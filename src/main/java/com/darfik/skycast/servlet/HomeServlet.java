@@ -3,7 +3,6 @@ package com.darfik.skycast.servlet;
 import com.darfik.skycast.model.dto.LocationDTO;
 import com.darfik.skycast.model.dto.UserDTO;
 import com.darfik.skycast.model.dto.WeatherDTO;
-import com.darfik.skycast.service.WeatherService;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

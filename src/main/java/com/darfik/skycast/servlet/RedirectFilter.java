@@ -22,7 +22,7 @@ public class RedirectFilter implements Filter {
                     ((HttpServletRequest) req).getContextPath()
                             + SkycastURL.HOME_URL.getValue());
 
-        } else if ("/search".equals(requestURI) && !((Boolean) req.getAttribute("isLoggedIn"))) {
+        } else if (SkycastURL.SEARCH_URL.getValue().equals(requestURI) && !((Boolean) req.getAttribute("isLoggedIn"))) {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             response.sendRedirect(
                     ((HttpServletRequest) req).getContextPath()
