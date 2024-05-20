@@ -2,22 +2,24 @@ package com.darfik.skycast.servlet;
 
 
 import com.darfik.skycast.SkycastURL;
+import com.darfik.skycast.dao.LocationDAO;
+import com.darfik.skycast.dao.UserDAO;
 import com.darfik.skycast.exception.AlreadyAddedLocationException;
 import com.darfik.skycast.model.dto.LocationDTO;
 import com.darfik.skycast.service.LocationService;
 import com.darfik.skycast.model.dto.UserDTO;
+import com.darfik.skycast.util.json.LocationJsonParser;
+import com.darfik.skycast.weatherapi.OpenWeatherService;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.net.URISyntaxException;
 import java.util.List;
 
 @WebServlet("/location")
-public class LocationServlet extends RenderServlet {
-    private final LocationService locationService = new LocationService();
+public class ForecastServlet extends BaseForecastServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {

@@ -3,22 +3,16 @@ package com.darfik.skycast.servlet;
 import com.darfik.skycast.model.dto.LocationDTO;
 import com.darfik.skycast.model.dto.UserDTO;
 import com.darfik.skycast.model.dto.WeatherDTO;
-import com.darfik.skycast.service.LocationService;
 import com.darfik.skycast.service.WeatherService;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.Arrays;
 import java.util.List;
 
 @WebServlet("/home")
-public class HomeServlet extends RenderServlet {
-    private final LocationService locationService = new LocationService();
-    private final WeatherService weatherService = new WeatherService();
-
+public class HomeServlet extends BaseForecastServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         if ((Boolean) req.getAttribute("isLoggedIn")) {

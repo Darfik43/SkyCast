@@ -1,10 +1,13 @@
 package com.darfik.skycast.servlet.authentication;
 
 import com.darfik.skycast.SkycastURL;
+import com.darfik.skycast.dao.UserDAO;
 import com.darfik.skycast.exception.DatabaseException;
 import com.darfik.skycast.exception.UserAlreadyExistsException;
 import com.darfik.skycast.model.dto.UserDTO;
+import com.darfik.skycast.service.PasswordEncryptor;
 import com.darfik.skycast.service.UserService;
+import com.darfik.skycast.service.UserSessionService;
 import com.darfik.skycast.servlet.RenderServlet;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,12 +18,7 @@ import java.io.IOException;
 
 
 @WebServlet("/register")
-public class RegistrationServlet extends RenderServlet {
-    private final UserService userService;
-
-    public RegistrationServlet() {
-        userService = new UserService();
-    }
+public class RegistrationServlet extends BaseAuthenticationServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {

@@ -1,10 +1,14 @@
 package com.darfik.skycast.servlet;
 
+import com.darfik.skycast.dao.LocationDAO;
+import com.darfik.skycast.dao.UserDAO;
 import com.darfik.skycast.model.dto.LocationDTO;
 import com.darfik.skycast.model.dto.UserDTO;
 import com.darfik.skycast.model.dto.WeatherDTO;
 import com.darfik.skycast.service.LocationService;
 import com.darfik.skycast.service.WeatherService;
+import com.darfik.skycast.util.json.LocationJsonParser;
+import com.darfik.skycast.weatherapi.OpenWeatherService;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -13,10 +17,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 @WebServlet("/search")
-public class SearchServlet extends RenderServlet {
-    private final LocationService locationService = new LocationService();
-    private final WeatherService weatherService = new WeatherService();
-
+public class SearchServlet extends BaseForecastServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {

@@ -15,10 +15,10 @@ public class UserService {
     private final UserSessionService userSessionService;
     private final PasswordEncryptor passwordEncryptor;
 
-    public UserService() {
-        this.userDAO = UserDAO.getInstance();
-        this.userSessionService = new UserSessionService();
-        this.passwordEncryptor = new PasswordEncryptor();
+    public UserService(UserDAO userDAO, UserSessionService userSessionService, PasswordEncryptor passwordEncryptor) {
+        this.userDAO = userDAO;
+        this.userSessionService = userSessionService;
+        this.passwordEncryptor = passwordEncryptor;
     }
 
 

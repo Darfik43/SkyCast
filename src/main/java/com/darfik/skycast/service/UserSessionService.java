@@ -10,8 +10,8 @@ import java.time.LocalDateTime;
 public class UserSessionService {
     private final UserSessionDAO userSessionDAO;
 
-    public UserSessionService() {
-        this.userSessionDAO = UserSessionDAO.getInstance();
+    public UserSessionService(UserSessionDAO userSessionDAO) {
+        this.userSessionDAO = userSessionDAO;
     }
 
     public void updateUserSessions(User user, UserSessionDTO userSessionDTO) {

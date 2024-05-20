@@ -9,9 +9,9 @@ import com.darfik.skycast.weatherapi.OpenWeatherService;
 public class WeatherService {
     private final WeatherJsonParser weatherParser;
     private final OpenWeatherService openWeatherService;
-    public WeatherService() {
-        this.weatherParser = new WeatherJsonParser();
-        this.openWeatherService = new OpenWeatherService();
+    public WeatherService(WeatherJsonParser weatherParser, OpenWeatherService openWeatherService) {
+        this.weatherParser = weatherParser;
+        this.openWeatherService = openWeatherService;
     }
 
     public WeatherDTO getWeatherByCoordinates(LocationDTO locationDTO) {

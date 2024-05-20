@@ -4,13 +4,10 @@ import com.darfik.skycast.dao.LocationDAO;
 import com.darfik.skycast.dao.UserDAO;
 import com.darfik.skycast.exception.AlreadyAddedLocationException;
 import com.darfik.skycast.mapper.LocationMapper;
-import com.darfik.skycast.mapper.WeatherMapper;
 import com.darfik.skycast.model.Location;
 import com.darfik.skycast.model.dto.LocationDTO;
 import com.darfik.skycast.model.dto.UserDTO;
-import com.darfik.skycast.model.dto.WeatherDTO;
 import com.darfik.skycast.util.json.LocationJsonParser;
-import com.darfik.skycast.util.json.WeatherJsonParser;
 import com.darfik.skycast.weatherapi.LocationJson;
 import com.darfik.skycast.weatherapi.OpenWeatherService;
 import lombok.extern.log4j.Log4j2;
@@ -27,11 +24,11 @@ public class LocationService {
     private final OpenWeatherService openWeatherService;
     private final LocationJsonParser locationParser;
 
-    public LocationService() {
-        this.locationDAO = LocationDAO.getInstance();
-        this.openWeatherService = new OpenWeatherService();
-        this.userDAO = UserDAO.getInstance();
-        this.locationParser = new LocationJsonParser();
+    public LocationService(LocationDAO locationDAO, UserDAO userDAO, OpenWeatherService openWeatherService, LocationJsonParser locationParser) {
+        this.locationDAO = locationDAO;
+        this.openWeatherService = openWeatherService;
+        this.userDAO = userDAO;
+        this.locationParser = locationParser;
     }
 
     public List<LocationDTO> getUserLocations(UserDTO userDTO) {
@@ -68,7 +65,7 @@ public class LocationService {
     public boolean isAlreadyAdded(LocationDTO locationDTO, UserDTO userDTO) {
         return getUserLocations(userDTO).stream()
                 .anyMatch(userLocation ->
-                                Objects.equals(userLocation.getLatitude(), locationDTO.getLatitude()) &&
+                        Objects.equals(userLocation.getLatitude(), locationDTO.getLatitude()) &&
                                 Objects.equals(userLocation.getLongitude(), locationDTO.getLongitude())
                 );
     }
