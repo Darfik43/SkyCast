@@ -29,6 +29,9 @@ After this homepage starts to show added locations
 - CSS
 - Bootstrap 5
 
+### Deploy
+- Docker
+
 ## Implementation
 
 ### MVCs pattern
@@ -81,10 +84,13 @@ Skycast - это веб-приложение для проверки текущ�
 - Mockito
 - Thymeleaf 3.1.2
 
-#### Front-end:
+### Front-end:
 - HTML
 - CSS
 - Bootstrap 5
+
+### Deploy
+- Docker
 
 ## Реализация
 
