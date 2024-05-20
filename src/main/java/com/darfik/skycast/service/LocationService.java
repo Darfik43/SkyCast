@@ -10,6 +10,7 @@ import com.darfik.skycast.model.dto.UserDTO;
 import com.darfik.skycast.util.json.LocationJsonParser;
 import com.darfik.skycast.weatherapi.LocationJson;
 import com.darfik.skycast.weatherapi.OpenWeatherService;
+import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.Arrays;
@@ -17,19 +18,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+@AllArgsConstructor
 @Log4j2
 public class LocationService {
     private final LocationDAO locationDAO;
     private final UserDAO userDAO;
     private final OpenWeatherService openWeatherService;
     private final LocationJsonParser locationParser;
-
-    public LocationService(LocationDAO locationDAO, UserDAO userDAO, OpenWeatherService openWeatherService, LocationJsonParser locationParser) {
-        this.locationDAO = locationDAO;
-        this.openWeatherService = openWeatherService;
-        this.userDAO = userDAO;
-        this.locationParser = locationParser;
-    }
 
     public List<LocationDTO> getUserLocations(UserDTO userDTO) {
         return userDAO.find(userDTO.getUsername())

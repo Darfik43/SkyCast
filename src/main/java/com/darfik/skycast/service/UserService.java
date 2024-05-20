@@ -8,19 +8,14 @@ import com.darfik.skycast.mapper.UserMapper;
 import com.darfik.skycast.model.User;
 import com.darfik.skycast.model.dto.UserDTO;
 import com.darfik.skycast.model.dto.UserSessionDTO;
+import lombok.AllArgsConstructor;
 import org.hibernate.HibernateException;
 
+@AllArgsConstructor
 public class UserService {
     private final UserDAO userDAO;
     private final UserSessionService userSessionService;
     private final PasswordEncryptor passwordEncryptor;
-
-    public UserService(UserDAO userDAO, UserSessionService userSessionService, PasswordEncryptor passwordEncryptor) {
-        this.userDAO = userDAO;
-        this.userSessionService = userSessionService;
-        this.passwordEncryptor = passwordEncryptor;
-    }
-
 
     public void registerUser(UserDTO userDTO) throws UserAlreadyExistsException, DatabaseException {
             User user = UserMapper.toModel(userDTO);
