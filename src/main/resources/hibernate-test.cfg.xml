@@ -6,7 +6,7 @@
 <hibernate-configuration>
     <session-factory>
         <property name="connection.driver_class">org.mariadb.jdbc.Driver</property>
-        <property name="connection.url">jdbc:mariadb://localhost:3306/skycastTest</property>
+        <property name="connection.url">jdbc:mariadb://localhost:3306/skycast_test</property>
         <property name="connection.username">root</property>
         <property name="connection.password">12345678</property>
 
@@ -15,6 +15,5 @@
         <mapping class="com.darfik.skycast.model.User"/>
         <mapping class="com.darfik.skycast.model.Location"/>
         <mapping class="com.darfik.skycast.model.UserSession"/>
-
     </session-factory>
 </hibernate-configuration>
