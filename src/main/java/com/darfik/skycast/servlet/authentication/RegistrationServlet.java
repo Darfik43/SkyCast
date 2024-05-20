@@ -25,21 +25,21 @@ public class RegistrationServlet extends BaseAuthenticationServlet {
         if (!req.getParameter("password").equals(req.getParameter("confirmPassword"))) {
             req.setAttribute("errorMessage", "Please make sure your passwords match");
             super.processTemplate("register", req, resp);
-        }
-
-        try {
-            UserDTO userDTO = new UserDTO(
-                    req.getParameter("username").trim(),
-                    req.getParameter("password")
-            );
-            userService.registerUser(userDTO);
-            req.getRequestDispatcher(SkycastURL.LOGIN_URL.getValue()).forward(req, resp);
-        } catch (UserAlreadyExistsException e) {
-            req.setAttribute("errorMessage", "User already exists");
-            super.processTemplate("register", req, resp);
-        } catch (DatabaseException e) {
-            req.setAttribute("errorMessage", "A database error occurred. Please try again later.");
-            super.processTemplate("register", req, resp);
+        } else {
+            try {
+                UserDTO userDTO = new UserDTO(
+                        req.getParameter("username").trim(),
+                        req.getParameter("password")
+                );
+                userService.registerUser(userDTO);
+                req.getRequestDispatcher(SkycastURL.LOGIN_URL.getValue()).forward(req, resp);
+            } catch (UserAlreadyExistsException e) {
+                req.setAttribute("errorMessage", "User already exists");
+                super.processTemplate("register", req, resp);
+            } catch (DatabaseException e) {
+                req.setAttribute("errorMessage", "A database error occurred. Please try again later.");
+                super.processTemplate("register", req, resp);
+            }
         }
     }
 }

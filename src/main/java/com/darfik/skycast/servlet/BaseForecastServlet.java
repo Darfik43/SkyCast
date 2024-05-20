@@ -11,6 +11,7 @@ public class BaseForecastServlet extends RenderServlet {
 
     @Override
     public void init() {
+        super.init();
         this.locationService = LocationServiceFactory.createLocationService();
         this.weatherService = WeatherServiceFactory.createWeatherService();
     }

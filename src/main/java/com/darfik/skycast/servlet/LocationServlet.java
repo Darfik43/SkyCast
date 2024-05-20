@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @WebServlet("/location")
-public class ForecastServlet extends BaseForecastServlet {
+public class LocationServlet extends BaseForecastServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {

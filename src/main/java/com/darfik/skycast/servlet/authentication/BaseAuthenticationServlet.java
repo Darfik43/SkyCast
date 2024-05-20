@@ -10,6 +10,7 @@ public class BaseAuthenticationServlet extends RenderServlet {
 
     @Override
     public void init() {
+        super.init();
         userService = UserServiceFactory.createUserService();
     }
 }
