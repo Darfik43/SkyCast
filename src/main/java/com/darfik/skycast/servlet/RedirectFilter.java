@@ -1,6 +1,6 @@
 package com.darfik.skycast.servlet;
 
-import com.darfik.skycast.SkycastURL;
+import com.darfik.skycast.enums.SkycastURL;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;

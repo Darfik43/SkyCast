@@ -1,4 +1,4 @@
-package com.darfik.skycast;
+package com.darfik.skycast.enums;
 
 public enum SkycastURL {
     HOME_URL("/home"),

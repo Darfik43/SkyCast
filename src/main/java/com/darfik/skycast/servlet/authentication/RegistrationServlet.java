@@ -1,14 +1,9 @@
 package com.darfik.skycast.servlet.authentication;
 
-import com.darfik.skycast.SkycastURL;
-import com.darfik.skycast.dao.UserDAO;
+import com.darfik.skycast.enums.SkycastURL;
 import com.darfik.skycast.exception.DatabaseException;
 import com.darfik.skycast.exception.UserAlreadyExistsException;
 import com.darfik.skycast.model.dto.UserDTO;
-import com.darfik.skycast.service.PasswordEncryptor;
-import com.darfik.skycast.service.UserService;
-import com.darfik.skycast.service.UserSessionService;
-import com.darfik.skycast.servlet.RenderServlet;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
