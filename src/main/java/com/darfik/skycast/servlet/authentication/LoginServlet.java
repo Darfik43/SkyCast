@@ -1,5 +1,6 @@
 package com.darfik.skycast.servlet.authentication;
 
+import com.darfik.skycast.SkycastURL;
 import com.darfik.skycast.exception.InvalidCredentialsException;
 import com.darfik.skycast.model.dto.UserDTO;
 import com.darfik.skycast.service.UserService;
@@ -20,7 +21,7 @@ public class LoginServlet extends RenderServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         if ((Boolean) req.getAttribute("isLoggedIn")) {
-            resp.sendRedirect(req.getContextPath() + "/home");
+            resp.sendRedirect(req.getContextPath() + SkycastURL.HOME_URL.getValue());
         } else {
             processTemplate("login", req, resp);
         }
@@ -33,12 +34,11 @@ public class LoginServlet extends RenderServlet {
                     new UserDTO(req.getParameter("username").trim(), req.getParameter("password")),
                     new UserSessionDTO(req.getSession().getId()));
             req.getSession().setAttribute("username", req.getParameter("username").trim());
-            Cookie cookie = new Cookie("sessionID", req.getSession().getId());
-            cookie.setPath("/");
-            cookie.setMaxAge(3600);
-            resp.addCookie(cookie);
-            resp.getWriter().print("You've logged in");
-            resp.sendRedirect(req.getContextPath() + "/home");
+
+            CookieServlet cookieServlet = new CookieServlet();
+            cookieServlet.setSessionCookie(req, resp);
+
+            resp.sendRedirect(req.getContextPath() + SkycastURL.HOME_URL.getValue());
         }  catch (InvalidCredentialsException e) {
             req.setAttribute("errorMessage", "Incorrect username or password");
             super.processTemplate("login", req, resp);

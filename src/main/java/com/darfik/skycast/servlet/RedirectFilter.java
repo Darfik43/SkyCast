@@ -1,5 +1,6 @@
 package com.darfik.skycast.servlet;
 
+import com.darfik.skycast.SkycastURL;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,16 +18,17 @@ public class RedirectFilter implements Filter {
         String requestURI = request.getRequestURI().substring(request.getContextPath().length());
 
         if ("/".equals(requestURI)) {
-            ((HttpServletResponse) resp).sendRedirect(((HttpServletRequest) req).getContextPath() + "/home");
-            return;
-        }
+            ((HttpServletResponse) resp).sendRedirect(
+                    ((HttpServletRequest) req).getContextPath()
+                            + SkycastURL.HOME_URL.getValue());
 
-        if ("/search".equals(requestURI) && !((Boolean) req.getAttribute("isLoggedIn"))) {
+        } else if ("/search".equals(requestURI) && !((Boolean) req.getAttribute("isLoggedIn"))) {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            response.sendRedirect(((HttpServletRequest) req).getContextPath() + "/login");
-            return;
+            response.sendRedirect(
+                    ((HttpServletRequest) req).getContextPath()
+                            + SkycastURL.LOGIN_URL.getValue());
+        } else {
+            chain.doFilter(request, response);
         }
-
-        chain.doFilter(request, response);
     }
 }

@@ -24,7 +24,7 @@ public class Location {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "userid")
+    @JoinColumn(name = "user_id")
     @Getter
     @Setter
     private User user;

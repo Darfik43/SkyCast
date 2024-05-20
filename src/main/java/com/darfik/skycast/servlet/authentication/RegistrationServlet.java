@@ -1,5 +1,6 @@
 package com.darfik.skycast.servlet.authentication;
 
+import com.darfik.skycast.SkycastURL;
 import com.darfik.skycast.exception.DatabaseException;
 import com.darfik.skycast.exception.UserAlreadyExistsException;
 import com.darfik.skycast.model.dto.UserDTO;
@@ -28,13 +29,18 @@ public class RegistrationServlet extends RenderServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (!req.getParameter("password").equals(req.getParameter("confirmPassword"))) {
+            req.setAttribute("errorMessage", "Please make sure your passwords match");
+            super.processTemplate("register", req, resp);
+        }
+
         try {
             UserDTO userDTO = new UserDTO(
                     req.getParameter("username").trim(),
                     req.getParameter("password")
             );
             userService.registerUser(userDTO);
-            req.getRequestDispatcher("/login").forward(req, resp);
+            req.getRequestDispatcher(SkycastURL.LOGIN_URL.getValue()).forward(req, resp);
         } catch (UserAlreadyExistsException e) {
             req.setAttribute("errorMessage", "User already exists");
             super.processTemplate("register", req, resp);

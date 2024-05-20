@@ -24,11 +24,11 @@ public class UserSession {
 
 
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     private User user;
 
 
-    @Column(name = "expiresAt")
+    @Column(name = "expires_at")
     private LocalDateTime expiresAt;
 
 

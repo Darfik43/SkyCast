@@ -26,14 +26,12 @@ public class LocationService {
     private final UserDAO userDAO;
     private final OpenWeatherService openWeatherService;
     private final LocationJsonParser locationParser;
-    private final WeatherJsonParser weatherParser;
 
     public LocationService() {
         this.locationDAO = LocationDAO.getInstance();
         this.openWeatherService = new OpenWeatherService();
         this.userDAO = UserDAO.getInstance();
         this.locationParser = new LocationJsonParser();
-        this.weatherParser = new WeatherJsonParser();
     }
 
     public List<LocationDTO> getUserLocations(UserDTO userDTO) {
@@ -85,10 +83,5 @@ public class LocationService {
         return Arrays.stream(parsedJsons)
                 .map(LocationMapper::fromJsonToDTO)
                 .toArray(LocationDTO[]::new);
-    }
-
-    public WeatherDTO getWeatherByCoordinates(LocationDTO locationDTO) {
-        return WeatherMapper.fromJsonToDTO(
-                weatherParser.parse(openWeatherService.getWeatherByCoordinates(locationDTO)));
     }
 }

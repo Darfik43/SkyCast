@@ -1,6 +1,7 @@
 package com.darfik.skycast.servlet;
 
 
+import com.darfik.skycast.SkycastURL;
 import com.darfik.skycast.exception.AlreadyAddedLocationException;
 import com.darfik.skycast.model.dto.LocationDTO;
 import com.darfik.skycast.service.LocationService;
@@ -16,10 +17,10 @@ import java.util.List;
 
 @WebServlet("/location")
 public class LocationServlet extends RenderServlet {
+    private final LocationService locationService = new LocationService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-            LocationService locationService = new LocationService();
             UserDTO userDTO = new UserDTO(req.getSession().getAttribute("username").toString());
             List<LocationDTO> userLocations = locationService.getUserLocations(userDTO);
             req.getSession().setAttribute("userLocations", userLocations);
@@ -30,19 +31,17 @@ public class LocationServlet extends RenderServlet {
         String action = req.getParameter("action");
 
         try {
-            LocationService locationService = new LocationService();
             LocationDTO locationDTO = new LocationDTO(req.getParameter("location"),
                     new BigDecimal(req.getParameter("latitude")),
                     new BigDecimal(req.getParameter("longitude")));
             UserDTO userDTO = new UserDTO(req.getSession().getAttribute("username").toString());
 
-            if ("delete".equals(action)) {
-                locationService.deleteLocationForUser(locationDTO, userDTO);
-            } else if ("add".equals(action)) {
-                locationService.addLocationForUser(locationDTO, userDTO);
+            switch (action) {
+                case "delete" -> locationService.deleteLocationForUser(locationDTO, userDTO);
+                case "add" -> locationService.addLocationForUser(locationDTO, userDTO);
             }
 
-            resp.sendRedirect(req.getContextPath() + "/home");
+            resp.sendRedirect(req.getContextPath() + SkycastURL.HOME_URL.getValue());
         }  catch (AlreadyAddedLocationException e) {
             req.setAttribute("errorMessage", e.getMessage());
             super.processTemplate("error", req, resp);

@@ -4,6 +4,7 @@ import com.darfik.skycast.model.dto.LocationDTO;
 import com.darfik.skycast.model.dto.UserDTO;
 import com.darfik.skycast.model.dto.WeatherDTO;
 import com.darfik.skycast.service.LocationService;
+import com.darfik.skycast.service.WeatherService;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,6 +15,7 @@ import java.util.Arrays;
 @WebServlet("/search")
 public class SearchServlet extends RenderServlet {
     private final LocationService locationService = new LocationService();
+    private final WeatherService weatherService = new WeatherService();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -28,7 +30,7 @@ public class SearchServlet extends RenderServlet {
             }
 
             WeatherDTO[] weatherDTOs = Arrays.stream(locationDTOs)
-                    .map(locationService::getWeatherByCoordinates)
+                    .map(weatherService::getWeatherByCoordinates)
                     .toArray(WeatherDTO[]::new);
 
             req.setAttribute("foundLocations", locationDTOs);

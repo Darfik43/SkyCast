@@ -64,8 +64,8 @@
 </div>
 
 <main class="container mt-4">
-    <div th:if="${errorMessage}" class="alert alert-danger text-center" role="alert">
-        <span th:text="${errorMessage}"></span>
+    <div th:if="${errorMessage}" class="text-center" role="alert">
+        <div class="text-danger mb-3" th:text="${errorMessage}">An error occurred</div>
     </div>
     <section id="foundLocations" th:unless="${errorMessage}">
         <div class="col-12 text-center mb-4">

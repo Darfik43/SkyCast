@@ -24,15 +24,15 @@ public class UserService {
 
     public void registerUser(UserDTO userDTO) throws UserAlreadyExistsException, DatabaseException {
             User user = UserMapper.toModel(userDTO);
-        if (userExists(user.getUsername())) {
-            throw new UserAlreadyExistsException("User already exists");
-        } else {
+        if (!userExists(user.getUsername())) {
             try {
                 user.setPassword(passwordEncryptor.encryptPassword(userDTO.getPassword()));
                 userDAO.save(user);
             } catch (HibernateException e) {
                 throw new DatabaseException("Error saving user", e);
             }
+        } else {
+            throw new UserAlreadyExistsException("User already exists");
         }
     }
 

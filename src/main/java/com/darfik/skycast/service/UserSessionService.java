@@ -1,5 +1,6 @@
 package com.darfik.skycast.service;
 import com.darfik.skycast.dao.UserSessionDAO;
+import com.darfik.skycast.mapper.UserSessionMapper;
 import com.darfik.skycast.model.User;
 import com.darfik.skycast.model.UserSession;
 import com.darfik.skycast.model.dto.UserSessionDTO;

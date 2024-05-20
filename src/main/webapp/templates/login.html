@@ -21,6 +21,10 @@
         .container {
             background-color: #ffffff;
         }
+
+        .alert-danger {
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
@@ -52,7 +56,7 @@
                     <label for="password">Password</label>
                     <input type="password" class="form-control" id="password" name="password" required>
                 </div>
-                <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+                <div th:if="${errorMessage}" class="text-center" role="alert">
                     <div class="text-danger mb-3" th:text="${errorMessage}">An error occurred</div>
                 </div>
                 <div class="d-flex justify-content-center align-items-center flex-wrap">

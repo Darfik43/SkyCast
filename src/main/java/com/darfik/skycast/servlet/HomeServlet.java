@@ -4,6 +4,7 @@ import com.darfik.skycast.model.dto.LocationDTO;
 import com.darfik.skycast.model.dto.UserDTO;
 import com.darfik.skycast.model.dto.WeatherDTO;
 import com.darfik.skycast.service.LocationService;
+import com.darfik.skycast.service.WeatherService;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,6 +17,7 @@ import java.util.List;
 @WebServlet("/home")
 public class HomeServlet extends RenderServlet {
     private final LocationService locationService = new LocationService();
+    private final WeatherService weatherService = new WeatherService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -24,7 +26,7 @@ public class HomeServlet extends RenderServlet {
                     new UserDTO(req.getSession().getAttribute("username").toString()));
 
             WeatherDTO[] weatherDTOs = locationDTOs.stream()
-                    .map(locationService::getWeatherByCoordinates)
+                    .map(weatherService::getWeatherByCoordinates)
                     .toArray(WeatherDTO[]::new);
 
             req.setAttribute("userLocations", locationDTOs);

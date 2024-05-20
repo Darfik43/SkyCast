@@ -1,5 +1,6 @@
 package com.darfik.skycast.servlet.authentication;
 
+import com.darfik.skycast.SkycastURL;
 import com.darfik.skycast.service.UserService;
 import com.darfik.skycast.model.dto.UserSessionDTO;
 import com.darfik.skycast.servlet.RenderServlet;
@@ -28,7 +29,7 @@ public class LogoutServlet extends RenderServlet {
             cookie.setPath("/");
             resp.addCookie(cookie);
             resp.getWriter().print("You've logged out");
-            resp.sendRedirect(req.getContextPath() + "/home");
+            resp.sendRedirect(req.getContextPath() + SkycastURL.HOME_URL.getValue());
         }
     }
 }
