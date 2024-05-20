@@ -4,7 +4,7 @@
 
 ## English Version
 
-![Homepage](https://github.com/Darfik43/skycast/blob/master/img/homepage.jpg)
+![Homepage](img/homepage.jpg)
 
 ## Description
 
@@ -28,6 +28,9 @@ After this homepage starts to show added locations
 - HTML
 - CSS
 - Bootstrap 5
+
+### Deploy
+- Docker
 
 ## Implementation
 
@@ -62,7 +65,7 @@ darfik43@gmail.com
 ## Русская версия
 # Skycast
 
-![Homepage](https://github.com/Darfik43/skycast/blob/master/img/homepage.jpg)
+![Homepage](img/homepage.jpg)
 
 ## Описание
 Skycast - это веб-приложение для проверки текущей погоды. Пользователь может зарегистрироваться и начать добавлять любые местоположения.
@@ -81,10 +84,13 @@ Skycast - это веб-приложение для проверки текущ�
 - Mockito
 - Thymeleaf 3.1.2
 
-#### Front-end:
+### Front-end:
 - HTML
 - CSS
 - Bootstrap 5
+
+### Deploy
+- Docker
 
 ## Реализация
 
