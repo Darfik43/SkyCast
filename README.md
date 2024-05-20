@@ -1,5 +1,7 @@
 # Skycast
 
+![Homepage](https://github.com/Darfik43/skycast/img/homepage.jpg)
+
 ## Description
 
 Skycast is a web application to check up current weather. User can signup and start adding any locations.
@@ -26,10 +28,10 @@ After this homepage starts to show added locations
 ## Implementation
 
 ### MVCs pattern
-- Model layer is a hibernate entity with DAO classes processing basic crud operations.
+- A model layer is a hibernate entity with DAO classes processing basic crud operations.
 Additionally, it has DTO classes to transfers required data between layers and classes 
-- View layer is HTML+CSS stack using Bootstrap 5
-- Controller layer is number of jakarta servlets. Also it has cookie implementation to
+- A view layer is HTML+CSS stack using Bootstrap 5
+- A controller layer is number of jakarta servlets. Also it has cookie implementation to
 remember user when he is logged in
 
 ## Installation and Running
