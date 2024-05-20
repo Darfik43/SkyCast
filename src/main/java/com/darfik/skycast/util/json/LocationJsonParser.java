@@ -10,11 +10,13 @@ public class LocationJsonParser {
 
     public LocationJson[] parse(String json) {
         try {
-            return jsonMapper.readValue(json, LocationJson[].class);
+            LocationJson[] locationJsons = jsonMapper.readValue(json, LocationJson[].class);
+            if (locationJsons.length == 0) {
+                throw new ArrayIndexOutOfBoundsException("No locations found");
+            }
+            return locationJsons;
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Error parsing location JSON", e);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw new ArrayIndexOutOfBoundsException("No locations found");
         }
     }
 }

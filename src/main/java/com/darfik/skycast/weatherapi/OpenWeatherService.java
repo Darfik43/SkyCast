@@ -32,7 +32,7 @@ public class OpenWeatherService {
         return null;
     }
 
-    public String getLocationsByName(String location){
+    public String getLocationsByName(String location) {
         String url = "https://api.openweathermap.org/geo/1.0/direct?q=" + location
                 + "&limit=5"
                 + "&appid=" + API_KEY;

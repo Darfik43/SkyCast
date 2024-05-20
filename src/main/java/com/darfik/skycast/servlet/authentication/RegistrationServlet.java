@@ -37,10 +37,10 @@ public class RegistrationServlet extends RenderServlet {
             req.getRequestDispatcher("/login").forward(req, resp);
         } catch (UserAlreadyExistsException e) {
             req.setAttribute("errorMessage", "User already exists");
-            super.processTemplate("error", req, resp);
+            super.processTemplate("register", req, resp);
         } catch (DatabaseException e) {
             req.setAttribute("errorMessage", "A database error occurred. Please try again later.");
-            super.processTemplate("error", req, resp);
+            super.processTemplate("register", req, resp);
         }
     }
 }
