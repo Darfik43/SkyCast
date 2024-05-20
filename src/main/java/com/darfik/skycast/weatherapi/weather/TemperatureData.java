@@ -1,4 +1,4 @@
-package com.darfik.skycast.weatherapi;
+package com.darfik.skycast.weatherapi.weather;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MainWeatherData {
+public class TemperatureData {
 
     @JsonProperty("temp")
     private Double temp;

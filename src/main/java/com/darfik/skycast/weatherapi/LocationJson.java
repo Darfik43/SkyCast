@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @Getter
 public class LocationJson {
     @JsonProperty("name")
-    private String location;
+    private String name;
 
     @JsonProperty("lat")
     private BigDecimal latitude;

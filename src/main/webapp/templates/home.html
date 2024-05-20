@@ -67,8 +67,8 @@
     <section id="userLocations" th:if="${isLoggedIn}">
         <h2 class="text-center mb-4">Your Locations</h2>
         <div class="row justify-content-center">
-            <div class="col-md-4 mb-4" th:each="location : ${session.userLocations}">
-                <div class="card position-relative">
+            <div th:each="location, status : ${userLocations}" class="col-md-4 mb-4">
+                <div th:with="weather = ${weatherInLocations[__${status.index}__]}" class="card position-relative">
                     <div class="card-body">
                         <div class="position-absolute top-0 right-0 mt-1 mr-2">
                             <form action="#" th:action="@{/location}" method="post" class="mb-0 text-center">
@@ -86,17 +86,17 @@
                         </div>
                         <div class="d-flex align-items-center justify-content-center">
                             <p class="card-text" style="color: #333;"><strong>Temperature</strong> <span
-                                    th:text="${#numbers.formatDecimal(location.getTemperature(), 0, 0)} + '°C'"></span></p>
+                                    th:text="${#numbers.formatDecimal(weather.getTemperature(), 0, 0)} + '°C'"></span></p>
                         </div>
                         <div class="d-flex align-items-center justify-content-center">
                             <p class="card-text" style="color: #333;"><strong>Feels Like</strong> <span
-                                    th:text="${#numbers.formatDecimal(location.getFeelsLike(), 0, 0)} + '°C'"></span></p>
+                                    th:text="${#numbers.formatDecimal(weather.getFeelsLike(), 0, 0)} + '°C'"></span></p>
                         </div>
                         <div class="d-flex align-items-center justify-content-center">
                             <p class="card-text" style="color: #333;"><strong>Conditions</strong> <span
-                                    th:text="${(location.getWeather())}"></span></p>
+                                    th:text="${(weather.getCondition())}"></span></p>
                         </div>
-                        <img th:src="@{'https://openweathermap.org/img/wn/' + ${location.getIcon()} + '.png'}" alt="Weather Icon" class="weather-icon">
+                        <img th:src="@{'https://openweathermap.org/img/wn/' + ${weather.getIcon()} + '.png'}" alt="Weather Icon" class="weather-icon">
                     </div>
                 </div>
             </div>

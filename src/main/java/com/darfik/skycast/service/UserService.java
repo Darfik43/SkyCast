@@ -4,6 +4,7 @@ import com.darfik.skycast.dao.UserDAO;
 import com.darfik.skycast.exception.DatabaseException;
 import com.darfik.skycast.exception.InvalidCredentialsException;
 import com.darfik.skycast.exception.UserAlreadyExistsException;
+import com.darfik.skycast.mapper.UserMapper;
 import com.darfik.skycast.model.User;
 import com.darfik.skycast.model.dto.UserDTO;
 import com.darfik.skycast.model.dto.UserSessionDTO;

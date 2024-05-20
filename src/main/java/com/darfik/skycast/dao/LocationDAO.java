@@ -50,8 +50,10 @@ public class LocationDAO {
     public void delete(Location location, User user) {
         try (Session session = HibernateUtil.getSession()) {
             Transaction tx = session.beginTransaction();
-            session.createMutationQuery("DELETE FROM Location WHERE name = :name AND user.id = :userID")
-                    .setParameter("name", location.getName())
+            session.createMutationQuery("DELETE FROM Location WHERE latitude = :latitude" +
+                            " AND longitude =:longitude AND user.id = :userID")
+                    .setParameter("latitude", location.getLatitude())
+                    .setParameter("longitude", location.getLongitude())
                     .setParameter("userID", user.getId())
                     .executeUpdate();
             tx.commit();

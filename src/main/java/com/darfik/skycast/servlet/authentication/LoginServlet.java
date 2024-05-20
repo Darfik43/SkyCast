@@ -18,7 +18,7 @@ public class LoginServlet extends RenderServlet {
     private final UserService userService = new UserService();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         if ((Boolean) req.getAttribute("isLoggedIn")) {
             resp.sendRedirect(req.getContextPath() + "/home");
         } else {

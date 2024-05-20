@@ -18,15 +18,11 @@ import java.util.List;
 public class LocationServlet extends RenderServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
-        try {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
             LocationService locationService = new LocationService();
             UserDTO userDTO = new UserDTO(req.getSession().getAttribute("username").toString());
             List<LocationDTO> userLocations = locationService.getUserLocations(userDTO);
             req.getSession().setAttribute("userLocations", userLocations);
-        } catch (Exception e) {
-            resp.getWriter().print("No locations");
-        }
     }
 
     @Override
@@ -47,13 +43,7 @@ public class LocationServlet extends RenderServlet {
             }
 
             resp.sendRedirect(req.getContextPath() + "/home");
-        } catch (InterruptedException e) {
-            resp.getWriter().print("Connection to the API was interrupted");
-        } catch (IOException e) {
-            resp.getWriter().print("Can't connect to OpenWeatherAPI");
-        } catch (URISyntaxException e) {
-            resp.getWriter().print("URI is invalid");
-        } catch (AlreadyAddedLocationException e) {
+        }  catch (AlreadyAddedLocationException e) {
             req.setAttribute("errorMessage", e.getMessage());
             super.processTemplate("error", req, resp);
         }

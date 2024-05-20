@@ -14,15 +14,15 @@ import java.io.IOException;
 
 
 @WebServlet("/register")
-public class UserRegistrationServlet extends RenderServlet {
+public class RegistrationServlet extends RenderServlet {
     private final UserService userService;
 
-    public UserRegistrationServlet() {
+    public RegistrationServlet() {
         userService = new UserService();
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         processTemplate("register", req, resp);
     }
 

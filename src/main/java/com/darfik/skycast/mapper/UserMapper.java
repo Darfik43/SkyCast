@@ -1,4 +1,4 @@
-package com.darfik.skycast.service;
+package com.darfik.skycast.mapper;
 
 import com.darfik.skycast.model.User;
 import com.darfik.skycast.model.dto.UserDTO;

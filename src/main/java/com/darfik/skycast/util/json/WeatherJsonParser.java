@@ -1,5 +1,5 @@
 package com.darfik.skycast.util.json;
-import com.darfik.skycast.weatherapi.WeatherJson;
+import com.darfik.skycast.weatherapi.weather.WeatherJson;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
