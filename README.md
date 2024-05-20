@@ -1,5 +1,9 @@
 # Skycast
 
+[English Version](#english-version) | [Русская версия](#русская-версия)
+
+## English Version
+
 ![Homepage](https://github.com/Darfik43/skycast/blob/master/img/homepage.jpg)
 
 ## Description
@@ -53,4 +57,58 @@ Author: Darfik43
 
 ## Contact
 
-If you have any questions or suggestions, feel free to contact us at darfik43@gmail.com
+darfik43@gmail.com
+
+## Русская версия
+# Skycast
+
+![Homepage](https://github.com/Darfik43/skycast/blob/master/img/homepage.jpg)
+
+## Описание
+Skycast - это веб-приложение для проверки текущей погоды. Пользователь может зарегистрироваться и начать добавлять любые местоположения.
+После этого на главной странице они начнут отображаться.
+
+## Используемые технологии
+
+### Back-end:
+- Java 19
+- Apache Tomcat Server 10.1.8
+- Servlets 6
+- Gradle 8.7
+- Hibernate ORM 6.4.4
+- База данных MariaDB
+- JUnit5
+- Mockito
+- Thymeleaf 3.1.2
+
+#### Front-end:
+- HTML
+- CSS
+- Bootstrap 5
+
+## Реализация
+
+### Паттерн MVC
+
+- Слой моделей представляет собой Hibernate сущности с DAO классами, обрабатывающими основные CRUD операции. Также добавлены классы DTO для передачи необходимых данных между слоями и классами.
+- Слой представления - это стек HTML+CSS с использованием Bootstrap 5.
+- Слой контроллеров - Jakarta Servlets. Также реализована работа с куки для запоминания пользователя при входе в систему.
+
+## Установка и запуск
+
+1. git clone https://github.com/Darfik43/skycast
+2. Зарегистрировать и получить [API ключ](https://openweathermap.org/)
+3. Ключ надо добавить в /skycast/src/main/resource/config.properties
+4. Откройте терминал
+5. cd [путь-к-репозиторию]/skycast
+6. docker compose build
+7. docker compose up
+8. Откройте браузер и перейдите на localhost:8080/skycast
+
+## Автор
+
+Darfik43
+
+## Контакты
+darfik43@gmail.com
+
