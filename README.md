@@ -1,6 +1,6 @@
 # Skycast
 
-![Homepage](https://github.com/Darfik43/skycast/img/homepage.jpg)
+![Homepage](https://github.com/Darfik43/skycast/blob/master/img/homepage.jpg)
 
 ## Description
 
