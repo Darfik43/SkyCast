@@ -4,7 +4,7 @@
 
 ## Description
 
-Skycast is a web application to check up current weather. User can signup and start adding any locations.
+Skycast is a web application to check up the current weather. User can signup and start adding any locations.
 After this homepage starts to show added locations
 
 ## Technologies Used
